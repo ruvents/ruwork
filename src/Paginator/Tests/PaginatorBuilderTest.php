@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ruwork\Paginator\Test;
 
 use PHPUnit\Framework\TestCase;
+use Ruwork\Paginator\PaginatorBuilder;
 use Ruwork\Paginator\Provider\ProviderInterface;
 
 class PaginatorBuilderTest extends TestCase

@@ -30,6 +30,9 @@
         "ruwork/paginator-bundle": "self.version",
         "ruwork/upload-bundle": "self.version"
     },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "merge-plugin": {
             "require": [

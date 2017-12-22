@@ -27,6 +27,11 @@
         "ruwork/paginator-bundle": "self.version",
         "ruwork/upload-bundle": "self.version"
     },
+    "autoload": {
+        "psr-4": {
+            "Ruwork\\": "src/"
+        }
+    },
     "config": {
         "sort-packages": true
     },

@@ -2,14 +2,12 @@
     "name": "ruwork/upload-bundle",
     "description": "Ruwork Upload Bundle",
     "type": "symfony-bundle",
+    "keywords": ["ruwork"],
+    "homepage": "https://ruvents.github.io/ruwork/",
     "license": "MIT",
     "authors": [
-        {
-            "name": "Valentin Udaltsov",
-            "email": "udaltsov@ruvents.com"
-        }
+        {"name": "Valentin Udaltsov", "email": "udaltsov@ruvents.com"}
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": "^7.1.3",
         "doctrine/orm": "^2.5",
@@ -31,9 +29,12 @@
             "/Tests/"
         ]
     },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.5-dev"
+            "dev-master": "0.1-dev"
         }
     }
 }

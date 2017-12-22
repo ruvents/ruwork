@@ -1,15 +1,12 @@
 {
+    "name": "ruwork/ruwork",
     "description": "Ruwork monorepo package.",
-    "keywords": [
-        "ruwork"
-    ],
+    "type": "library",
+    "keywords": ["ruwork"],
     "homepage": "https://ruvents.github.io/ruwork/",
-    "licence": "MIT",
+    "license": "MIT",
     "authors": [
-        {
-            "name": "Valentin Udaltsov",
-            "email": "udaltsov@ruvents.com"
-        }
+        {"name": "Valentin Udaltsov", "email": "udaltsov@ruvents.com"}
     ],
     "require": {
         "php": "^7.1.3",
@@ -34,6 +31,9 @@
         "sort-packages": true
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        },
         "merge-plugin": {
             "require": [
                 "src/*/composer.json"

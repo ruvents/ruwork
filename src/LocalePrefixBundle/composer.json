@@ -2,12 +2,11 @@
     "name": "ruwork/locale-prefix-bundle",
     "description": "Ruwork Locale Prefix Bundle",
     "type": "symfony-bundle",
+    "keywords": ["ruwork"],
+    "homepage": "https://ruvents.github.io/ruwork/",
     "license": "MIT",
     "authors": [
-        {
-            "name": "Valentin Udaltsov",
-            "email": "udaltsov@ruwork.com"
-        }
+        {"name": "Valentin Udaltsov", "email": "udaltsov@ruvents.com"}
     ],
     "require": {
         "php": "^7.1.3",
@@ -21,9 +20,6 @@
         "matthiasnoback/symfony-dependency-injection-test": "^2.3",
         "symfony/framework-bundle": "^3.4 || ^4.0"
     },
-    "config": {
-        "sort-packages": true
-    },
     "autoload": {
         "psr-4": {
             "Ruwork\\LocalePrefixBundle\\": ""
@@ -31,6 +27,9 @@
         "exclude-from-classmap": [
             "/Tests/"
         ]
+    },
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {

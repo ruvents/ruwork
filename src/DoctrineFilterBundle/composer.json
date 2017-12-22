@@ -2,18 +2,13 @@
     "name": "ruwork/doctrine-filter-bundle",
     "description": "Ruwork Filter Bundle",
     "type": "symfony-bundle",
+    "keywords": ["ruwork"],
+    "homepage": "https://ruvents.github.io/ruwork/",
     "license": "MIT",
     "authors": [
-        {
-            "name": "Artem Diakov",
-            "email": "adiakov.work@gmail.com"
-        },
-        {
-            "name": "Valentin Udaltsov",
-            "email": "udaltsov@ruvents.com"
-        }
+        {"name": "Artem Diakov", "email": "adiakov.work@gmail.com"},
+        {"name": "Valentin Udaltsov", "email": "udaltsov@ruvents.com"}
     ],
-    "minimum-stability": "beta",
     "require": {
         "php": "^7.1.3",
         "doctrine/orm": "^2.5",
@@ -29,5 +24,13 @@
         "exclude-from-classmap": [
             "/Tests/"
         ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
     }
 }

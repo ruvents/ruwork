@@ -1,0 +1,63 @@
+{% extends '@RuworkAdmin/base.html.twig' %}
+
+{% trans_default_domain 'ruwork_admin' %}
+
+{% block title entity_config.list.title %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-auto">
+            <h1>{{ entity_config.list.title }}</h1>
+        </div>
+        <div class="ml-auto col-auto text-right">
+            {% if entity_config.create.enabled %}
+                <a href="{{ path('ruwork_admin_create', {ruwork_admin_entity: entity_config.name}) }}" class="btn btn-primary">{{ 'Create'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                {% for field in entity_config.list.fields %}
+                    <th>{{ field.title ?: field.propertyPath|default(field.type)|humanize|trans }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in paginator.items %}
+                <tr>
+                    {% for field in entity_config.list.fields %}
+                        <td>
+                            {{ ruwork_admin_render_list_field(entity_config.name, entity, field.propertyPath, field.type) }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="{{ entity_config.list.fields|length }}">
+                        {{ 'No entities found'|trans }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if paginator.total > 1 %}
+        <nav class="sticky-bottom">
+            {% set route = app.request.attributes.get('_route') %}
+            {% set route_params = app.request.attributes.get('_route_params', []) %}
+            {% embed '@RuworkPaginator/bootstrap_4.html.twig' with {paginator: paginator, class: 'justify-content-center'} %}
+                {% trans_default_domain 'ruwork_admin' %}
+
+                {% block href path(route, route_params|merge({page: page.first ? null : page.number})) %}
+
+                {% block previous_label 'Previous'|trans %}
+
+                {% block next_label 'Next'|trans %}
+            {% endembed %}
+        </nav>
+    {% endif %}
+{% endblock %}

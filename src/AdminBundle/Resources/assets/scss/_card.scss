@@ -1,0 +1,60 @@
+.card {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    border: none;
+
+    > .table {
+        margin-bottom: 0;
+
+        &.table-bordered {
+            border: none;
+
+            th, td {
+                &:first-child {
+                    border-left: none;
+                }
+                &:last-child {
+                    border-right: none;
+                }
+            }
+
+            > *:first-child > tr:first-child {
+                th, td {
+                    border-top: none;
+                }
+            }
+
+            > *:last-child > tr:last-child {
+                th, td {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+}
+
+.card-overlay-wrapper {
+    position: relative;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: -$border-width;
+        right: -($grid-gutter-width / 2);
+        bottom: -$border-width;
+        left: -($grid-gutter-width / 2);
+        background: $body-bg;
+    }
+
+    &.sticky-bottom {
+        bottom: -$border-radius;
+    }
+
+    &.sticky-top {
+        top: -$border-radius;
+    }
+}
+
+.row > .card-overlay-wrapper:before {
+    right: 0;
+    left: 0;
+}

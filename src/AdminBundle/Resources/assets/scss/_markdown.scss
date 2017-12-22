@@ -1,0 +1,13 @@
+.md-editor {
+    .btn-group {
+        margin-right: $spacer / 2;
+    }
+
+    border-radius: $border-radius;
+}
+
+.md-input {
+    padding: $input-btn-padding-y $input-btn-padding-x !important;
+    border: none !important;
+    background: $white !important;
+}

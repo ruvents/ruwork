@@ -1,0 +1,6 @@
+ruwork_upload_download:
+    path: /{path}
+    defaults:
+        _controller: Ruwork\UploadBundle\Controller\DownloadController
+    requirements:
+        path: '[a-zA-Z/-_]+(.[a-zA-Z-_]+)?'

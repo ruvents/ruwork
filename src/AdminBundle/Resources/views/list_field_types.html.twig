@@ -1,0 +1,171 @@
+{% block default %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% elseif value_php_type is same as('bool') %}
+        {{ block('bool') }}
+    {% elseif value_php_type in ['int', 'float', 'string'] %}
+        {{ value }}
+    {% else %}
+        <code>{{ value_php_type }}</code>
+    {% endif %}
+{% endblock %}
+
+{% block plain %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {{ value|nl2br }}
+    {% endif %}
+{% endblock %}
+
+{% block raw %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {{ value|raw }}
+    {% endif %}
+{% endblock %}
+
+{% block pre %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        <pre>{{ value }}</pre>
+    {% endif %}
+{% endblock %}
+
+{% block markdown %}
+    {{ block('pre') }}
+{% endblock %}
+
+{% block null %}
+    <span class="badge badge-dark">null</span>
+{% endblock %}
+
+{% block empty %}
+    <span class="badge badge-dark">empty</span>
+{% endblock %}
+
+{% block bool %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% elseif value %}
+        <span class="badge badge-success">Yes</span>
+    {% else %}
+        <span class="badge badge-danger">No</span>
+    {% endif %}
+{% endblock %}
+
+{% block length %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {{ value|length }}
+    {% endif %}
+{% endblock %}
+
+{% block json value|json_encode %}
+
+{% block simple_array %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% elseif value is empty %}
+        {{ block('empty') }}
+    {% else %}
+        {{ value|join(', ') }}
+    {% endif %}
+{% endblock %}
+
+{% block date %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {{ value|date('d.m.Y') }}
+    {% endif %}
+{% endblock %}
+
+{% block date_time %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {{ value|date('d.m.Y H:i') }}
+    {% endif %}
+{% endblock %}
+
+{% block time %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {{ value|date('H:i') }}
+    {% endif %}
+{% endblock %}
+
+{% block blob %}
+    <code>blob</code>
+{% endblock %}
+
+{% block binary %}
+    <code>binary</code>
+{% endblock %}
+
+{% block actions %}
+    <a class="btn btn-sm btn-outline-primary" href="{{ path('ruwork_admin_edit', {ruwork_admin_entity: entity_name, id: block('id')}) }}">
+        <i class="fa fa-pencil"></i>
+    </a>
+
+    {% if entity_config.delete.enabled %}
+        <a class="btn btn-sm btn-outline-danger" href="{{ path('ruwork_admin_delete', {ruwork_admin_entity: entity_name, id: block('id')}) }}">
+            <i class="fa fa-times"></i>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block id attribute(entity, entity_id_property) %}
+
+{% block entity_to_string entity_has_to_string ? entity : entity_class ~ '#' ~ block('id') %}
+
+{% block title %}
+    <a href="{{ path('ruwork_admin_edit', {ruwork_admin_entity: entity_name, id: block('id')}) }}">
+        {{ value|default(block('entity_to_string')) }}
+    </a>
+{% endblock %}
+
+{% block association %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {% with {entity_has_to_string: association_has_to_string, entity_class: association_class, entity_id_property: association_id_property} %}
+        {% if association_single %}
+            {% with {entity: value} %}
+            {{ block('association_element') }}
+            {% endwith %}
+        {% else %}
+            {% for item in value -%}
+                {% with {entity: item} -%}
+                {{- not loop.first ? ',' }} {{ block('association_element') -}}
+                {% endwith -%}
+            {% else %}
+                {{ block('empty') }}
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    {% endif %}
+{% endblock %}
+
+{% block association_element -%}
+    {%- if association_entity_name -%}
+        <a href="{{ path('ruwork_admin_edit', {ruwork_admin_entity: association_entity_name, id: block('id')}) }}">
+            {{- block('entity_to_string') -}}
+        </a>
+    {%- else -%}
+        {{- block('entity_to_string') -}}
+    {%- endif -%}
+{%- endblock %}
+
+{% block upload %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        <img class="img-thumbnail" src="{{ asset(value) }}" alt="" style="max-height: 100px;">
+    {% endif %}
+{% endblock %}

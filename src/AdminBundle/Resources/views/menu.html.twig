@@ -1,0 +1,28 @@
+{% set id = 'menu' ~ random(1000) %}
+
+<ul id="{{ id }}" class="menu">
+    {% for item in ruwork_admin_resolve_menu(menu) %}
+        <li class="menu-item">
+            {% if item.href %}
+                <a href="{{ item.href }}" target="{{ item.attributes.target|default('_self') }}" class="menu-link {{- item.active ? ' active' }}">
+                    <i class="menu-icon fa {{ item.attributes.icon|default }}"></i>
+                    <span>{{ item.title }}</span>
+                </a>
+            {% else %}
+                {% set sub_id = id ~ 'Sub' ~ loop.index %}
+                <a href="#{{ sub_id }}" class="menu-link {{ item.active ? 'active' : 'collapsed' }}" data-toggle="collapse" data-parent="#{{ id }}">
+                    <i class="menu-icon fa {{ item.attributes.icon|default }}"></i>
+                    <span>{{ item.title }}</span>
+                    <i class="menu-arrow fa fa-angle-down"></i>
+                </a>
+                <ul id="{{ sub_id }}" class="menu-sub collapse {{- item.active ? ' show' }}">
+                    {% for subitem in item.children %}
+                        <li class="menu-sub-item">
+                            <a href="{{ subitem.href }}" target="{{ subitem.target|default('_self') }}" class="menu-sub-link {{- subitem.active ? ' active' }}">{{ subitem.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

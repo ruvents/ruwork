@@ -1,0 +1,14 @@
+{% extends '@RuworkAdmin/base.html.twig' %}
+
+{% block title entity_config.edit.title %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-auto">
+            <h1>{{ entity_config.edit.title }}</h1>
+        </div>
+    </div>
+
+    {% form_theme form entity_config.edit.theme %}
+    {{ form(form) }}
+{% endblock %}

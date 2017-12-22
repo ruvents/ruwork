@@ -1,0 +1,76 @@
+{% use "bootstrap_4_layout.html.twig" %}
+
+{% block form %}
+    {{ form_start(form) }}
+    {{ form_widget(form, {attr: {class: 'row'}}) }}
+    {{ form_end(form) }}
+{% endblock %}
+
+{%- block form_rows -%}
+    {% for name, child in form %}
+        {% if not child.vars.ruwork_admin_button_group|default(false) %}
+            {{- form_row(child) -}}
+        {% endif %}
+    {% endfor %}
+{%- endblock form_rows -%}
+
+{% block ruwork_admin_group_row %}
+    {% set attr = attr|merge({class: (attr.class|default('col-12') ~ ' pb-3')|trim}) %}
+    <div {{ block('widget_container_attributes') }}>
+        <div class="card h-100">
+            {% if label %}
+                <div class="card-header">{{ label }}</div>
+            {% endif %}
+            <div class="card-body">
+                {{ form_errors(form) }}
+                {{- block('form_rows') -}}
+                {{- form_rest(form) -}}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block ruwork_admin_button_group_row %}
+    {% set attr = attr|merge({class: (attr.class|default('col-12') ~ ' card-overlay-wrapper sticky-bottom')|trim}) %}
+    <div {{ block('widget_container_attributes') }}>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    {% for button in form %}
+                        <div class="col-auto">{{ form_widget(button) }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block ruwork_admin_markdown_widget %}
+    {% set attr = attr|merge({'data-provide': 'markdown', 'data-iconlibrary': 'fa', 'data-language': app.request.locale}) %}
+    {{ block('textarea_widget') }}
+{% endblock %}
+
+{% block form_errors %}
+    {% if form.parent %}
+        {{ parent() }}
+    {% else %}
+        <div class="col-12">
+            {{ parent() }}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block ruwork_upload_widget %}
+    <div class="row">
+        {% if data and valid and data.path %}
+            <div class="col-auto">
+                <a href="{{ asset(data) }}" target="_blank">
+                    <img src="{{ asset(data) }}" alt="" class="img-thumbnail" style="max-height: 200px;">
+                </a>
+            </div>
+        {% endif %}
+        <div class="col">
+            {{ form_row(form.file) }}
+        </div>
+    </div>
+{% endblock %}

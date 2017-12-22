@@ -1,0 +1,42 @@
+<ul class="pagination {{ class|default }}">
+    {% if show_previous_next ?? true %}
+        {% set page = paginator.previous %}
+        {% if page %}
+            <li class="page-item">
+                <a class="page-link" href="{% block href '#' %}">{% block previous_label 'Previous' %}</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">{{ block('previous_label') }}</span>
+            </li>
+        {% endif %}
+    {% endif %}
+    {% for section in paginator %}
+        {% for page in section %}
+            <li class="page-item {{- page.current ? ' active' }}">
+                {% if page.current %}
+                    <span class="page-link">{{ page.number }}</span>
+                {% else %}
+                    <a class="page-link" href="{{ block('href') }}">{{ page.number }}</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+        {% if not section.last %}
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
+        {% endif %}
+    {% endfor %}
+    {% if show_previous_next ?? true %}
+        {% set page = paginator.next %}
+        {% if page %}
+            <li class="page-item">
+                <a class="page-link" href="{{ block('href') }}">{% block next_label 'Next' %}</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">{{ block('next_label') }}</span>
+            </li>
+        {% endif %}
+    {% endif %}
+</ul>

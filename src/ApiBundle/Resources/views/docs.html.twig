@@ -1,0 +1,102 @@
+{% extends '@RuworkApi/base.html.twig' %}
+
+{% set method_themes = {
+GET: 'success',
+POST: 'primary',
+PATCH: 'warning',
+ANY: 'dark',
+} %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron my-3 pt-5 pb-3">
+            <h1 class="display-4 mb-4">{{ block('title') }}</h1>
+            {% block general_content %}
+                <section class="mb-4">
+                    <h1 class="h5">Базовый url</h1>
+                    <code>{{ app.request.schemeAndHttpHost }}</code>
+                </section>
+                <section class="mb-4">
+                    <h1 class="h5">Ответ</h1>
+                    <div class="row">
+                        <div class="col-6">
+                            <h2 class="h6">Успешный запрос</h2>
+                            <p>Формат: <code>JSON</code><br>
+                                Код ответа: <code>200</code></p>
+                        </div>
+                        <div class="col-6">
+                            <h2 class="h6">Ошибка</h2>
+                            <p>Формат: <code>JSON</code><br>
+                                Коды ответа: <code>4xx</code>, <code>5xx</code></p>
+                        </div>
+                    </div>
+                </section>
+            {% endblock %}
+        </div>
+        {% for doc in docs if doc.displayRoles is empty or is_granted(doc.displayRoles) %}
+            {% set doc_block = doc.block %}
+            {{ block(doc_block) is defined ? block(doc_block) : block('doc') }}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block doc %}
+    <section class="card mb-3">
+        <div class="card-header" data-toggle="collapse" data-target="#{{ doc_block }}">
+            <div class="row">
+                <div class="col">
+                    {% for method in doc.methods %}
+                        {{ block('method') }}
+                    {% else %}
+                        {% with {method: 'ANY'} %}{{ block('method') }}{% endwith %}
+                    {% endfor %}
+                    {% if doc.requiresAuth %}
+                        <span class="d-inline-block pl-2">&#128273;</span>
+                    {% endif %}
+                    <code>{{ doc.endpoint }}</code>
+                </div>
+                <div class="col text-right">{{ doc }}</div>
+            </div>
+        </div>
+        <div id="{{ doc_block }}" class="collapse">
+            <div class="card-body">
+                {{ (block(doc_block ~ '_description') ?? doc.description)|raw }}
+                {% if doc.params is not empty %}
+                    <table class="table table-sm table-bordered">
+                        <colgroup>
+                            <col width="1%">
+                            <col width="1%">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <td>Параметр</td>
+                            <td>Формат</td>
+                            <td>Описание</td>
+                        </tr>
+                        </thead>
+                        {% for param in doc.params %}
+                            {% set param_block = doc_block ~ '_param_' ~ param %}
+                            <tr>
+                                <td>
+                                    <code class="text-nowrap">{{ param }}{% if param.required %}<sup>*</sup>{% endif %}</code>
+                                </td>
+                                <td>
+                                    <code class="text-nowrap">{{ param.format }}</code>
+                                </td>
+                                <td>
+                                    {{ (block(param_block ~ '_description') ?? param.description)|raw }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                <h2 class="h6">Ответ</h2>
+                <pre><code class="language-js">{{ include(doc.result|default('@RuworkApi/result/null.json.twig'))|escape('html') }}</code></pre>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block method %}
+    <span class="badge badge-{{ method_themes[method]|default('secondary') }}">{{ method }}</span>
+{% endblock %}

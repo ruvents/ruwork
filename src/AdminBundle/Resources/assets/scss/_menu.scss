@@ -1,0 +1,103 @@
+.menu {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.menu-item {
+    position: relative;
+    display: block;
+    padding: 0 .4rem;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    padding: .7rem .8rem .7rem .6rem;
+    border-radius: 3px;
+    color: inherit;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: gray('920');
+        z-index: -1;
+        opacity: 0;
+        @include transition();
+    }
+
+    &:hover {
+        color: $white;
+        text-decoration: none;
+    }
+
+    &.active {
+        color: $white;
+        background-color: $blue;
+        font-weight: $font-weight-bold;
+    }
+
+    &[data-toggle=collapse]:not(.collapsed) {
+        color: $white;
+        font-weight: $font-weight-bold;
+
+        > .menu-arrow {
+            transform: rotate(90deg);
+        }
+
+        &:before {
+            opacity: 1;
+        }
+    }
+
+    @include transition();
+}
+
+.menu-icon {
+    flex: 0 0 1.2rem;
+    font-size: 110%;
+    text-align: center;
+    margin-right: .6rem;
+}
+
+.menu-arrow {
+    margin-left: auto;
+    @include transition();
+    transition-property: transform;
+}
+
+.menu-sub {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.menu-sub-link {
+    display: block;
+    padding: .6rem .8rem .6rem 3rem;
+    color: inherit;
+
+    @at-root {
+        .menu-sub-item:last-child {
+            > .menu-sub-link {
+                padding-bottom: 1rem;
+            }
+        }
+    }
+
+    &:hover {
+        color: $white;
+        text-decoration: none;
+    }
+
+    &.active {
+        color: $white;
+        font-weight: $font-weight-bold;
+    }
+
+    @include transition();
+}

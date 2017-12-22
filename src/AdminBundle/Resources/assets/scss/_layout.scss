@@ -1,0 +1,16 @@
+body {
+    padding-left: $aside-width;
+}
+
+#aside {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    width: $aside-width;
+}
+
+#main {
+    padding: $grid-gutter-width;
+}

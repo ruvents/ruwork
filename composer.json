@@ -1,0 +1,40 @@
+{
+    "description": "Ruwork monorepo package.",
+    "keywords": [
+        "ruwork"
+    ],
+    "homepage": "https://ruvents.github.io/ruwork/",
+    "licence": "MIT",
+    "authors": [
+        {
+            "name": "Valentin Udaltsov",
+            "email": "udaltsov@ruvents.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "wikimedia/composer-merge-plugin": "^1.4"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^3.4 || ^4.0"
+    },
+    "replace": {
+        "ruwork/admin-bundle": "self.version",
+        "ruwork/api-bundle": "self.version",
+        "ruwork/doctrine-behaviors-bundle": "self.version",
+        "ruwork/doctrine-filter-bundle": "self.version",
+        "ruwork/doctrine-postgresql-bundle": "self.version",
+        "ruwork/locale-prefix-bundle": "self.version",
+        "ruwork/manual-auth-bundle": "self.version",
+        "ruwork/paginator": "self.version",
+        "ruwork/paginator-bundle": "self.version",
+        "ruwork/upload-bundle": "self.version"
+    },
+    "extra": {
+        "merge-plugin": {
+            "require": [
+                "src/*/composer.json"
+            ]
+        }
+    }
+}

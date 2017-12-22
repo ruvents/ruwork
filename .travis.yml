@@ -49,5 +49,5 @@ script:
     - ./phpunit $PHPUNIT_FLAGS
     - composer validate --strict --no-check-lock
 
-after_script:
-    - curl -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_ID}/sendMessage" -d "chat_id=${TELEGRAM_CHAT_ID}&text=${TRAVIS_TEST_RESULT}"
+notifications:
+  webhooks: https://fathomless-fjord-24024.herokuapp.com/notify

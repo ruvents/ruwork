@@ -11,9 +11,9 @@
     "require": {
         "php": "^7.1.3",
         "ruwork/paginator": "dev-master",
-        "symfony/dependency-injection": "^3.0 || ^4.0",
-        "symfony/event-dispatcher": "^3.0 || ^4.0",
-        "symfony/http-kernel": "^3.0 || ^4.0"
+        "symfony/dependency-injection": "^3.4 || ^4.0",
+        "symfony/event-dispatcher": "^3.4 || ^4.0",
+        "symfony/http-kernel": "^3.4 || ^4.0"
     },
     "autoload": {
         "psr-4": {

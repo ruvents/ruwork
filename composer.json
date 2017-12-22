@@ -18,6 +18,9 @@
     "require-dev": {
         "symfony/phpunit-bridge": "^3.4 || ^4.0"
     },
+    "conflict": {
+        "phpunit/phpunit": "<6.0"
+    },
     "replace": {
         "ruwork/admin-bundle": "self.version",
         "ruwork/api-bundle": "self.version",

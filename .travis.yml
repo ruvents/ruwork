@@ -48,6 +48,3 @@ install:
 script:
     - ./phpunit $PHPUNIT_FLAGS
     - composer validate --strict --no-check-lock
-
-notifications:
-  webhooks: https://fathomless-fjord-24024.herokuapp.com/notify

@@ -1,3 +1,5 @@
+/.phpunit/
 vendor/
 !/src/AdminBundle/Resources/public/vendor/
 composer.lock
+phpunit.xml

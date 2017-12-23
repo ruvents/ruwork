@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+git push git@github.com:ruvents/ruwork-manual-auth-bundle.git `splitsh-lite --prefix=src/ManualAuthBundle`:master

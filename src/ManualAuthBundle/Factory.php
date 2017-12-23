@@ -33,7 +33,7 @@ class Factory implements SecurityFactoryInterface
             ->setArguments([
                 '$authenticator' => new Reference(ManualAuthenticator::class),
                 '$firewallConfig' => new Reference('security.firewall.map.config.'.$id),
-                '$manager' => new Reference('security.auth.manager'),
+                '$manager' => new Reference('security.authentication.manager'),
             ])
             ->setPublic(false)
             ->addTag('kernel.event_listener', ['event' => KernelEvents::RESPONSE, 'priority' => -4000])

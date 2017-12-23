@@ -17,11 +17,6 @@ abstract class AbstractUpload
      */
     protected $path;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $temporary = true;
-
     private $uploadedFile;
 
     public function __construct(UploadedFile $uploadedFile, string $path)
@@ -38,17 +33,5 @@ abstract class AbstractUpload
     public function getPath(): string
     {
         return $this->path;
-    }
-
-    public function isTemporary(): bool
-    {
-        return $this->temporary;
-    }
-
-    public function setTemporary(bool $temporary)
-    {
-        $this->temporary = $temporary;
-
-        return $this;
     }
 }

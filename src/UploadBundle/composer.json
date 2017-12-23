@@ -19,6 +19,7 @@
     },
     "require-dev": {
         "symfony/serializer": "^3.4 || ^4.0",
+        "symfony/twig-bridge": "^3.4 || ^4.0",
         "symfony/validator": "^3.4 || ^4.0"
     },
     "autoload": {

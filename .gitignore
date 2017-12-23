@@ -1,4 +1,5 @@
 /.phpunit/
+/.splitsh/
 vendor/
 !/src/AdminBundle/Resources/public/vendor/
 composer.lock

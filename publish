@@ -1,3 +1,18 @@
 #!/usr/bin/env bash
 
-git push git@github.com:ruvents/ruwork-manual-auth-bundle.git `splitsh-lite --prefix=src/ManualAuthBundle`:master
+if [ ! -f .splitsh/splitsh-lite ]
+then
+    mkdir -p .splitsh/
+
+    if [[ $OSTYPE == darwin* ]]
+    then
+        curl -L https://github.com/splitsh/lite/releases/download/v1.0.1/lite_darwin_amd64.tar.gz > .splitsh/splitsh-lite.tar.gz
+    else
+        curl -L https://github.com/splitsh/lite/releases/download/v1.0.1/lite_linux_amd64.tar.gz > .splitsh/splitsh-lite.tar.gz
+    fi
+
+    tar -zxvf .splitsh/splitsh-lite.tar.gz -C .splitsh/  --strip-components=1
+    chmod 755 .splitsh/splitsh-lite
+fi
+
+git push git@github.com:ruvents/ruwork-manual-auth-bundle.git `.splitsh/splitsh-lite --prefix=src/ManualAuthBundle`:master

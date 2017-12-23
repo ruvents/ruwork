@@ -6,6 +6,7 @@ cache:
     directories:
         - $HOME/.composer/cache/files
         - $HOME/.phpunit
+        - $HOME/.splitsh
 
 env:
     global:
@@ -29,7 +30,7 @@ matrix:
 
           # Latest unstable packages
         - php: 7.2
-          env: STABILITY="dev"
+          env: STABILITY="dev" PUBLISH=1
 
     allow_failures:
         - env: STABILITY="dev"
@@ -47,3 +48,6 @@ install:
 
 script:
     - ./phpunit $PHPUNIT_FLAGS
+
+after_script:
+    - if ! [ -z "$PUBLISH" ]; then ./publish; fi;

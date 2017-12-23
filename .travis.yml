@@ -37,7 +37,7 @@ matrix:
 
 before_install:
     - echo -e "machine github.com\n  login $GITHUB_USER\n  password $GITHUB_PASSWORD" >> ~/.netrc
-    - if ! [ -z "$PUBLISH" ]; then ./publish; fi;
+    - if [[ $PUBLISH && $TRAVIS_PULL_REQUEST = false ]]; then ./publish; fi;
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
     - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;

@@ -5,23 +5,18 @@
 ```yaml
 # app/config/security.yml
 security:
-  firewalls:
-    dev:
-      pattern:  ^/(_(profiler|wdt)|css|images|js)/
-      security: false
-
     main:
-      # add manual auth to any firewall (it has no options)
-      manual: ~
-      anonymous: ~
-      provider: user_entity_provider
-      form_login:
-        # ...
-      logout:
-        # ...
-      remember_me:
-        secret: "%secret%"
-        always_remember_me: true
+        # add manual auth to any firewall
+        manual: ~
+        anonymous: ~
+        provider: your_user_provider
+        form_login:
+            # ...
+        logout:
+            # ...
+        remember_me:
+            # configure remember me if you need
+            always_remember_me: true
 ```
 
 ## Authenticating a User in the controller
@@ -31,33 +26,36 @@ security:
 
 namespace AppBundle\Controller;
 
-use Ruwork\ManualAuthBundle\Security\AuthList;
+use Ruwork\ManualAuthBundle\ManualAuthenticator;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @Route("/registration")
- */
 class RegistrationController
 {
     /**
-     * @Route("")
-     * @Template()
+     * @Route("/registration")
      */
-    public function indexAction(AuthList $authList)
+    public function __invoke(ManualAuthenticator $authenticator)
     {
-        // registration form and etc
+        // registration form handling
         
-        /** @var UserInterface $user */
+        /** 
+         * @var UserInterface $user
+         * @var FormInterface $form
+         */
         
-        // on form success
+        if ($form->isSubmitted() && $form->isValid()) {
+            // you have to create relevant Tokens
+            // f.e. PostAuthGuardToken for a firewall with guard authentication
+            $token = new UsernamePasswordToken($user, $user->getPassword(), 'main', $user->getRoles());
+            $authenticator->schedule('main', $token);
+            
+            // redirect to next page
+        }
         
-        // you have to create relevant Tokens
-        // f.e. PostAuthGuardToken for Guard auth
-        $token = new UsernamePasswordToken($user, $user->getPassword(), 'main', $user->getRoles());
-        $authList->setToken('main', $token);
-        
-        // redirect to next page
+        // not submitted and invalid form logic
     }
 }
 ```

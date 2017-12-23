@@ -15,4 +15,4 @@ then
     chmod 755 .splitsh/splitsh-lite
 fi
 
-git push git@github.com:ruvents/ruwork-manual-auth-bundle.git `.splitsh/splitsh-lite --prefix=src/ManualAuthBundle`:master
+git push https://github.com/ruvents/ruwork-manual-auth-bundle.git `.splitsh/splitsh-lite --prefix=src/ManualAuthBundle`:master

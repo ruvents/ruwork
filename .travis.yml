@@ -17,7 +17,7 @@ matrix:
     include:
           # Lowest stable packages and latest PHP version
         - php: 7.2
-          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
+          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak" PUBLISH=1
 
           # Latest stable packages
         - php: 7.1
@@ -30,12 +30,14 @@ matrix:
 
           # Latest unstable packages
         - php: 7.2
-          env: STABILITY="dev" PUBLISH=1
+          env: STABILITY="dev"
 
     allow_failures:
         - env: STABILITY="dev"
 
 before_install:
+    - echo -e "machine github.com\n    login $GITHUB_ACCESS_TOKEN" >> ~/.netrc
+    - if ! [ -z "$PUBLISH" ]; then ./publish; fi;
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
     - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
@@ -48,6 +50,3 @@ install:
 
 script:
     - ./phpunit $PHPUNIT_FLAGS
-
-after_script:
-    - if ! [ -z "$PUBLISH" ]; then ./publish; fi;

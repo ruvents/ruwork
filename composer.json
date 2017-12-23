@@ -1,5 +1,4 @@
 {
-    "name": "ruwork/ruwork",
     "description": "Ruwork monorepo package.",
     "type": "library",
     "keywords": ["ruwork"],
@@ -26,11 +25,6 @@
         "ruwork/paginator": "self.version",
         "ruwork/paginator-bundle": "self.version",
         "ruwork/upload-bundle": "self.version"
-    },
-    "autoload": {
-        "psr-4": {
-            "Ruwork\\": "src/"
-        }
     },
     "config": {
         "sort-packages": true

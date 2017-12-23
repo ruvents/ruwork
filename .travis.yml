@@ -47,4 +47,3 @@ install:
 
 script:
     - ./phpunit $PHPUNIT_FLAGS
-    - composer validate --strict --no-check-lock

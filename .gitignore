@@ -2,5 +2,6 @@
 /.splitsh/
 vendor/
 !/src/AdminBundle/Resources/public/vendor/
+.php_cs
 composer.lock
 phpunit.xml

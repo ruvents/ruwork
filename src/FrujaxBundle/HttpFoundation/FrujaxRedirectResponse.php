@@ -22,7 +22,11 @@ class FrujaxRedirectResponse extends Response
         $frujax = new self($redirect->getTargetUrl());
 
         $frujax->setProtocolVersion($redirect->getProtocolVersion());
-        $frujax->setCharset($redirect->getCharset());
+
+        if (null !== $charset = $redirect->getCharset()) {
+            $frujax->setCharset($charset);
+        }
+
         $frujax->headers = clone $redirect->headers;
         $frujax->headers->remove('Location');
 
@@ -39,7 +43,7 @@ class FrujaxRedirectResponse extends Response
 
     public function setTargetUrl(string $targetUrl)
     {
-        if (empty($targetUrl)) {
+        if ('' === trim($targetUrl)) {
             throw new \InvalidArgumentException('Cannot redirect to an empty URL.');
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
@@ -14,7 +15,7 @@ use Ruwork\AdminBundle\Twig;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
-return function (ContainerConfigurator $container) {
+return function (ContainerConfigurator $container): void {
     $services = $container->services()
         ->defaults()
         ->private()

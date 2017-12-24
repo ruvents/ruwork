@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\UploadBundle\Controller;
 
 use Doctrine\Common\Persistence\ManagerRegistry;

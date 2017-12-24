@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\UploadBundle\EventListener;
@@ -28,7 +29,7 @@ class UploadDoctrineListener implements EventSubscriber
         ];
     }
 
-    public function onFlush(OnFlushEventArgs $args)
+    public function onFlush(OnFlushEventArgs $args): void
     {
         $unitOfWork = $args->getEntityManager()->getUnitOfWork();
 

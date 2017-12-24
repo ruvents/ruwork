@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\ApiBundle\DependencyInjection;
 
 use Ruwork\ApiBundle\Controller\DocsController;
@@ -13,7 +15,7 @@ class RuworkApiExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $container->autowire(DocsExtractor::class)
             ->setPublic(false);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\DoctrineFilterBundle\DependencyInjection;
 
 use Ruwork\DoctrineFilterBundle\FilterManager;
@@ -12,7 +14,7 @@ class RuworkDoctrineFilterExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $container->autowire(FilterManager::class)
             ->setPublic(false);

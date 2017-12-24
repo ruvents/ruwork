@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\UploadBundle;
@@ -12,7 +13,7 @@ class RuworkUploadBundle extends Bundle
     /**
      * {@inheritdoc}
      */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new ReplaceTwigAssetExtensionPass());
     }

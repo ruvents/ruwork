@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\AdminBundle\Config\Model;
@@ -23,7 +24,7 @@ abstract class AbstractConfig implements \Serializable
         return $this->data[$name] ?? null;
     }
 
-    public function __set($name, $value)
+    public function __set($name, $value): void
     {
         if ($this->locked) {
             throw new \LogicException(sprintf('Config %s is closed for modification.', get_class($this)));
@@ -45,7 +46,7 @@ abstract class AbstractConfig implements \Serializable
     /**
      * {@inheritdoc}
      */
-    public function unserialize($serialized)
+    public function unserialize($serialized): void
     {
         $this->data = unserialize($serialized);
         $this->locked = true;

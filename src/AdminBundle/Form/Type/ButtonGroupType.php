@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\AdminBundle\Form\Type;
@@ -12,7 +13,7 @@ class ButtonGroupType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['ruwork_admin_button_group'] = true;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\DoctrineFilterBundle\Tests\Fixtures\FilterTypes;
 
 use Doctrine\ORM\QueryBuilder;
@@ -24,11 +26,11 @@ class FilterTypeTest implements FilterTypeInterface
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
     }
 
-    public function testMethodFilter($data, QueryBuilder $queryBuilder, array $options)
+    public function testMethodFilter($data, QueryBuilder $queryBuilder, array $options): void
     {
         $queryBuilder->andWhere('a = :data')->setParameter('data', $data);
     }

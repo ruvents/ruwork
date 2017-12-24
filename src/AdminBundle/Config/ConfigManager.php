@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\AdminBundle\Config;
@@ -86,7 +87,7 @@ class ConfigManager implements CacheWarmerInterface
     /**
      * {@inheritdoc}
      */
-    public function warmUp($cacheDir)
+    public function warmUp($cacheDir): void
     {
         $this->buildAndSaveConfig();
     }

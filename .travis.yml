@@ -21,6 +21,7 @@ matrix:
 
           # Latest stable packages
         - php: 7.1
+          env: PHP_CS=true
         - php: 7.2
           env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
 
@@ -37,10 +38,11 @@ matrix:
 
 before_install:
     - echo -e "machine github.com\n  login $GITHUB_API_TOKEN" >> ~/.netrc
-    - if [[ $PUBLISH && $TRAVIS_PULL_REQUEST = false ]]; then ./publish; fi;
+    - if [[ $PUBLISH && $TRAVIS_PULL_REQUEST = false ]]; then ./publish; fi
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
-    - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
-    - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
+    - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi
+    - if ! [ -z "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi
+    - if [[ $PHP_CS = true ]]; then composer require --no-update friendsofphp/php-cs-fixer; fi
 
 install:
     # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
@@ -50,3 +52,4 @@ install:
 
 script:
     - ./phpunit $PHPUNIT_FLAGS
+    - if [[ $PHP_CS = true ]]; then vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no; fi

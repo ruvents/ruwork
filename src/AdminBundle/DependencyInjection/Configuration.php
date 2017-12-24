@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\AdminBundle\DependencyInjection;
@@ -140,7 +141,7 @@ class Configuration implements ConfigurationInterface
                 ->defaultValue([
                     ['property_path' => null, 'type' => 'id', 'title' => null],
                     ['property_path' => null, 'type' => 'title', 'title' => null],
-                    ['property_path' => null,'type' => 'actions', 'title' => null],
+                    ['property_path' => null, 'type' => 'actions', 'title' => null],
                 ])
                 ->arrayPrototype()
                     ->children()
@@ -245,7 +246,7 @@ class Configuration implements ConfigurationInterface
                             $type = $matches['type'] ?? null;
 
                             if (!$propertyPath) {
-                                if ($type === 'group') {
+                                if ('group' === $type) {
                                     $name = '__group'.($groupI++);
                                 } else {
                                     throw new \InvalidArgumentException(sprintf('"%s" is not a valid field definition. Not specifying property is allowed only for the "group" type.', $value));
@@ -258,7 +259,7 @@ class Configuration implements ConfigurationInterface
                                 'name' => $name,
                                 'type' => $type,
                                 'options' => [
-                                    'mapped' => $type !== 'group',
+                                    'mapped' => 'group' !== $type,
                                     'property_path' => $propertyPath,
                                     'label' => $matches['label'] ?? null,
                                     'attr' => [

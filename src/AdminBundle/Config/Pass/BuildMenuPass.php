@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\AdminBundle\Config\Pass;
@@ -17,7 +18,7 @@ class BuildMenuPass implements PassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(Config $config, array $data)
+    public function process(Config $config, array $data): void
     {
         $config->menu = array_map([$this, 'buildItem'], $data['menu']);
     }

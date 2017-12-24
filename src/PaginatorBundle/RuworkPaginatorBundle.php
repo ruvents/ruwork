@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\PaginatorBundle;
 
 use Ruwork\PaginatorBundle\DependencyInjection\Compiler\AddTwigPathPass;
@@ -11,7 +13,7 @@ class RuworkPaginatorBundle extends Bundle
     /**
      * {@inheritdoc}
      */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new AddTwigPathPass());
     }

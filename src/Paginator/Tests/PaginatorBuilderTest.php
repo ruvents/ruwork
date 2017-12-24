@@ -10,39 +10,37 @@ use Ruwork\Paginator\Provider\ProviderInterface;
 
 class PaginatorBuilderTest extends TestCase
 {
-    /**
-     * @expectedException \LogicException
-     */
     public function testNoProvider(): void
     {
+        $this->expectException(\LogicException::class);
+
         PaginatorBuilder::create()->getPaginator();
     }
 
     /**
      * @dataProvider getNonPositiveIntegers
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidPerPageException(int $value): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         PaginatorBuilder::create()->setPerPage($value);
     }
 
     /**
      * @dataProvider getNonPositiveIntegers
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidProximityException(int $value): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         PaginatorBuilder::create()->setProximity($value);
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     */
     public function testUnexpectedProviderTotalException(): void
     {
+        $this->expectException(\UnexpectedValueException::class);
+
         $provider = $this->createMock(ProviderInterface::class);
 
         $provider->expects($this->once())
@@ -56,12 +54,11 @@ class PaginatorBuilderTest extends TestCase
             ->getPaginator();
     }
 
-    /**
-     * @expectedException \Ruwork\Paginator\Exception\PageOutOfRangeException
-     * @expectedExceptionMessage Page 2 is out of range [1, 1].
-     */
     public function testCurrentPageOutOfRangeException(): void
     {
+        $this->expectException(\Ruwork\Paginator\Exception\PageOutOfRangeException::class);
+        $this->expectExceptionMessage('Page 2 is out of range [1, 1].');
+
         $provider = $this->createMock(ProviderInterface::class);
 
         $provider->expects($this->once())

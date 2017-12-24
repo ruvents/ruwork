@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\AdminBundle\Config\Pass;
@@ -28,7 +29,7 @@ class BuildEntitiesPass implements PassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(Config $config, array $data)
+    public function process(Config $config, array $data): void
     {
         $entities = [];
 
@@ -123,7 +124,7 @@ class BuildEntitiesPass implements PassInterface
         return $action;
     }
 
-    private function checkEntity(string $class)
+    private function checkEntity(string $class): void
     {
         $manager = $this->registry->getManagerForClass($class);
 

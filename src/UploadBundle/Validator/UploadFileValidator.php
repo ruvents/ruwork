@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\UploadBundle\Validator;
@@ -13,7 +14,7 @@ class UploadFileValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof UploadFile) {
             throw new UnexpectedTypeException($constraint, UploadFile::class);

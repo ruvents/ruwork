@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Ruwork\LocalePrefixBundle\Routing\Router;
 use Ruwork\LocalePrefixBundle\Routing\LoaderDecorator;
+use Ruwork\LocalePrefixBundle\Routing\Router;
 
 return function (ContainerConfigurator $container): void {
     $services = $container->services();

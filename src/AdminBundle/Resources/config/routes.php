@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Symfony\Component\Routing\Loader\Configurator;
 
 use Ruwork\AdminBundle\Controller;
 
-return function (RoutingConfigurator $configurator) {
+return function (RoutingConfigurator $configurator): void {
     $configurator
         ->add('ruwork_admin', '')
         ->controller(Controller\IndexController::class);

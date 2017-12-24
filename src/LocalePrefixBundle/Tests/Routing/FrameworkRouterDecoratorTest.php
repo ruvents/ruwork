@@ -35,7 +35,7 @@ class FrameworkRouterDecoratorTest extends TestCase
         // test match
         $expectedParams = array_merge($parameters, [
             '_route' => $name,
-            '_locale' => isset($parameters['_locale']) ? $parameters['_locale'] : $currentLocale,
+            '_locale' => $parameters['_locale'] ?? $currentLocale,
         ]);
         $pathInfo = parse_url($url, PHP_URL_PATH);
         $request = $this->createRequest($pathInfo);
@@ -44,11 +44,10 @@ class FrameworkRouterDecoratorTest extends TestCase
         $this->assertEquals($expectedParams, $i18nRouter->matchRequest($request));
     }
 
-    /**
-     * @expectedException \Symfony\Component\Routing\Exception\RouteNotFoundException
-     */
     public function testGenerateNonExistentRoute(): void
     {
+        $this->expectException(\Symfony\Component\Routing\Exception\RouteNotFoundException::class);
+
         $i18nRouter = $this->createRouter(new RouteCollection(), ['ru'], 'ru', 'ru');
         $i18nRouter->generate('a');
     }

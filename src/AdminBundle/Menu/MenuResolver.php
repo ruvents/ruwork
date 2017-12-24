@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\AdminBundle\Menu;
@@ -49,18 +50,18 @@ class MenuResolver
     private function resolveItem(AbstractItemConfig $item)
     {
         switch (true) {
-            case ($item instanceof UrlItemConfig):
+            case $item instanceof UrlItemConfig:
                 return $this->resolveUrlItem($item);
 
-            case ($item instanceof ChildrenItemConfig):
+            case $item instanceof ChildrenItemConfig:
                 return $this->resolveChildrenItem($item);
 
-            case ($item instanceof RouteItemConfig):
+            case $item instanceof RouteItemConfig:
                 return $this->resolveRouteItem($item);
 
-            case ($item instanceof EntityItemConfig):
+            case $item instanceof EntityItemConfig:
                 return $this->resolveEntityItem($item);
-        };
+        }
 
         throw new \InvalidArgumentException(sprintf('Item of class "%s" is not supported.', get_class($item)));
     }
@@ -120,7 +121,7 @@ class MenuResolver
         }
 
         if ($expression) {
-            return (bool)$this->language->evaluate($expression, [
+            return (bool) $this->language->evaluate($expression, [
                 'request' => $request = $this->requestStack->getCurrentRequest(),
                 'route' => $request->attributes->get('_route'),
                 'route_params' => $params = $request->attributes->get('_route_params', []),

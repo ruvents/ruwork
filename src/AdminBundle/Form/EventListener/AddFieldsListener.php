@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\AdminBundle\Form\EventListener;
@@ -35,7 +36,7 @@ class AddFieldsListener implements EventSubscriberInterface
         ];
     }
 
-    public function onPreSetData(FormEvent $event)
+    public function onPreSetData(FormEvent $event): void
     {
         $form = $event->getForm();
         $entity = $event->getData();

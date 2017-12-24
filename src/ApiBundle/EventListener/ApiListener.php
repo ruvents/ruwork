@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\ApiBundle\EventListener;
 
 use Ruwork\ApiBundle\Helper;
@@ -25,7 +27,7 @@ class ApiListener implements EventSubscriberInterface
         ];
     }
 
-    public function setLocale(GetResponseEvent $event)
+    public function setLocale(GetResponseEvent $event): void
     {
         $request = $event->getRequest();
 
@@ -34,7 +36,7 @@ class ApiListener implements EventSubscriberInterface
         }
     }
 
-    public function onException(GetResponseForExceptionEvent $event)
+    public function onException(GetResponseForExceptionEvent $event): void
     {
         $request = $event->getRequest();
         $exception = $event->getException();
@@ -44,7 +46,7 @@ class ApiListener implements EventSubscriberInterface
         }
     }
 
-    public function onView(GetResponseForControllerResultEvent $event)
+    public function onView(GetResponseForControllerResultEvent $event): void
     {
         $request = $event->getRequest();
 

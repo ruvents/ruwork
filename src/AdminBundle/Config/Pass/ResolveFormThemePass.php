@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\AdminBundle\Config\Pass;
@@ -10,7 +11,7 @@ class ResolveFormThemePass implements PassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(Config $config, array $data)
+    public function process(Config $config, array $data): void
     {
         $defaultTheme = $data['forms']['default_theme'];
 

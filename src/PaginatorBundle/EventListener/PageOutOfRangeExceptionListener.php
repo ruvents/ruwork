@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\PaginatorBundle\EventListener;
 
 use Ruwork\Paginator\Exception\PageOutOfRangeException;
@@ -20,7 +22,7 @@ class PageOutOfRangeExceptionListener implements EventSubscriberInterface
         ];
     }
 
-    public function onException(GetResponseForExceptionEvent $event)
+    public function onException(GetResponseForExceptionEvent $event): void
     {
         if (($exception = $event->getException()) instanceof PageOutOfRangeException) {
             $event->setException(new NotFoundHttpException($exception->getMessage(), $exception));

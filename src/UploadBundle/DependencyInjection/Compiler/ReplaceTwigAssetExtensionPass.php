@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\UploadBundle\DependencyInjection\Compiler;
@@ -12,7 +13,7 @@ class ReplaceTwigAssetExtensionPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if ($container->has($name = 'twig.extension.assets')) {
             $container

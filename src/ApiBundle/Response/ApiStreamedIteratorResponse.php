@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\ApiBundle\Response;
 
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -26,7 +28,7 @@ class ApiStreamedIteratorResponse extends StreamedResponse
     {
         $this->data = $data;
         $this->normalizer = $normalizer;
-        $this->callback = function () {
+        $this->callback = function (): void {
             echo '[';
 
             $once = false;
@@ -90,7 +92,7 @@ class ApiStreamedIteratorResponse extends StreamedResponse
     /**
      * {@inheritdoc}
      */
-    public function setCallback(callable $callback)
+    public function setCallback(callable $callback): void
     {
         throw new \LogicException('The callback cannot be overridden on ApiStreamedIteratorResponse.');
     }

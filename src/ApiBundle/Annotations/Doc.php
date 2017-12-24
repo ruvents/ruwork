@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\ApiBundle\Annotations;
 
 /**
@@ -70,15 +72,15 @@ class Doc
      */
     public $data;
 
+    public function __toString(): string
+    {
+        return (string) $this->title;
+    }
+
     public function setValue(string $value)
     {
         $this->title = $value;
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return (string)$this->title;
     }
 }

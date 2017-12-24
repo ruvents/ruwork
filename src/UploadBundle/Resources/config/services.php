@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
@@ -11,7 +12,7 @@ use Ruwork\UploadBundle\Serializer\UploadNormalizer;
 use Ruwork\UploadBundle\UploadManager;
 use Ruwork\UploadBundle\Validator\UploadFileValidator;
 
-return function (ContainerConfigurator $container) {
+return function (ContainerConfigurator $container): void {
     $services = $container->services()
         ->defaults()
         ->private();

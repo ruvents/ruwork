@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\AdminBundle\DependencyInjection\Compiler;
@@ -10,7 +11,6 @@ use Symfony\Component\DependencyInjection\Argument\IteratorArgument;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Compiler\PriorityTaggedServiceTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 
 class ListFieldTypeContextProcessorsPass implements CompilerPassInterface
 {
@@ -19,7 +19,7 @@ class ListFieldTypeContextProcessorsPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->has(ListExtension::class)) {
             return;
@@ -29,7 +29,7 @@ class ListFieldTypeContextProcessorsPass implements CompilerPassInterface
         $processorReferencesByType = [];
 
         foreach ($processorReferences as $processorReference) {
-            $processor = $container->findDefinition((string)$processorReference);
+            $processor = $container->findDefinition((string) $processorReference);
             $class = $processor->getClass();
 
             if (!is_subclass_of($class, TypeContextProcessorInterface::class)) {

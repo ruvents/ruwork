@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\DoctrineFilterBundle\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\FormType;

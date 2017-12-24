@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\ApiBundle\Normalizer;
 
 use Ruwork\ApiBundle\Helper;

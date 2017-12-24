@@ -35,7 +35,6 @@ class LoaderDecorator implements LoaderInterface
 
         foreach ($routes->all() as $route) {
             /** @var Route $route */
-
             if (true === $route->getOption('locale_prefixed')) {
                 $route
                     ->setPath('/{_locale}'.ltrim($route->getPath(), '/'))

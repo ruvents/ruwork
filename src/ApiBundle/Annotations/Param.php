@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\ApiBundle\Annotations;
 
 /**
@@ -37,15 +39,15 @@ class Param
      */
     public $data;
 
+    public function __toString(): string
+    {
+        return (string) $this->name;
+    }
+
     public function setValue(string $value)
     {
         $this->name = $value;
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return (string)$this->name;
     }
 }

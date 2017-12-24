@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\DoctrineFilterBundle;
 
 use Ruwork\DoctrineFilterBundle\DependencyInjection\Compiler\FilterPass;
@@ -11,7 +13,7 @@ class RuworkDoctrineFilterBundle extends Bundle
     /**
      * {@inheritdoc}
      */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new FilterPass());
     }

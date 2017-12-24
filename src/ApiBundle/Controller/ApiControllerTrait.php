@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\ApiBundle\Controller;
 
 use Ruwork\ApiBundle\Helper;
@@ -43,7 +45,7 @@ trait ApiControllerTrait
     /**
      * @param FormInterface $form
      */
-    protected function validateForm(FormInterface $form)
+    protected function validateForm(FormInterface $form): void
     {
         if (!$form->isSubmitted()) {
             $form->submit(null);

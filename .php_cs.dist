@@ -1,0 +1,32 @@
+<?php
+
+declare(strict_types=1);
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@DoctrineAnnotation' => true,
+        '@PHP71Migration' => true,
+        '@PHP71Migration:risky' => true,
+        '@PHPUnit60Migration:risky' => true,
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
+        'align_multiline_comment' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'doctrine_annotation_braces' => ['syntax' => 'with_braces'],
+        'no_null_property_initialization' => true,
+        'no_php4_constructor' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'ordered_class_elements' => true,
+        'ordered_imports' => true,
+        'phpdoc_types_order' => ['sort_algorithm' => 'none'],
+    ])
+    ->setRiskyAllowed(true)
+    ->setFinder(
+        PhpCsFixer\Finder::create()
+            ->in(__DIR__.'/src')
+            ->append([
+                __FILE__,
+                __DIR__.'/phpunit',
+            ])
+    );

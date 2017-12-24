@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\DoctrineFilterBundle\Tests;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,11 +31,20 @@ class FilterManagerTest extends TestCase
     /** @var QueryBuilder */
     private $queryBuilder;
 
-    /**
-     * @expectedException \LogicException
-     */
-    public function testLogicException()
+    protected function setUp(): void
     {
+        $this->container = new PsrContainer();
+        $this->formFactory = (new FormFactory(
+            new FormRegistry([new HttpFoundationExtension()], new ResolvedFormTypeFactory())
+        ));
+        $this->requestStack = new RequestStack();
+        $this->queryBuilder = new QueryBuilder($this->createMock(EntityManagerInterface::class));
+    }
+
+    public function testLogicException(): void
+    {
+        $this->expectException(\LogicException::class);
+
         $serviceId = FilterTypeTest::class;
         $this->container->set($serviceId, new FilterTypeTest());
 
@@ -41,18 +52,17 @@ class FilterManagerTest extends TestCase
             ->apply(FilterTypeTest::class, $this->queryBuilder);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInvalidArgumentException()
+    public function testInvalidArgumentException(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $this->requestStack->push(new Request());
 
         (new FilterManager($this->container, $this->formFactory, $this->requestStack))
             ->apply(FilterTypeTest::class, $this->queryBuilder);
     }
 
-    public function testApply()
+    public function testApply(): void
     {
         $serviceId = FilterTypeTest::class;
         $this->container->set($serviceId, new FilterTypeTest());
@@ -65,15 +75,5 @@ class FilterManagerTest extends TestCase
 
         $actualValue = $filterResult->getQueryBuilder()->getParameters()[0]->getValue();
         $this->assertEquals(FilterTypeTest::TEST_VALUE, $actualValue);
-    }
-
-    protected function setUp()
-    {
-        $this->container = new PsrContainer();
-        $this->formFactory = (new FormFactory(
-            new FormRegistry([new HttpFoundationExtension()], new ResolvedFormTypeFactory())
-        ));
-        $this->requestStack = new RequestStack();
-        $this->queryBuilder = new QueryBuilder($this->createMock(EntityManagerInterface::class));
     }
 }

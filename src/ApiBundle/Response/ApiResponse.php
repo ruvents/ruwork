@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\ApiBundle\Response;
 
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\UploadBundle\DependencyInjection;
@@ -14,6 +15,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
+        // @formatter:off
         return (new TreeBuilder())
             ->root('ruwork_upload')
                 ->children()
@@ -36,5 +38,6 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
+        // @formatter:on
     }
 }

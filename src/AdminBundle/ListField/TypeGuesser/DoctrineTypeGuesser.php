@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\AdminBundle\ListField\TypeGuesser;
@@ -55,7 +56,7 @@ class DoctrineTypeGuesser implements TypeGuesserInterface
         $metadata = $manager->getClassMetadata($class);
 
         if ($metadata->hasField($propertyPath)) {
-            $type = (string)$metadata->getTypeOfField($propertyPath);
+            $type = (string) $metadata->getTypeOfField($propertyPath);
 
             return $this->map[$type] ?? null;
         }

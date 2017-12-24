@@ -8,6 +8,11 @@ abstract class AbstractMultilingual implements MultilingualInterface
 {
     private $currentLocale;
 
+    public function __toString(): string
+    {
+        return (string) $this->getCurrent();
+    }
+
     public function has(string $locale): bool
     {
         return property_exists($this, $locale);
@@ -59,11 +64,6 @@ abstract class AbstractMultilingual implements MultilingualInterface
         }
 
         return $current;
-    }
-
-    public function __toString(): string
-    {
-        return (string) $this->getCurrent();
     }
 
     protected function getCurrentLocale(): string

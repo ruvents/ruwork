@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\ApiBundle;
 
 use Doctrine\Common\Annotations\Reader;
@@ -94,7 +96,7 @@ class DocsExtractor
     /**
      * @param Doc[] $docs
      */
-    private function sortDocs(array & $docs)
+    private function sortDocs(array &$docs): void
     {
         usort($docs, function (Doc $a, Doc $b) {
             return $a->priority === $b->priority

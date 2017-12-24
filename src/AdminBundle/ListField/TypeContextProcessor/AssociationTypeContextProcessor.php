@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Ruwork\AdminBundle\ListField\TypeContextProcessor;
@@ -29,7 +30,7 @@ class AssociationTypeContextProcessor implements TypeContextProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function process(string $class, ?string $propertyPath, array &$context)
+    public function process(string $class, ?string $propertyPath, array &$context): void
     {
         $entityMetadata = $this->registry
             ->getManagerForClass($class)

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\DoctrineFilterBundle\Tests\Fixtures;
 
 use Psr\Container\ContainerInterface;

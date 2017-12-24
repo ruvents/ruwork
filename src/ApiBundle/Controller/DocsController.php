@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ruwork\ApiBundle\Controller;
 
 use Ruwork\ApiBundle\DocsExtractor;

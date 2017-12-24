@@ -16,6 +16,9 @@
         "symfony/http-foundation": "^3.4 || ^4.0",
         "symfony/http-kernel": "^3.4 || ^4.0"
     },
+    "require-dev": {
+        "matthiasnoback/symfony-dependency-injection-test": "^2.3"
+    },
     "autoload": {
         "psr-4": {
             "Ruwork\\FrujaxBundle\\": ""

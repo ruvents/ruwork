@@ -20,6 +20,7 @@
         "ruwork/doctrine-behaviors-bundle": "self.version",
         "ruwork/doctrine-filter-bundle": "self.version",
         "ruwork/doctrine-postgresql-bundle": "self.version",
+        "ruwork/frujax-bundle": "self.version",
         "ruwork/locale-prefix-bundle": "self.version",
         "ruwork/manual-auth-bundle": "self.version",
         "ruwork/paginator": "self.version",

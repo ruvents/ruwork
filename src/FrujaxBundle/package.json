@@ -1,0 +1,9 @@
+{
+    "name": "@ruwork/frujax",
+    "version": "0.0.1",
+    "license": "MIT",
+    "devDependencies": {
+        "jquery": "^3.2.1",
+        "jquery-form": "^4.2.1"
+    }
+}

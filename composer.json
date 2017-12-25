@@ -21,10 +21,10 @@
         "ruwork/doctrine-filter-bundle": "self.version",
         "ruwork/doctrine-postgresql-bundle": "self.version",
         "ruwork/frujax-bundle": "self.version",
-        "ruwork/locale-prefix-bundle": "self.version",
         "ruwork/manual-auth-bundle": "self.version",
         "ruwork/paginator": "self.version",
         "ruwork/paginator-bundle": "self.version",
+        "ruwork/route-optional-prefix": "self.version",
         "ruwork/upload-bundle": "self.version"
     },
     "config": {

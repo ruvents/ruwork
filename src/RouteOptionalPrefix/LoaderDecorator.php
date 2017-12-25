@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\LocalePrefixBundle\Routing;
+namespace Ruwork\RouteOptionalPrefix;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
@@ -12,14 +12,10 @@ use Symfony\Component\Routing\RouteCollection;
 class LoaderDecorator implements LoaderInterface
 {
     private $loader;
-    private $locales;
-    private $defaultLocale;
 
-    public function __construct(LoaderInterface $loader, array $locales, string $defaultLocale)
+    public function __construct(LoaderInterface $loader)
     {
         $this->loader = $loader;
-        $this->locales = $locales;
-        $this->defaultLocale = $defaultLocale;
     }
 
     /**
@@ -35,16 +31,18 @@ class LoaderDecorator implements LoaderInterface
 
         foreach ($routes->all() as $route) {
             /** @var Route $route */
-            if (true === $route->getOption('locale_prefixed')) {
-                $route
-                    ->setPath('/{_locale}'.ltrim($route->getPath(), '/'))
-                    ->addDefaults(['_locale' => ''])
-                    ->addRequirements([
-                        '_locale' => implode('|', array_map(function ($locale) {
-                            return $locale === $this->defaultLocale ? '' : $locale.'/';
-                        }, $this->locales)),
-                    ]);
+            if (null === $variable = $route->getOption('prefix_variable')) {
+                continue;
             }
+
+            $route
+                ->setPath(sprintf('/{%s}%s', $variable, ltrim($route->getPath(), '/')))
+                ->addDefaults([
+                    $variable => '',
+                ])
+                ->addRequirements([
+                    $variable => sprintf('((%s)/|)', $route->getOption('prefix_requirements') ?? '[^/]+'),
+                ]);
         }
 
         return $routes;
@@ -53,7 +51,7 @@ class LoaderDecorator implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function supports($resource, $type = null)
+    public function supports($resource, $type = null): bool
     {
         return $this->loader->supports($resource, $type);
     }
@@ -61,7 +59,7 @@ class LoaderDecorator implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function getResolver()
+    public function getResolver(): LoaderResolverInterface
     {
         return $this->loader->getResolver();
     }

@@ -12,7 +12,7 @@
     </php>
 
     <testsuites>
-        <testsuite name="Ruwork I18n Routing Bundle Test Suite">
+        <testsuite name="Default">
             <directory>./Tests</directory>
         </testsuite>
     </testsuites>
@@ -21,9 +21,7 @@
         <whitelist>
             <directory>./</directory>
             <exclude>
-                <directory>./Resources</directory>
                 <directory>./Tests</directory>
-                <directory>./vendor</directory>
             </exclude>
         </whitelist>
     </filter>

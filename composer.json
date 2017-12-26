@@ -1,6 +1,5 @@
 {
     "description": "Ruwork monorepo package.",
-    "type": "library",
     "keywords": ["ruwork"],
     "homepage": "https://ruvents.github.io/ruwork/",
     "license": "MIT",

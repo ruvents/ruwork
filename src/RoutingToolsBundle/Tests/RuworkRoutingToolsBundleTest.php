@@ -26,38 +26,37 @@ class RuworkRoutingToolsBundleTest extends AbstractBundleTestCase
 {
     public function testCompilerPasses(): void
     {
-        $container = new ContainerBuilder();
-        $container->getCompilerPassConfig()->addPass(new ReplaceBridgeRoutingExtensionPass());
-        $container->getCompilerPassConfig()->addPass(new RouteOptionalPrefixPass());
+        $this->container->getCompilerPassConfig()->addPass(new ReplaceBridgeRoutingExtensionPass());
+        $this->container->getCompilerPassConfig()->addPass(new RouteOptionalPrefixPass());
 
-        $this->assertContainerCompiles($container);
+        $this->assertContainerCompiles();
     }
 
     public function testOptionalPrefixDefault(): void
     {
+        $this->loadBundleExtension();
         $this->compile();
-        $container = $this->getContainer();
 
-        $this->assertInstanceOf(RouterDecorator::class, $container->get('router'));
-        $this->assertInstanceOf(LoaderDecorator::class, $container->get('routing.loader'));
-        $this->assertSame(BridgeRoutingExtension::class, get_class($container->get('twig.extension.routing')));
+        $this->assertInstanceOf(RouterDecorator::class, $this->container->get('router'));
+        $this->assertInstanceOf(LoaderDecorator::class, $this->container->get('routing.loader'));
+        $this->assertSame(BridgeRoutingExtension::class, get_class($this->container->get('twig.extension.routing')));
         $this->assertContainerHasService(RoutingHelpersExtension::class);
     }
 
     public function testOptionalPrefixFalse(): void
     {
-        $this->compile([
+        $this->loadBundleExtension([
             'optional_prefix' => false,
             'twig' => [
                 'object_as_parameters' => false,
                 'routing_helpers' => false,
             ],
         ]);
-        $container = $this->getContainer();
+        $this->compile();
 
-        $this->assertInstanceOf(Router::class, $container->get('router'));
-        $this->assertInstanceOf(PhpFileLoader::class, $container->get('routing.loader'));
-        $this->assertSame(RoutingExtension::class, get_class($container->get('twig.extension.routing')));
+        $this->assertInstanceOf(Router::class, $this->container->get('router'));
+        $this->assertInstanceOf(PhpFileLoader::class, $this->container->get('routing.loader'));
+        $this->assertSame(RoutingExtension::class, get_class($this->container->get('twig.extension.routing')));
         $this->assertContainerNotHasService(RoutingHelpersExtension::class);
     }
 

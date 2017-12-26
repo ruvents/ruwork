@@ -7,13 +7,13 @@ namespace Ruwork\BundleTestCase\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class ExposePrivateServicesPass implements CompilerPassInterface
+class ExposeServicesPass implements CompilerPassInterface
 {
-    private $services;
+    private $services = [];
 
-    public function __construct(array $services)
+    public function addService(string $id): void
     {
-        $this->services = $services;
+        $this->services[] = $id;
     }
 
     /**

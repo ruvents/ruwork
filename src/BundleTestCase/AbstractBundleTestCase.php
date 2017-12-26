@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Ruwork\BundleTestCase;
 
 use PHPUnit\Framework\TestCase;
-use Ruwork\BundleTestCase\DependencyInjection\Compiler\ExposePrivateServicesPass;
+use Ruwork\BundleTestCase\DependencyInjection\Compiler\ExposeServicesPass;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -16,14 +16,17 @@ abstract class AbstractBundleTestCase extends TestCase
     /**
      * @var ContainerBuilder
      */
-    protected $container;
+    private $container;
 
     /**
      * @var string
      */
     private $extensionAlias;
 
-    private $exposedServices = [];
+    /**
+     * @var ExposeServicesPass
+     */
+    private $exposeServicesPass;
 
     /**
      * {@inheritdoc}
@@ -31,11 +34,15 @@ abstract class AbstractBundleTestCase extends TestCase
     protected function setUp(): void
     {
         $this->container = new ContainerBuilder();
-        $this->container->setParameter('container.autowiring.strict_mode', true);
+        $this->exposeServicesPass = new ExposeServicesPass();
+
+        $this->container
+            ->addCompilerPass($this->exposeServicesPass, PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000)
+            ->setParameter('container.autowiring.strict_mode', true);
 
         $bundle = $this->getBundle();
         $bundle->build($this->container);
-        $this->build($this->container);
+        $this->setUpContainer($this->container);
 
         $extension = $bundle->getContainerExtension();
         $this->container->registerExtension($extension);
@@ -45,27 +52,23 @@ abstract class AbstractBundleTestCase extends TestCase
     protected function tearDown(): void
     {
         $this->container = null;
+        $this->extensionAlias = null;
+        $this->exposeServicesPass = null;
     }
 
     abstract protected function getBundle(): BundleInterface;
 
-    protected function build(ContainerBuilder $container): void
+    protected function setUpContainer(ContainerBuilder $container): void
     {
     }
 
     protected function exposeService(string $id): void
     {
-        if ($this->container->isCompiled()) {
-            throw new \LogicException('Container is compiled.');
-        }
-
-        $this->exposedServices[] = $id;
+        $this->exposeServicesPass->addService($id);
     }
 
     protected function compile(array $config = []): void
     {
-        $pass = new ExposePrivateServicesPass($this->exposedServices);
-        $this->container->addCompilerPass($pass, PassConfig::TYPE_BEFORE_OPTIMIZATION, -10000);
         $this->container->loadFromExtension($this->extensionAlias, $config);
         $this->container->compile();
     }
@@ -79,7 +82,7 @@ abstract class AbstractBundleTestCase extends TestCase
         return $this->container;
     }
 
-    protected function assertContainerCompiles(ContainerBuilder $container)
+    protected function assertContainerCompiles(ContainerBuilder $container): void
     {
         try {
             $container->compile();

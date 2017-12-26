@@ -1,0 +1,38 @@
+{
+    "name": "ruwork/routing-tools-bundle",
+    "description": "Ruwork Routing Tools Bundle",
+    "type": "symfony-bundle",
+    "keywords": ["ruwork"],
+    "homepage": "https://ruvents.github.io/ruwork/",
+    "license": "MIT",
+    "authors": [
+        {"name": "Valentin Udaltsov", "email": "udaltsov@ruvents.com"}
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "ruwork/route-optional-prefix": "dev-master",
+        "symfony/config": "^3.4 || ^4.0",
+        "symfony/dependency-injection": "^3.4 || ^4.0",
+        "symfony/http-kernel": "^3.4 || ^4.0"
+    },
+    "require-dev": {
+        "matthiasnoback/symfony-config-test": "^3.1",
+        "symfony/twig-bridge": "^3.4 || ^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ruwork\\RoutingToolsBundle\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}

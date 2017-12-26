@@ -17,6 +17,7 @@
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^3.1",
+        "ruwork/bundle-test": "dev-master",
         "symfony/twig-bridge": "^3.4 || ^4.0"
     },
     "autoload": {

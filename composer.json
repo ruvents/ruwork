@@ -16,6 +16,7 @@
     "replace": {
         "ruwork/admin-bundle": "self.version",
         "ruwork/api-bundle": "self.version",
+        "ruwork/bundle-test": "self.version",
         "ruwork/doctrine-behaviors-bundle": "self.version",
         "ruwork/doctrine-filter-bundle": "self.version",
         "ruwork/doctrine-postgresql-bundle": "self.version",

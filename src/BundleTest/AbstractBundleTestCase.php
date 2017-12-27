@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\BundleTestCase;
+namespace Ruwork\BundleTest;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractContainerBuilderTestCase;
-use Ruwork\BundleTestCase\DependencyInjection\Compiler\ExposeServicesPass;
+use Ruwork\BundleTest\DependencyInjection\Compiler\ExposeServicesPass;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;

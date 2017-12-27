@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ruwork\RoutingToolsBundle;
 
-use Ruwork\BundleTestCase\AbstractBundleTestCase;
+use Ruwork\BundleTest\AbstractBundleTestCase;
 use Ruwork\RouteOptionalPrefix\LoaderDecorator;
 use Ruwork\RouteOptionalPrefix\RouterDecorator;
 use Ruwork\RoutingToolsBundle\Twig\BridgeRoutingExtension;

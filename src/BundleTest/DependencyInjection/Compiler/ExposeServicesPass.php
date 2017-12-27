@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\BundleTestCase\DependencyInjection\Compiler;
+namespace Ruwork\BundleTest\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

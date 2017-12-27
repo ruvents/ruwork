@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ruwork\PaginatorBundle;
 
-use Ruwork\BundleTestCase\AbstractBundleTestCase;
+use Ruwork\BundleTest\AbstractBundleTestCase;
 use Ruwork\PaginatorBundle\EventListener\PageOutOfRangeExceptionListener;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;

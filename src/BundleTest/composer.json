@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Ruwork\\BundleTestCase\\": ""
+            "Ruwork\\BundleTest\\": ""
         }
     },
     "config": {

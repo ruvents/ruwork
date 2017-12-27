@@ -7,8 +7,6 @@ namespace Ruwork\RoutingToolsBundle;
 use Ruwork\BundleTestCase\AbstractBundleTestCase;
 use Ruwork\RouteOptionalPrefix\LoaderDecorator;
 use Ruwork\RouteOptionalPrefix\RouterDecorator;
-use Ruwork\RoutingToolsBundle\DependencyInjection\Compiler\ReplaceBridgeRoutingExtensionPass;
-use Ruwork\RoutingToolsBundle\DependencyInjection\Compiler\RouteOptionalPrefixPass;
 use Ruwork\RoutingToolsBundle\Twig\BridgeRoutingExtension;
 use Ruwork\RoutingToolsBundle\Twig\RoutingHelpersExtension;
 use Symfony\Bridge\Twig\Extension\RoutingExtension;
@@ -23,11 +21,8 @@ use Symfony\Component\Routing\Router;
 
 class RuworkRoutingToolsBundleTest extends AbstractBundleTestCase
 {
-    public function testCompilerPasses(): void
+    public function testUnobtrusiveCompilerPasses(): void
     {
-        $this->container->getCompilerPassConfig()->addPass(new ReplaceBridgeRoutingExtensionPass());
-        $this->container->getCompilerPassConfig()->addPass(new RouteOptionalPrefixPass());
-
         $this->assertContainerCompiles();
     }
 

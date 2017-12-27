@@ -42,9 +42,7 @@
             "dev-master": "0.1-dev"
         },
         "merge-plugin": {
-            "require": [
-                "src/*/composer.json"
-            ]
+            "require": "src/*/composer.json"
         }
     }
 }

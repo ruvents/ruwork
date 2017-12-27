@@ -15,7 +15,7 @@
     </php>
 
     <testsuites>
-        <testsuite name="Ruwork Test Suite">
+        <testsuite name="Ruwork">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>

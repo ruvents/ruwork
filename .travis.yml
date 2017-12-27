@@ -9,7 +9,6 @@ cache:
     directories:
         - $HOME/.composer/cache/files
         - $HOME/.phpunit
-        - $HOME/.splitsh
 
 env:
     global:

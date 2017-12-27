@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace Ruwork\BundleTestCase;
 
-use PHPUnit\Framework\TestCase;
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractContainerBuilderTestCase;
 use Ruwork\BundleTestCase\DependencyInjection\Compiler\ExposeServicesPass;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
-abstract class AbstractBundleTestCase extends TestCase
+abstract class AbstractBundleTestCase extends AbstractContainerBuilderTestCase
 {
-    /**
-     * @var ContainerBuilder
-     */
-    protected $container;
-
     /**
      * @var BundleInterface
      */
@@ -58,14 +53,9 @@ abstract class AbstractBundleTestCase extends TestCase
     {
     }
 
-    protected function registerService(string $id, string $class = null): Definition
+    protected function registerService($id, $class = null): Definition
     {
         return $this->container->register($id, $class);
-    }
-
-    protected function setParameter(string $name, $value): void
-    {
-        $this->container->setParameter($name, $value);
     }
 
     protected function exposeService(string $id): void
@@ -80,11 +70,6 @@ abstract class AbstractBundleTestCase extends TestCase
         $this->container->loadFromExtension($extension->getAlias(), $config);
     }
 
-    protected function compile(): void
-    {
-        $this->container->compile();
-    }
-
     protected function assertContainerCompiles(): void
     {
         try {
@@ -93,15 +78,5 @@ abstract class AbstractBundleTestCase extends TestCase
         } catch (\Throwable $exception) {
             $this->fail('Failed to compile container.');
         }
-    }
-
-    protected function assertContainerHasService(string $id): void
-    {
-        $this->assertTrue($this->container->has($id), sprintf('Container does not have a service "%s".', $id));
-    }
-
-    protected function assertContainerNotHasService(string $id): void
-    {
-        $this->assertFalse($this->container->has($id), sprintf('Container has a service "%s".', $id));
     }
 }

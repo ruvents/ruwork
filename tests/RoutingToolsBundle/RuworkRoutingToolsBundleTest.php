@@ -34,7 +34,7 @@ class RuworkRoutingToolsBundleTest extends AbstractBundleTestCase
         $this->assertInstanceOf(RouterDecorator::class, $this->container->get('router'));
         $this->assertInstanceOf(LoaderDecorator::class, $this->container->get('routing.loader'));
         $this->assertSame(BridgeRoutingExtension::class, get_class($this->container->get('twig.extension.routing')));
-        $this->assertContainerHasService(RoutingHelpersExtension::class);
+        $this->assertContainerBuilderHasService(RoutingHelpersExtension::class);
     }
 
     public function testOptionalPrefixFalse(): void
@@ -51,7 +51,7 @@ class RuworkRoutingToolsBundleTest extends AbstractBundleTestCase
         $this->assertInstanceOf(Router::class, $this->container->get('router'));
         $this->assertInstanceOf(PhpFileLoader::class, $this->container->get('routing.loader'));
         $this->assertSame(RoutingExtension::class, get_class($this->container->get('twig.extension.routing')));
-        $this->assertContainerNotHasService(RoutingHelpersExtension::class);
+        $this->assertContainerBuilderNotHasService(RoutingHelpersExtension::class);
     }
 
     protected function setUpContainer(ContainerBuilder $container): void

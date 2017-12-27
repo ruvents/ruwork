@@ -16,7 +16,7 @@
 
     <testsuites>
         <testsuite name="Ruwork Test Suite">
-            <directory>./src/*/Tests/</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
 
@@ -24,7 +24,6 @@
         <whitelist>
             <directory>./src/</directory>
             <exclude>
-                <directory>./src/*/Tests</directory>
                 <directory>./src/*/vendor</directory>
             </exclude>
         </whitelist>

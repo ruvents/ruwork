@@ -33,10 +33,7 @@
     "autoload": {
         "psr-4": {
             "Ruwork\\AdminBundle\\": "src/"
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+        }
     },
     "config": {
         "sort-packages": true

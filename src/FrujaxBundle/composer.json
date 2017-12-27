@@ -22,10 +22,7 @@
     "autoload": {
         "psr-4": {
             "Ruwork\\FrujaxBundle\\": ""
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+        }
     },
     "config": {
         "sort-packages": true

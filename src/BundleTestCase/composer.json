@@ -14,10 +14,7 @@
     "autoload": {
         "psr-4": {
             "Ruwork\\BundleTestCase\\": ""
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+        }
     },
     "config": {
         "sort-packages": true

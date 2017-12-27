@@ -18,10 +18,7 @@
     "autoload": {
         "psr-4": {
             "Ruwork\\PaginatorBundle\\": ""
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+        }
     },
     "config": {
         "sort-packages": true

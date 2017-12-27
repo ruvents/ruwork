@@ -48,8 +48,8 @@ gulp.task('vendor', function () {
     return gulp
         .src([
             'node_modules/bootstrap-markdown/locale/bootstrap-markdown.ru.js'
-        ], {base: './'})
-        .pipe(gulp.dest('vendor', {cwd: 'Resources/public'}))
+        ])
+        .pipe(gulp.dest('js', {cwd: 'Resources/public'}))
 })
 
 gulp.task('watch', function () {

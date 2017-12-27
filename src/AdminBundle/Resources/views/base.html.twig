@@ -36,7 +36,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/js/bootstrap-markdown.min.js"></script>
     {% if app.request.locale == 'ru' %}
-    <script src="{{ asset('bundles/ruworkadmin/vendor/node_modules/bootstrap-markdown/locale/bootstrap-markdown.ru.js') }}"></script>
+    <script src="{{ asset('bundles/ruworkadmin/js/bootstrap-markdown.ru.js') }}"></script>
     {% endif %}
     <script src="{{ asset('bundles/ruworkadmin/js/app.js') }}"></script>
     {% if app.request.clientIp is same as('127.0.0.1') and app.environment is same as('dev') %}

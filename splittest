@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+cp composer.json composer.json.backup
+jq 'del(.replace)' composer.json.backup > composer.json
+
+for dir in tests/*
+do
+    if [ -d "${dir}" ]
+    then
+        package=${dir//tests\//}
+        composer config extra.merge-plugin.require "src/${package}/composer.json"
+        composer update
+        ./phpunit --testsuite ${package}
+    fi
+done
+
+rm composer.json
+mv composer.json.backup composer.json
+composer update

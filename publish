@@ -15,4 +15,17 @@ then
     chmod 755 .splitsh/splitsh-lite
 fi
 
+git push https://github.com/ruvents/ruwork-admin-bundle.git `.splitsh/splitsh-lite --prefix=src/AdminBundle`:master
+git push https://github.com/ruvents/ruwork-api-bundle.git `.splitsh/splitsh-lite --prefix=src/ApiBundle`:master
+git push https://github.com/ruvents/ruwork-bundle-test.git `.splitsh/splitsh-lite --prefix=src/BundleTest`:master
+git push https://github.com/ruvents/ruwork-doctrine-behaviors-bundle.git `.splitsh/splitsh-lite --prefix=src/DoctrineBehaviorsBundle`:master
+git push https://github.com/ruvents/ruwork-doctrine-filter-bundle.git `.splitsh/splitsh-lite --prefix=src/DoctrineFilterBundle`:master
+git push https://github.com/ruvents/ruwork-doctrine-postgresql-bundle.git `.splitsh/splitsh-lite --prefix=src/DoctrinePostgresqlBundle`:master
+git push https://github.com/ruvents/ruwork-frujax-bundle.git `.splitsh/splitsh-lite --prefix=src/FrujaxBundle`:master
 git push https://github.com/ruvents/ruwork-manual-auth-bundle.git `.splitsh/splitsh-lite --prefix=src/ManualAuthBundle`:master
+git push https://github.com/ruvents/ruwork-paginator-bundle.git `.splitsh/splitsh-lite --prefix=src/PaginatorBundle`:master
+git push https://github.com/ruvents/ruwork-paginator.git `.splitsh/splitsh-lite --prefix=src/Paginator`:master
+git push https://github.com/ruvents/ruwork-route-optional-prefix.git `.splitsh/splitsh-lite --prefix=src/RouteOptionalPrefix`:master
+git push https://github.com/ruvents/ruwork-routing-tools-bundle.git `.splitsh/splitsh-lite --prefix=src/RoutingToolsBundle`:master
+git push https://github.com/ruvents/ruwork-upload-bundle.git `.splitsh/splitsh-lite --prefix=src/UploadBundle`:master
+git push https://github.com/ruvents/ruwork-wizard-bundle.git `.splitsh/splitsh-lite --prefix=src/WizardBundle`:master

@@ -25,7 +25,7 @@ matrix:
         - php: 7.1
           env: PUBLISH=true PHP_CS=true SPLITTEST=true
         - php: 7.2
-          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
+          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover=coverage.xml"
 
           # Symfony LTS versions
         - php: 7.2
@@ -55,3 +55,6 @@ install:
 script:
     - if [[ $PUBLISH = true ]]; then ./splittest; else ./phpunit $PHPUNIT_FLAGS; fi
     - if [[ $PHP_CS = true ]]; then vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no; fi
+
+after_success:
+    - if [[ $COVERAGE != true ]]; then bash <(curl -s https://codecov.io/bash); fi

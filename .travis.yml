@@ -8,7 +8,7 @@ sudo: false
 cache:
     directories:
         - $HOME/.composer/cache/files
-        - $HOME/.phpunit
+        - $HOME/vendor/bin/.phpunit
 
 env:
     global:
@@ -40,7 +40,7 @@ matrix:
 
 before_install:
     - echo -e "machine github.com\n  login $GITHUB_API_TOKEN" >> ~/.netrc
-    - if [[ $PUBLISH = true && $TRAVIS_PULL_REQUEST = false ]]; then ./publish; fi
+    - if [[ $PUBLISH = true && $TRAVIS_PULL_REQUEST = false ]]; then ./bin/publish; fi
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi
     - if ! [ -z "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi
@@ -50,10 +50,10 @@ install:
     # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
     - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
     - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
-    - ./phpunit install
+    - ./bin/phpunit install
 
 script:
-    - if [[ $PUBLISH = true ]]; then ./splittest; else ./phpunit $PHPUNIT_FLAGS; fi
+    - if [[ $SPLITTEST = true ]]; then ./bin/splittest; else ./bin/phpunit $PHPUNIT_FLAGS; fi
     - if [[ $PHP_CS = true ]]; then vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no; fi
 
 after_success:

@@ -10,7 +10,7 @@ do
         package=${dir//tests\//}
         composer config extra.merge-plugin.require "src/${package}/composer.json"
         composer update
-        ./phpunit --testsuite ${package}
+        ./bin/phpunit --testsuite ${package}
     fi
 done
 

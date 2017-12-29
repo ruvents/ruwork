@@ -57,4 +57,4 @@ script:
     - if [[ $PHP_CS = true ]]; then vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no; fi
 
 after_success:
-    - if [[ $COVERAGE != true ]]; then bash <(curl -s https://codecov.io/bash); fi
+    - if [[ $COVERAGE = true ]]; then bash <(curl -s https://codecov.io/bash); fi

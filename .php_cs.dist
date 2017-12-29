@@ -29,7 +29,7 @@ return PhpCsFixer\Config::create()
                 __DIR__.'/tests',
             ])
             ->append([
-                __DIR__.'/phpunit',
+                __DIR__.'/bin/phpunit',
                 __FILE__,
             ])
     );

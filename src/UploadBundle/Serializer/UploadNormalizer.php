@@ -10,6 +10,10 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class UploadNormalizer implements NormalizerInterface
 {
+    const TYPE = 'ruwork_upload_type';
+    const URL = 'url';
+    const PATHNAME = 'pathname';
+
     private $manager;
 
     public function __construct(UploadManager $manager)
@@ -24,7 +28,13 @@ class UploadNormalizer implements NormalizerInterface
      */
     public function normalize($upload, $format = null, array $context = [])
     {
-        return $this->manager->getUrl($upload);
+        $type = $context[self::TYPE] ?? self::URL;
+
+        if (self::URL === $type) {
+            return $this->manager->getUrl($upload);
+        }
+
+        return $this->manager->getPathname($upload);
     }
 
     /**

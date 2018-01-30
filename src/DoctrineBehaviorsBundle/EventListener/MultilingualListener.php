@@ -18,7 +18,7 @@ class MultilingualListener
     private $defaultLocale;
 
     /**
-     * @var \SplObjectStorage|MultilingualInterface[]
+     * @var MultilingualInterface[]|\SplObjectStorage
      */
     private $multilinguals;
 

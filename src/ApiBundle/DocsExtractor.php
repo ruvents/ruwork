@@ -85,7 +85,7 @@ class DocsExtractor
     /**
      * @param string $classMethod
      *
-     * @return null|object|Doc
+     * @return null|Doc|object
      */
     private function getDocAnnotation(string $classMethod)
     {

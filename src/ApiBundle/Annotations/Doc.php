@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Ruwork\ApiBundle\Annotations;
 
 /**
- * @Annotation()
+ * @Annotation
  * @Target({"METHOD"})
  */
 class Doc
 {
     /**
-     * @Required()
+     * @Required
      *
      * @var string
      */

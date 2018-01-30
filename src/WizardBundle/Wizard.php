@@ -260,7 +260,7 @@ final class Wizard implements \ArrayAccess, \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      *
-     * @return \Traversable|Step[]
+     * @return Step[]|\Traversable
      */
     public function getIterator(): \Traversable
     {

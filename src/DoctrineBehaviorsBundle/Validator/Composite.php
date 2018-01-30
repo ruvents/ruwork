@@ -7,7 +7,7 @@ namespace Ruwork\DoctrineBehaviorsBundle\Validator;
 use Symfony\Component\Validator\Constraints\Composite as AbstractComposite;
 
 /**
- * @Annotation()
+ * @Annotation
  * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
  */
 class Composite extends AbstractComposite

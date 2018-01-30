@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Ruwork\DoctrineBehaviorsBundle\Mapping;
 
 /**
- * @Annotation()
+ * @Annotation
  * @Target("CLASS")
  */
 final class SearchColumn
 {
     /**
-     * @Required()
+     * @Required
      *
      * @var string
      */
@@ -23,7 +23,7 @@ final class SearchColumn
     public $type;
 
     /**
-     * @Required()
+     * @Required
      *
      * @var <string>
      */

@@ -8,7 +8,7 @@ use Doctrine\Common\Annotations\Annotation\Target;
 use Symfony\Component\Validator\Constraints\Composite as AbstractComposite;
 
 /**
- * @Annotation()
+ * @Annotation
  * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
  */
 class ValidMultilingual extends AbstractComposite

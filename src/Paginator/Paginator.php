@@ -70,7 +70,7 @@ class Paginator implements \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      *
-     * @return \Traversable|Section[]
+     * @return Section[]|\Traversable
      */
     public function getIterator(): \Traversable
     {

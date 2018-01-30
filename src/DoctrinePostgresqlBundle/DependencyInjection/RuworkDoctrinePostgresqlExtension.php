@@ -39,7 +39,7 @@ class RuworkDoctrinePostgresqlExtension extends ConfigurableExtension
     }
 
     /**
-     * @return \Generator|ChildDefinition[]
+     * @return ChildDefinition[]|\Generator
      */
     private function getListeners(array $config, string $connection = null): \Generator
     {

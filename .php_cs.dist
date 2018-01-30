@@ -12,14 +12,15 @@ return PhpCsFixer\Config::create()
         '@Symfony:risky' => true,
         'align_multiline_comment' => true,
         'array_syntax' => ['syntax' => 'short'],
-        'doctrine_annotation_braces' => ['syntax' => 'with_braces'],
         'no_null_property_initialization' => true,
         'no_php4_constructor' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,
         'ordered_class_elements' => true,
         'ordered_imports' => true,
-        'phpdoc_types_order' => ['sort_algorithm' => 'none'],
+        'phpdoc_no_empty_return' => false,
+        'phpdoc_order' => true,
+        'phpdoc_types_order' => true,
     ])
     ->setRiskyAllowed(true)
     ->setFinder(

@@ -26,7 +26,7 @@ final class Section implements \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      *
-     * @return \Traversable|Page[]
+     * @return Page[]|\Traversable
      */
     public function getIterator(): \Traversable
     {

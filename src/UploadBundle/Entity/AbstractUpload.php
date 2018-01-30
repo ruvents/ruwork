@@ -8,31 +8,38 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\MappedSuperclass()
+ * @ORM\MappedSuperclass
  */
 abstract class AbstractUpload
 {
     /**
      * @ORM\Column(name="id", type="string")
-     * @ORM\Id()
+     * @ORM\Id
      */
     protected $path;
 
     private $uploadedFile;
 
-    public function __construct(UploadedFile $uploadedFile, string $path)
+    public function __construct(UploadedFile $uploadedFile)
     {
         $this->uploadedFile = $uploadedFile;
-        $this->path = $path;
     }
 
-    public function getUploadedFile(): ?UploadedFile
+    final public function getUploadedFile(): ?UploadedFile
     {
+        if (null === $this->uploadedFile) {
+            throw new \LogicException('Uploaded file is not available in a persisted upload.');
+        }
+
         return $this->uploadedFile;
     }
 
-    public function getPath(): string
+    final public function getPath(): string
     {
+        if (null === $this->path) {
+            throw new \LogicException('Path is not available in a not persisted upload.');
+        }
+
         return $this->path;
     }
 }

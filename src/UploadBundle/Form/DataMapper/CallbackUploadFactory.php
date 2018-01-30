@@ -19,8 +19,8 @@ class CallbackUploadFactory implements UploadFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createUpload(UploadedFile $uploadedFile, string $path, \Traversable $forms): AbstractUpload
+    public function createUpload(UploadedFile $uploadedFile, \Traversable $forms): AbstractUpload
     {
-        return call_user_func($this->factory, $uploadedFile, $path, $forms);
+        return ($this->factory)($uploadedFile, $forms);
     }
 }

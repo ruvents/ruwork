@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\UploadBundle\Download;
+namespace Ruwork\UploadBundle\Entity;
 
-interface DownloadInterface
+interface DownloadNameInterface
 {
     public function getDownloadName(): string;
 }

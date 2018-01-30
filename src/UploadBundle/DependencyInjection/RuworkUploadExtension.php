@@ -6,7 +6,6 @@ namespace Ruwork\UploadBundle\DependencyInjection;
 
 use Ruwork\UploadBundle\Form\TypeGuesser\UploadTypeGuesser;
 use Ruwork\UploadBundle\Serializer\UploadNormalizer;
-use Ruwork\UploadBundle\UploadManager;
 use Ruwork\UploadBundle\Validator\UploadFileValidator;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,9 +24,8 @@ class RuworkUploadExtension extends ConfigurableExtension
         (new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config')))
             ->load('services.php');
 
-        $container->getDefinition(UploadManager::class)
-            ->setArgument('$publicDir', $config['public_dir'])
-            ->setArgument('$uploadsDirName', $config['uploads_dir_name']);
+        $container->setParameter('ruwork_upload.public_dir', $config['public_dir']);
+        $container->setParameter('ruwork_upload.uploads_dir', $config['uploads_dir']);
 
         if (null !== $config['default_form_type']) {
             $container->findDefinition(UploadTypeGuesser::class)

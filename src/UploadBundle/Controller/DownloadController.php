@@ -6,8 +6,8 @@ namespace Ruwork\UploadBundle\Controller;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
-use Ruwork\UploadBundle\Download\DownloadInterface;
 use Ruwork\UploadBundle\Entity\AbstractUpload;
+use Ruwork\UploadBundle\Entity\DownloadNameInterface;
 use Ruwork\UploadBundle\UploadManager;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -25,7 +25,7 @@ class DownloadController
         $this->manager = $manager;
     }
 
-    public function __invoke(string $class, string $path)
+    public function __invoke(string $class, string $path): BinaryFileResponse
     {
         $manager = $this->doctrine->getManagerForClass($class);
 
@@ -40,7 +40,7 @@ class DownloadController
             throw new NotFoundHttpException(sprintf('File "%s" was not found.', $path));
         }
 
-        if ($upload instanceof DownloadInterface) {
+        if ($upload instanceof DownloadNameInterface) {
             $name = $upload->getDownloadName();
         } else {
             $name = basename($upload->getPath());

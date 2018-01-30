@@ -32,9 +32,7 @@ class UploadType extends AbstractType
             ->add('uploadedFile', FileType::class, [
                 'mapped' => false,
             ])
-            ->setDataMapper(
-                new UploadDataMapper($this->manager, $options['factory'], $builder->getDataMapper())
-            );
+            ->setDataMapper(new UploadDataMapper($options['factory'], $builder->getDataMapper()));
     }
 
     /**

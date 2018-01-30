@@ -8,6 +8,8 @@ use Ruwork\UploadBundle\Controller\DownloadController;
 use Ruwork\UploadBundle\EventListener\UploadDoctrineListener;
 use Ruwork\UploadBundle\Form\Type\UploadType;
 use Ruwork\UploadBundle\Form\TypeGuesser\UploadTypeGuesser;
+use Ruwork\UploadBundle\PathGenerator\PathGenerator;
+use Ruwork\UploadBundle\PathGenerator\PathGeneratorInterface;
 use Ruwork\UploadBundle\Serializer\UploadNormalizer;
 use Ruwork\UploadBundle\UploadManager;
 use Ruwork\UploadBundle\Validator\UploadFileValidator;
@@ -17,16 +19,23 @@ return function (ContainerConfigurator $container): void {
         ->defaults()
         ->private();
 
+    $services->set('ruwork_upload.path_generator', PathGenerator::class)
+        ->args([
+            '$uploadsDir' => '%ruwork_upload.uploads_dir%',
+        ]);
+
+    $services->alias(PathGeneratorInterface::class, 'ruwork_upload.path_generator');
+
     $services->set(UploadManager::class)
         ->args([
-            '$requestStack' => ref('request_stack')
-                ->nullOnInvalid(),
-            '$requestContext' => ref('router.request_context')
-                ->nullOnInvalid(),
+            '$publicDir' => '%ruwork_upload.public_dir%',
+            '$requestStack' => ref('request_stack')->nullOnInvalid(),
+            '$requestContext' => ref('router.request_context')->nullOnInvalid(),
         ]);
 
     $services->set(UploadDoctrineListener::class)
         ->args([
+            '$pathGenerator' => ref(PathGeneratorInterface::class),
             '$manager' => ref(UploadManager::class),
         ])
         ->tag('doctrine.event_subscriber');

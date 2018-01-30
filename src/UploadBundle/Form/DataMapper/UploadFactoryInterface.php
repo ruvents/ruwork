@@ -9,5 +9,5 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 interface UploadFactoryInterface
 {
-    public function createUpload(UploadedFile $uploadedFile, string $path, \Traversable $forms): AbstractUpload;
+    public function createUpload(UploadedFile $uploadedFile, \Traversable $forms): AbstractUpload;
 }

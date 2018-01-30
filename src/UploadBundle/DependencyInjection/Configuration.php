@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
                         ->cannotBeEmpty()
                         ->defaultValue('%kernel.project_dir%/public')
                     ->end()
-                    ->scalarNode('uploads_dir_name')
+                    ->scalarNode('uploads_dir')
                         ->cannotBeEmpty()
                         ->defaultValue('uploads')
                     ->end()
@@ -33,7 +33,7 @@ class Configuration implements ConfigurationInterface
                             ->ifTrue(function ($class) {
                                 return !is_subclass_of($class, FormTypeInterface::class);
                             })
-                            ->thenInvalid('"%s" must implement '.FormTypeInterface::class)
+                            ->thenInvalid(sprintf('%%s must implement "%s".', FormTypeInterface::class))
                         ->end()
                     ->end()
                 ->end()

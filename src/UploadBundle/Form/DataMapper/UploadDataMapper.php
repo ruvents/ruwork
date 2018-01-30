@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Ruwork\UploadBundle\Form\DataMapper;
 
 use Ruwork\UploadBundle\Entity\AbstractUpload;
-use Ruwork\UploadBundle\UploadManager;
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Extension\Core\DataMapper\PropertyPathMapper;
@@ -14,15 +13,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadDataMapper implements DataMapperInterface
 {
-    private $manager;
-
     private $factory;
-
     private $mapper;
 
-    public function __construct(UploadManager $manager, UploadFactoryInterface $factory, DataMapperInterface $mapper = null)
+    public function __construct(UploadFactoryInterface $factory, DataMapperInterface $mapper = null)
     {
-        $this->manager = $manager;
         $this->factory = $factory;
         $this->mapper = $mapper ?? new PropertyPathMapper();
     }
@@ -41,6 +36,8 @@ class UploadDataMapper implements DataMapperInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param FormInterface[]|\Traversable $forms
      */
     public function mapFormsToData($forms, &$data): void
     {
@@ -66,15 +63,13 @@ class UploadDataMapper implements DataMapperInterface
         $uploadedFile = $form->getData();
 
         if (!$uploadedFile instanceof UploadedFile) {
-            $type = is_object($uploadedFile) ? get_class($uploadedFile) : gettype($uploadedFile);
-
-            throw new \UnexpectedValueException(
-                sprintf('Uploaded file is expected to be an instance of "%s", "%s" given.', UploadedFile::class, $type)
-            );
+            throw new \UnexpectedValueException(sprintf(
+                'Uploaded file is expected to be an instance of "%s", "%s" given.',
+                UploadedFile::class,
+                is_object($uploadedFile) ? get_class($uploadedFile) : gettype($uploadedFile)
+            ));
         }
 
-        $path = $this->manager->generatePath($uploadedFile->guessExtension());
-
-        return $this->factory->createUpload($uploadedFile, $path, $forms);
+        return $this->factory->createUpload($uploadedFile, $forms);
     }
 }

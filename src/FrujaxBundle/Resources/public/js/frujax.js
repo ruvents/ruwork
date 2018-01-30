@@ -79,7 +79,9 @@
                         if (jqXHR.getResponseHeader('Frujax-Redirect-Url')) {
                             textStatus = 'redirect'
                         } else if (options.action && options.target) {
-                            _this._performAction(options.action, options.target, $data)
+                            setTimeout(function () {
+                                _this._performAction(options.action, options.target, $data)
+                            }, 1)
                         }
 
                         _this._triggerAll(

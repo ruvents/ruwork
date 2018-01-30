@@ -37,7 +37,7 @@ class UploadDoctrineListener implements EventSubscriber
         ];
     }
 
-    public function onPrePersist(LifecycleEventArgs $args): void
+    public function prePersist(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
 

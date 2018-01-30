@@ -40,7 +40,7 @@ class UploadDoctrineListenerTest extends TestCase
             $listener->getSubscribedEvents()
         );
 
-        $listener->onPrePersist(new LifecycleEventArgs($upload, $entityManager));
+        $listener->prePersist(new LifecycleEventArgs($upload, $entityManager));
         $this->assertAttributeSame($path, 'path', $upload);
 
         $listener->onFlush(new OnFlushEventArgs($entityManager));

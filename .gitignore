@@ -1,5 +1,5 @@
 /bin/.splitsh/
-vendor/
-.php_cs
-composer.lock
-phpunit.xml
+/vendor/
+/.php_cs
+/composer.lock
+/phpunit.xml

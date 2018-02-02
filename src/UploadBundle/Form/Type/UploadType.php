@@ -43,6 +43,10 @@ class UploadType extends AbstractType
         $resolver
             ->setDefaults([
                 'empty_data' => null,
+                'error_bubbling' => false,
+                'error_mapping' => [
+                    '.' => 'uploadedFile',
+                ],
             ])
             ->setRequired([
                 'factory',

@@ -18,9 +18,6 @@ install:
     - composer update --prefer-dist --no-interaction
     - bin/phpunit install
 
-before_script:
-    - phpenv config-rm xdebug.ini
-
 script:
     - bin/phpunit
 
@@ -29,13 +26,14 @@ jobs:
         # Split test
         -
             php: 7.1
+            before_install:
+                - phpenv config-rm xdebug.ini
             script:
                 - bin/splittest
 
         # Code coverage
         -
             php: 7.2
-            before_script: skip
             script:
                 - bin/phpunit -v --coverage-clover=coverage.xml
             after_success:
@@ -45,6 +43,7 @@ jobs:
         -
             php: 7.2
             before_install:
+                - phpenv config-rm xdebug.ini
                 - composer require --no-update symfony/lts:^3
                 - composer require --no-update friendsofphp/php-cs-fixer
             script:
@@ -55,6 +54,7 @@ jobs:
         -
             php: 7.2
             before_install:
+                - phpenv config-rm xdebug.ini
                 - composer config minimum-stability dev
 
         # Publish

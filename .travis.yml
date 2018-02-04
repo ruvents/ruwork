@@ -18,8 +18,8 @@ matrix:
     fast_finish: true
     include:
           # Lowest stable packages and latest PHP version
-        - php: 7.2
-          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
+        #- php: 7.2
+        #  env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
 
           # Latest stable packages
         - php: 7.1

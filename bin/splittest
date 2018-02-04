@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-code=0
+set -e
+
 cp composer.json composer.json.backup
 jq 'del(.replace)' composer.json.backup > composer.json
 
@@ -13,14 +14,8 @@ do
         composer config extra.merge-plugin.require "src/${package}/composer.json"
         composer update
         ./bin/phpunit --testsuite ${package}
-
-        if [ $? -ne 0 ]; then
-            code=1
-        fi
     fi
 done
 
 rm composer.json
 mv composer.json.backup composer.json
-
-exit ${code}

@@ -14,49 +14,54 @@ env:
     global:
         - PHPUNIT_FLAGS="-v"
 
-jobs:
-    include:
-          # Lowest stable packages and latest PHP version
-        #- php: 7.2
-        #  env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
-
-          # Latest stable packages
-        - stage: test
-          php: 7.1
-          env: PHP_CS=true SPLITTEST=true
-        - php: 7.2
-          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover=coverage.xml"
-
-          # Symfony LTS versions
-        - php: 7.2
-          env: DEPENDENCIES="symfony/lts:^3"
-
-          # Latest unstable packages
-        - php: 7.2
-          env: STABILITY="dev"
-
-        - stage: publish
-          before_install: skip
-          install: skip
-          script: ./bin/publish
-          after_success: skip
-
-before_install:
-    - echo -e "machine github.com\n  login $GITHUB_API_TOKEN" >> ~/.netrc
-    - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
-    - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi
-    - if ! [ -z "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi
-    - if [[ $PHP_CS = true ]]; then composer require --no-update friendsofphp/php-cs-fixer; fi
-
 install:
-    # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
-    - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
-    - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
-    - ./bin/phpunit install
+    - composer update --prefer-dist --no-interaction
+    - bin/phpunit install
+
+before_script:
+    - phpenv config-rm xdebug.ini
 
 script:
-    - if [[ $SPLITTEST = true ]]; then ./bin/splittest; else ./bin/phpunit $PHPUNIT_FLAGS; fi
-    - if [[ $PHP_CS = true ]]; then vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no; fi
+    - bin/phpunit
 
-after_success:
-    - if [[ $COVERAGE = true ]]; then bash <(curl -s https://codecov.io/bash); fi
+jobs:
+    include:
+        # Split test
+        -
+            php: 7.1
+            script:
+                - bin/splittest
+
+        # Code coverage
+        -
+            php: 7.2
+            before_script: skip
+            script:
+                - bin/phpunit -v --coverage-clover=coverage.xml
+            after_success:
+                - bash <(curl -s https://codecov.io/bash)
+
+        # Symfony LTS 3 and Code Style test
+        -
+            php: 7.2
+            before_install:
+                - composer require --no-update symfony/lts:^3
+                - composer require --no-update friendsofphp/php-cs-fixer
+            script:
+                - bin/phpunit
+                - vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no
+
+        # Unstable package versions
+        -
+            php: 7.2
+            before_install:
+                - composer config minimum-stability dev
+
+        # Publish
+        -
+            stage: publish
+            install: skip
+            before_script:
+                - echo -e "machine github.com\n  login $GITHUB_API_TOKEN" >> ~/.netrc
+            script:
+                - ./bin/publish

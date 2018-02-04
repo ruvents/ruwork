@@ -22,6 +22,5 @@ done
 
 rm composer.json
 mv composer.json.backup composer.json
-composer update
 
 exit ${code}

@@ -31,33 +31,26 @@ jobs:
             script:
                 - bin/splittest
 
-        # Code coverage
-        -
-            php: 7.2
-            script:
-                - bin/phpunit -v --coverage-clover=coverage.xml
-            after_success:
-                - bash <(curl -s https://codecov.io/bash)
-
-        # Symfony LTS 3 and Code Style test
+        # Symfony LTS 3 requirement test, code style test, code coverage report
         -
             php: 7.2
             before_install:
-                - phpenv config-rm xdebug.ini
                 - composer require --no-update symfony/lts:^3
                 - composer require --no-update friendsofphp/php-cs-fixer
             script:
-                - bin/phpunit
+                - bin/phpunit -v --coverage-clover=coverage.xml
                 - vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no
+            after_success:
+                - bash <(curl -s https://codecov.io/bash)
 
-        # Unstable package versions
+        # Latest package versions test
         -
             php: 7.2
             before_install:
                 - phpenv config-rm xdebug.ini
                 - composer config minimum-stability dev
 
-        # Publish
+        # Publishing to mini repos
         -
             stage: publish
             install: skip

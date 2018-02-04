@@ -23,7 +23,7 @@ matrix:
 
           # Latest stable packages
         - php: 7.1
-          env: PUBLISH=true PHP_CS=true SPLITTEST=true
+          env: PHP_CS=true SPLITTEST=true
         - php: 7.2
           env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover=coverage.xml"
 
@@ -40,7 +40,6 @@ matrix:
 
 before_install:
     - echo -e "machine github.com\n  login $GITHUB_API_TOKEN" >> ~/.netrc
-    - if [[ $PUBLISH = true && $TRAVIS_PULL_REQUEST = false ]]; then ./bin/publish; fi
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi
     - if ! [ -z "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi
@@ -58,3 +57,8 @@ script:
 
 after_success:
     - if [[ $COVERAGE = true ]]; then bash <(curl -s https://codecov.io/bash); fi
+
+deploy:
+    skip_cleanup: true
+    provider: script
+    script: ./bin/publish

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-if [ ! -f bin/.splitsh/splitsh-lite ]
-then
+set -e
+
+if [ ! -f bin/.splitsh/splitsh-lite ]; then
     mkdir -p bin/.splitsh/
 
-    if [[ $OSTYPE == darwin* ]]
-    then
+    if [[ $OSTYPE == darwin* ]]; then
         curl -L https://github.com/splitsh/lite/releases/download/v1.0.1/lite_darwin_amd64.tar.gz > bin/.splitsh/splitsh-lite.tar.gz
     else
         curl -L https://github.com/splitsh/lite/releases/download/v1.0.1/lite_linux_amd64.tar.gz > bin/.splitsh/splitsh-lite.tar.gz

@@ -19,6 +19,7 @@
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^3.1",
+        "ruwork/bundle-test": "dev-master",
         "symfony/serializer": "^3.4 || ^4.0",
         "symfony/twig-bridge": "^3.4 || ^4.0",
         "symfony/validator": "^3.4 || ^4.0"

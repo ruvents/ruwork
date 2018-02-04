@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ruwork\RunetIdBundle\DependencyInjection;
 
-use RunetId\Client\RunetIdClientFactory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -48,9 +47,13 @@ final class Configuration implements ConfigurationInterface
                                     ->isRequired()
                                     ->cannotBeEmpty()
                                 ->end()
-                                ->scalarNode('default_uri')
+                                ->scalarNode('api_uri')
                                     ->cannotBeEmpty()
-                                    ->defaultValue(RunetIdClientFactory::DEFAULT_URI)
+                                    ->defaultNull()
+                                ->end()
+                                ->scalarNode('oauth_uri')
+                                    ->cannotBeEmpty()
+                                    ->defaultNull()
                                 ->end()
                                 ->arrayNode('plugins')
                                     ->scalarPrototype()

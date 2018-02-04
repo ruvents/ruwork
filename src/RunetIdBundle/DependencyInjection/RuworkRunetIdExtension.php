@@ -35,7 +35,8 @@ final class RuworkRunetIdExtension extends ConfigurableExtension
                 ->setArguments([
                     '$key' => $clientConfig['key'],
                     '$secret' => $clientConfig['secret'],
-                    '$defaultUri' => $clientConfig['default_uri'],
+                    '$apiUri' => $clientConfig['api_uri'],
+                    '$oauthUri' => $clientConfig['oauth_uri'],
                     '$plugins' => array_map(function (string $id) {
                         return new Reference($id);
                     }, $clientConfig['plugins']),

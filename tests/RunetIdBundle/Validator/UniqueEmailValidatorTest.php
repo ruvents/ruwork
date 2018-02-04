@@ -6,7 +6,7 @@ namespace Ruwork\RunetIdBundle\Validator;
 
 use GuzzleHttp\Psr7\Response;
 use Http\Mock\Client;
-use RunetId\Client\RunetIdClient;
+use RunetId\Client\RunetIdClientFactory;
 use Ruwork\RunetIdBundle\Fixtures\StringObject;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -92,7 +92,9 @@ class UniqueEmailValidatorTest extends ConstraintValidatorTestCase
 
     protected function createValidator()
     {
-        $client = new RunetIdClient($this->httpClient);
+        $this->httpClient = new Client();
+        $factory = new RunetIdClientFactory($this->httpClient);
+        $client = $factory->create('key', 'secret');
 
         return new UniqueEmailValidator(new SimpleContainer(['default' => $client]));
     }

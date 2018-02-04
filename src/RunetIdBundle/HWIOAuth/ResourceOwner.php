@@ -6,19 +6,16 @@ namespace Ruwork\RunetIdBundle\HWIOAuth;
 
 use HWI\Bundle\OAuthBundle\OAuth\ResourceOwnerInterface;
 use RunetId\Client\RunetIdClient;
-use RunetId\Client\RunetIdOAuth;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 final class ResourceOwner implements ResourceOwnerInterface
 {
     private $client;
-    private $key;
     private $name;
 
-    public function __construct(RunetIdClient $client, string $key)
+    public function __construct(RunetIdClient $client)
     {
         $this->client = $client;
-        $this->key = $key;
     }
 
     /**
@@ -49,9 +46,7 @@ final class ResourceOwner implements ResourceOwnerInterface
      */
     public function getAuthorizationUrl($redirectUri, array $extraParameters = [])
     {
-        $host = $extraParameters['host'] ?? RunetIdOAuth::DEFAULT_HOST;
-
-        return RunetIdOAuth::getUrl($this->key, $redirectUri, $host);
+        return $this->client->generateOAuthUri($redirectUri);
     }
 
     /**
@@ -83,17 +78,13 @@ final class ResourceOwner implements ResourceOwnerInterface
      */
     public function getOption($name)
     {
-        if ('key' === $name) {
-            return $this->key;
-        }
-
         throw new \InvalidArgumentException(sprintf('Option "%s" does not exist.', $name));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setName($name): void
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -101,14 +92,14 @@ final class ResourceOwner implements ResourceOwnerInterface
     /**
      * {@inheritdoc}
      */
-    public function addPaths(array $paths): void
+    public function addPaths(array $paths)
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function refreshAccessToken($refreshToken, array $extraParameters = []): void
+    public function refreshAccessToken($refreshToken, array $extraParameters = [])
     {
     }
 }

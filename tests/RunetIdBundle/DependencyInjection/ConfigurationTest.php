@@ -6,7 +6,6 @@ namespace Ruwork\RunetIdBundle\DependencyInjection;
 
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
-use RunetId\Client\RunetIdClientFactory;
 
 class ConfigurationTest extends TestCase
 {
@@ -26,7 +25,8 @@ class ConfigurationTest extends TestCase
                     'default' => [
                         'key' => 'key',
                         'secret' => 'secret',
-                        'default_uri' => RunetIdClientFactory::DEFAULT_URI,
+                        'api_uri' => null,
+                        'oauth_uri' => null,
                         'plugins' => [],
                         'http_client' => null,
                     ],
@@ -50,7 +50,8 @@ class ConfigurationTest extends TestCase
                             'name' => 2017,
                             'key' => 'key',
                             'secret' => 'secret',
-                            'default_uri' => 'localhost',
+                            'api_uri' => 'localhost',
+                            'oauth_uri' => 'localhost',
                             'plugins' => [
                                 'plugin1',
                                 'plugin2',
@@ -66,14 +67,16 @@ class ConfigurationTest extends TestCase
                     2016 => [
                         'key' => 'key',
                         'secret' => 'secret',
-                        'default_uri' => RunetIdClientFactory::DEFAULT_URI,
+                        'api_uri' => null,
+                        'oauth_uri' => null,
                         'plugins' => [],
                         'http_client' => null,
                     ],
                     2017 => [
                         'key' => 'key',
                         'secret' => 'secret',
-                        'default_uri' => 'localhost',
+                        'api_uri' => 'localhost',
+                        'oauth_uri' => 'localhost',
                         'plugins' => [
                             'plugin1',
                             'plugin2',

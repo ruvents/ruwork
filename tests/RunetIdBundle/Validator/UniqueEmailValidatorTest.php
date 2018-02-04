@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\RunetIdBundle;
+namespace Ruwork\RunetIdBundle\Validator;
 
 use GuzzleHttp\Psr7\Response;
 use Http\Mock\Client;
 use RunetId\Client\RunetIdClient;
 use Ruwork\RunetIdBundle\Fixtures\StringObject;
-use Ruwork\RunetIdBundle\Validator\UniqueEmail;
-use Ruwork\RunetIdBundle\Validator\UniqueEmailValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

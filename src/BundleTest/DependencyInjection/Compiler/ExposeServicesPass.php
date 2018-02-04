@@ -25,6 +25,10 @@ class ExposeServicesPass implements CompilerPassInterface
             if ($container->has($id)) {
                 $container->findDefinition($id)->setPublic(true);
             }
+
+            if ($container->hasAlias($id)) {
+                $container->getAlias($id)->setPublic(true);
+            }
         }
     }
 }

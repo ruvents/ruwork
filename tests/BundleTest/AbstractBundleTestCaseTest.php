@@ -7,6 +7,7 @@ namespace Ruwork\BundleTest;
 use PHPUnit\Framework\AssertionFailedError;
 use Ruwork\BundleTest\Fixtures\TestBundle;
 use Ruwork\BundleTest\Fixtures\TestService;
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
@@ -17,12 +18,16 @@ class AbstractBundleTestCaseTest extends AbstractBundleTestCase
         $this->registerService(TestService::class)
             ->setPublic(false);
 
+        $this->container->setAlias('alias', new Alias(TestService::class, false));
+
         // non existing services must not throw
         $this->exposeService('non_existing_service');
         $this->exposeService(TestService::class);
+        $this->exposeService('alias');
 
         $this->assertContainerCompiles();
         $this->assertTrue($this->container->findDefinition(TestService::class)->isPublic());
+        $this->assertTrue($this->container->getAlias('alias')->isPublic());
     }
 
     public function testContainerCompilesFailure(): void

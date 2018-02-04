@@ -36,6 +36,12 @@
         <testsuite name="RoutingToolsBundle">
             <directory>./tests/RoutingToolsBundle</directory>
         </testsuite>
+        <testsuite name="RunetIdBundle">
+            <directory>./tests/RunetIdBundle</directory>
+        </testsuite>
+        <testsuite name="UploadBundle">
+            <directory>./tests/UploadBundle</directory>
+        </testsuite>
     </testsuites>
 
     <filter>

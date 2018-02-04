@@ -35,13 +35,12 @@ jobs:
         -
             php: 7.2
             before_install:
-                - phpenv config-rm xdebug.ini
                 - composer require --no-update symfony/lts:^3
                 - composer require --no-update friendsofphp/php-cs-fixer
             script:
-                - vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no
-                - phpenv config-add xdebug.ini
                 - bin/phpunit -v --coverage-clover=coverage.xml
+                - phpenv config-rm xdebug.ini
+                - vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no
             after_success:
                 - bash <(curl -s https://codecov.io/bash)
 

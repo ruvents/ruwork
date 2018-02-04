@@ -10,6 +10,7 @@ use Http\Message\StreamFactory;
 use Http\Message\UriFactory;
 use RunetId\Client\RunetIdClient;
 use RunetId\Client\RunetIdClientFactory;
+use Ruwork\RunetIdBundle\Validator\UniqueEmailValidator;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 return function (ContainerConfigurator $container): void {
@@ -37,4 +38,9 @@ return function (ContainerConfigurator $container): void {
             ref('ruwork_runet_id.client_factory'),
             'create',
         ]);
+
+    $services
+        ->set('ruwork_runet_id.validator.unique_email', UniqueEmailValidator::class)
+        ->arg('$container', ref('ruwork_runet_id.client_container'))
+        ->tag('validator.constraint_validator');
 };

@@ -18,8 +18,12 @@ class RunetIdBundleTest extends AbstractBundleTestCase
         ]);
         $this->exposeService('ruwork_runet_id.client.default');
         $this->exposeService('ruwork_runet_id.client_container');
+        $this->exposeService('ruwork_runet_id.validator.unique_email');
         $this->exposeService(RunetIdClient::class);
+
         $this->compile();
+
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('ruwork_runet_id.validator.unique_email', 'validator.constraint_validator');
 
         $client = $this->container->get('ruwork_runet_id.client.default');
         $clientContainer = $this->container->get('ruwork_runet_id.client_container');

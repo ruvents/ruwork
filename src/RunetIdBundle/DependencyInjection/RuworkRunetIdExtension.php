@@ -12,13 +12,14 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
+use Symfony\Component\Validator\Validation;
 
 final class RuworkRunetIdExtension extends ConfigurableExtension
 {
     /**
      * {@inheritdoc}
      */
-    protected function loadInternal(array $config, ContainerBuilder $container): void
+    protected function loadInternal(array $config, ContainerBuilder $container)
     {
         (new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config')))
             ->load('services.php');
@@ -46,10 +47,14 @@ final class RuworkRunetIdExtension extends ConfigurableExtension
             $clientReferences[$name] = new Reference($id);
         }
 
-        $container->findDefinition('ruwork_runet_id.client_container')
+        $container->getDefinition('ruwork_runet_id.client_container')
             ->setArgument(0, $clientReferences);
 
         $defaultClientAlias = new Alias('ruwork_runet_id.client.'.$config['default_client'], false);
         $container->setAlias(RunetIdClient::class, $defaultClientAlias);
+
+        if (!class_exists(Validation::class)) {
+            $container->removeDefinition('ruwork_runet_id.validator.unique_email');
+        }
     }
 }

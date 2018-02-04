@@ -36,7 +36,7 @@ final class Configuration implements ConfigurationInterface
                 ->children()
                     ->arrayNode('clients')
                         ->isRequired()
-                        ->cannotBeEmpty()
+                        ->requiresAtLeastOneElement()
                         ->useAttributeAsKey('name')
                         ->arrayPrototype()
                             ->children()

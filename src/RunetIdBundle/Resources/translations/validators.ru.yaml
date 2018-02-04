@@ -1,0 +1,2 @@
+runet_id:
+    user_with_email_is_already_registered: User with email {{ value }} is already registered.

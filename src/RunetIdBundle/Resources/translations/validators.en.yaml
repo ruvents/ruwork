@@ -1,0 +1,2 @@
+runet_id:
+    user_with_email_is_already_registered: Пользователь с адресом {{ value }} уже зарегистрирован.

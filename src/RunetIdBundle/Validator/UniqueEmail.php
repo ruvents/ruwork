@@ -22,7 +22,7 @@ final class UniqueEmail extends Constraint
     /**
      * @var string
      */
-    public $message = 'runet_id.user_with_email_exists_log_in_with_runet_id';
+    public $message = 'runet_id.user_with_email_is_already_registered';
 
     protected static $errorNames = [
         self::NOT_UNIQUE_ERROR => 'NOT_UNIQUE_ERROR',

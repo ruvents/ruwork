@@ -8,6 +8,8 @@ for dir in tests/*
 do
     if [ -d "${dir}" ]; then
         package=${dir//tests\//}
+        printf "\nTesting ${package}\n"
+
         composer config extra.merge-plugin.require "src/${package}/composer.json"
         composer update
         ./bin/phpunit --testsuite ${package}

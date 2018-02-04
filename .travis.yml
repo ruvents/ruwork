@@ -21,7 +21,8 @@ jobs:
         #  env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
 
           # Latest stable packages
-        - php: 7.1
+        - stage: test
+          php: 7.1
           env: PHP_CS=true SPLITTEST=true
         - php: 7.2
           env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover=coverage.xml"
@@ -33,6 +34,12 @@ jobs:
           # Latest unstable packages
         - php: 7.2
           env: STABILITY="dev"
+
+        - stage: publish
+          before_install: skip
+          install: skip
+          script: ./bin/publish
+          after_success: skip
 
 before_install:
     - echo -e "machine github.com\n  login $GITHUB_API_TOKEN" >> ~/.netrc
@@ -53,8 +60,3 @@ script:
 
 after_success:
     - if [[ $COVERAGE = true ]]; then bash <(curl -s https://codecov.io/bash); fi
-
-#deploy:
-#    skip_cleanup: true
-#    provider: script
-#    script: ./bin/publish

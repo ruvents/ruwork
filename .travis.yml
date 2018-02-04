@@ -1,7 +1,6 @@
 language: php
 
-git:
-    depth: false
+php: 7.1
 
 sudo: false
 
@@ -9,10 +8,6 @@ cache:
     directories:
         - $HOME/.composer/cache/files
         - $HOME/vendor/bin/.phpunit
-
-env:
-    global:
-        - PHPUNIT_FLAGS="-v"
 
 install:
     - composer update --prefer-dist --no-interaction
@@ -25,7 +20,6 @@ jobs:
     include:
         # Split test
         -
-            php: 7.1
             before_install:
                 - phpenv config-rm xdebug.ini
             script:
@@ -54,6 +48,8 @@ jobs:
         # Publishing to mini repos
         -
             stage: publish
+            git:
+                depth: false
             install: skip
             before_script:
                 - echo -e "machine github.com\n  login $GITHUB_API_TOKEN" >> ~/.netrc

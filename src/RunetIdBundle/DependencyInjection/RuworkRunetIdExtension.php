@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Ruwork\RunetIdBundle\DependencyInjection;
 
+use HWI\Bundle\OAuthBundle\HWIOAuthBundle;
 use RunetId\Client\RunetIdClient;
+use Ruwork\RunetIdBundle\HWIOAuth\ResourceOwner;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ChildDefinition;
@@ -46,6 +48,13 @@ final class RuworkRunetIdExtension extends ConfigurableExtension
                 ]);
 
             $clientReferences[$name] = new Reference($id);
+
+            if (class_exists(HWIOAuthBundle::class)) {
+                $container
+                    ->register('ruwork_runet_id.oauth.'.$name, ResourceOwner::class)
+                    ->setPublic(false)
+                    ->setArgument('$client', new Reference($id));
+            }
         }
 
         $container->getDefinition('ruwork_runet_id.client_container')

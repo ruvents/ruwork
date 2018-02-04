@@ -6,6 +6,7 @@ namespace Ruwork\RunetIdBundle;
 
 use RunetId\Client\RunetIdClient;
 use Ruwork\BundleTest\AbstractBundleTestCase;
+use Ruwork\RunetIdBundle\HWIOAuth\ResourceOwner;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 class RunetIdBundleTest extends AbstractBundleTestCase
@@ -17,6 +18,7 @@ class RunetIdBundleTest extends AbstractBundleTestCase
             'secret' => 'secret',
         ]);
         $this->exposeService('ruwork_runet_id.client.default');
+        $this->exposeService('ruwork_runet_id.oauth.default');
         $this->exposeService('ruwork_runet_id.client_container');
         $this->exposeService('ruwork_runet_id.validator.unique_email');
         $this->exposeService(RunetIdClient::class);
@@ -24,6 +26,7 @@ class RunetIdBundleTest extends AbstractBundleTestCase
         $this->compile();
 
         $this->assertContainerBuilderHasServiceDefinitionWithTag('ruwork_runet_id.validator.unique_email', 'validator.constraint_validator');
+        $this->assertContainerBuilderHasService('ruwork_runet_id.oauth.default', ResourceOwner::class);
 
         $client = $this->container->get('ruwork_runet_id.client.default');
         $clientContainer = $this->container->get('ruwork_runet_id.client_container');

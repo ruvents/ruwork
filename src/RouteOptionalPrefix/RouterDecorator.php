@@ -102,6 +102,8 @@ class RouterDecorator implements RouterInterface, RequestMatcherInterface
         }
 
         if (!isset($parameters[$variable])) {
+            $parameters[$variable] = '';
+
             return;
         }
 

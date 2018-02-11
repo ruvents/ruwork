@@ -6,7 +6,7 @@
     "homepage": "https://ruvents.github.io/ruwork/",
     "license": "MIT",
     "authors": [
-        {"name": "Valentin Udaltsov", "email": "udaltsov@ruwork.com"}
+        {"name": "Valentin Udaltsov", "email": "udaltsov@ruvents.com"}
     ],
     "require": {
         "php": "^7.1.3",

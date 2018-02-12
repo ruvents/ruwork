@@ -6,7 +6,10 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Ruwork\RouteOptionalPrefix\LoaderDecorator;
 use Ruwork\RouteOptionalPrefix\RouterDecorator;
+use Ruwork\RoutingToolsBundle\RedirectFactory\RedirectFactory;
+use Ruwork\RoutingToolsBundle\RedirectFactory\RedirectFactoryInterface;
 use Ruwork\RoutingToolsBundle\Twig\RoutingHelpersExtension;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 return function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -31,4 +34,13 @@ return function (ContainerConfigurator $container): void {
         ->args([
             '$router' => ref(RouterDecorator::class.'.inner'),
         ]);
+
+    $services->set('ruwork_routing_tools.redirect_factory', RedirectFactory::class)
+        ->private()
+        ->args([
+            '$urlGenerator' => ref('router'),
+        ]);
+
+    $services->alias(RedirectFactoryInterface::class, 'ruwork_routing_tools.redirect_factory')
+        ->private();
 };

@@ -20,29 +20,33 @@ class LoaderDecorator implements LoaderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return RouteCollection
      */
     public function load($resource, $type = null)
     {
         $routes = $this->loader->load($resource, $type);
 
         if (!$routes instanceof RouteCollection) {
-            return $routes;
+            throw new \UnexpectedValueException(sprintf('Decorated route loader is expected to return an instance of %s.', RouteCollection::class));
         }
 
-        foreach ($routes->all() as $route) {
+        foreach ($routes->all() as $name => $route) {
             /** @var Route $route */
             if (null === $variable = $route->getOption('prefix_variable')) {
                 continue;
             }
 
+            if (!$route->hasDefault($variable)) {
+                throw new \LogicException(sprintf('Route "%s" with optional prefix "/{%s}" must have a default value for "%2$s".', $name, $variable));
+            }
+
+            $path = sprintf('/{%s}%s', $variable, ltrim($route->getPath(), '/'));
+            $requirement = sprintf('(%s)/|', $route->getRequirement($variable) ?? '[^/]+');
+
             $route
-                ->setPath(sprintf('/{%s}%s', $variable, ltrim($route->getPath(), '/')))
-                ->addDefaults([
-                    $variable => '',
-                ])
-                ->addRequirements([
-                    $variable => sprintf('((%s)/|)', $route->getOption('prefix_requirements') ?? '[^/]+'),
-                ]);
+                ->setPath($path)
+                ->setRequirement($variable, $requirement);
         }
 
         return $routes;
@@ -51,7 +55,7 @@ class LoaderDecorator implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function supports($resource, $type = null): bool
+    public function supports($resource, $type = null)
     {
         return $this->loader->supports($resource, $type);
     }
@@ -59,7 +63,7 @@ class LoaderDecorator implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function getResolver(): LoaderResolverInterface
+    public function getResolver()
     {
         return $this->loader->getResolver();
     }
@@ -67,7 +71,7 @@ class LoaderDecorator implements LoaderInterface
     /**
      * {@inheritdoc}
      */
-    public function setResolver(LoaderResolverInterface $resolver): void
+    public function setResolver(LoaderResolverInterface $resolver)
     {
         $this->loader->setResolver($resolver);
     }

@@ -6,38 +6,158 @@ namespace Ruwork\RouteOptionalPrefix;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\Config\Loader\LoaderResolver;
+use Symfony\Component\Config\Loader\LoaderResolverInterface;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
 
 class LoaderDecoratorTest extends TestCase
 {
-    public function testDecoration(): void
+    public function testSupports()
     {
-        $mock = $this->getMockBuilder(LoaderInterface::class)->getMock();
+        $loader = $this->createMock(LoaderInterface::class);
 
-        $mock->expects($this->once())
-            ->method('load')
-            ->with($this->equalTo($resource = 'resource'), $this->equalTo($type = 'type'))
-            ->willReturn($loadResult = 'loaded');
+        $resource = 'resource';
+        $type = 'type';
 
-        $mock->expects($this->once())
+        $loader->expects($this->once())
             ->method('supports')
-            ->with($this->equalTo($resource), $this->equalTo($type))
+            ->with($resource, $type)
             ->willReturn(true);
 
-        $mock->expects($this->once())
+        $decorator = new LoaderDecorator($loader);
+
+        $this->assertTrue($decorator->supports($resource, $type));
+    }
+
+    public function testGetResolver()
+    {
+        $loader = $this->createMock(LoaderInterface::class);
+
+        $resolver = $this->createMock(LoaderResolverInterface::class);
+
+        $loader->expects($this->once())
             ->method('getResolver')
-            ->willReturn($resolver = new LoaderResolver());
+            ->willReturn($resolver);
 
-        $mock->expects($this->once())
+        $decorator = new LoaderDecorator($loader);
+
+        $this->assertSame($resolver, $decorator->getResolver());
+    }
+
+    public function testSetResolver()
+    {
+        $loader = $this->createMock(LoaderInterface::class);
+
+        $resolver = $this->createMock(LoaderResolverInterface::class);
+
+        $loader->expects($this->once())
             ->method('setResolver')
-            ->with($this->equalTo($resolver));
+            ->with($resolver);
 
-        /** @var LoaderInterface $mock */
-        $loader = new LoaderDecorator($mock);
+        $decorator = new LoaderDecorator($loader);
 
-        $this->assertEquals($loadResult, $loader->load($resource, $type));
-        $this->assertTrue($loader->supports($resource, $type));
-        $this->assertEquals($resolver, $loader->getResolver());
-        $loader->setResolver($resolver);
+        $decorator->setResolver($resolver);
+    }
+
+    public function testLoadIgnoresNotRoutingCollection(): void
+    {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('Decorated route loader is expected to return an instance of Symfony\Component\Routing\RouteCollection.');
+
+        $loader = $this->createMock(LoaderInterface::class);
+        $loader->expects($this->once())
+            ->method('load')
+            ->willReturn(null);
+
+        (new LoaderDecorator($loader))->load('res');
+    }
+
+    public function testLoadIgnoresRouteWithoutOption(): void
+    {
+        $loader = $this->createLoaderDecorator($expectedRoutes = [
+            'test' => new Route('/test'),
+            'test2' => new Route('/test2/{a}', ['a' => 1]),
+        ]);
+
+        $actualRoutes = iterator_to_array($loader->load('resource'));
+
+        $this->assertSame($expectedRoutes, $actualRoutes);
+    }
+
+    public function testLoadFailsWithoutDefault(): void
+    {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Route "route" with optional prefix "/{_locale}" must have a default value for "_locale".');
+
+        $this
+            ->createLoaderDecorator([
+                'route' => new Route('/', [], [], ['prefix_variable' => '_locale']),
+            ])
+            ->load('res');
+    }
+
+    public function testLoadRouteWithPrefix(): void
+    {
+        $collection = $this
+            ->createLoaderDecorator([
+                'route' => new Route(
+                    '/',
+                    ['_locale' => 'en'],
+                    [],
+                    ['prefix_variable' => '_locale']
+                ),
+            ])
+            ->load('res');
+
+        $actualRoute = $collection->get('route');
+        $expectedRoute = new Route(
+            '/{_locale}',
+            ['_locale' => 'en'],
+            ['_locale' => '([^/]+)/|'],
+            ['prefix_variable' => '_locale']
+        );
+
+        $this->assertEquals($expectedRoute, $actualRoute);
+    }
+
+    public function testLoadRouteWithRequirement(): void
+    {
+        $collection = $this
+            ->createLoaderDecorator([
+                'route' => new Route(
+                    '/',
+                    ['_locale' => 'en'],
+                    ['_locale' => 'ru'],
+                    ['prefix_variable' => '_locale']
+                ),
+            ])
+            ->load('res');
+
+        $actualRoute = $collection->get('route');
+        $expectedRoute = new Route(
+            '/{_locale}',
+            ['_locale' => 'en'],
+            ['_locale' => '(ru)/|'],
+            ['prefix_variable' => '_locale']
+        );
+
+        $this->assertEquals($expectedRoute, $actualRoute);
+    }
+
+    private function createLoaderDecorator(iterable $routes): LoaderDecorator
+    {
+        $loader = $this->createMock(LoaderInterface::class);
+
+        $collection = new RouteCollection();
+
+        foreach ($routes as $name => $route) {
+            $collection->add($name, $route);
+        }
+
+        $loader->expects($this->once())
+            ->method('load')
+            ->willReturn($collection);
+
+        return new LoaderDecorator($loader);
     }
 }

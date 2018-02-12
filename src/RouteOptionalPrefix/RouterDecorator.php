@@ -7,7 +7,6 @@ namespace Ruwork\RouteOptionalPrefix;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
 class RouterDecorator implements RouterInterface, RequestMatcherInterface
@@ -22,15 +21,7 @@ class RouterDecorator implements RouterInterface, RequestMatcherInterface
     /**
      * {@inheritdoc}
      */
-    public function setContext(RequestContext $context): void
-    {
-        $this->router->setContext($context);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getContext(): RequestContext
+    public function getContext()
     {
         return $this->router->getContext();
     }
@@ -38,7 +29,23 @@ class RouterDecorator implements RouterInterface, RequestMatcherInterface
     /**
      * {@inheritdoc}
      */
-    public function match($pathinfo): array
+    public function setContext(RequestContext $context)
+    {
+        $this->router->setContext($context);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRouteCollection()
+    {
+        return $this->router->getRouteCollection();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function match($pathinfo)
     {
         $parameters = $this->router->match($pathinfo);
         $this->postMatch($parameters);
@@ -49,25 +56,7 @@ class RouterDecorator implements RouterInterface, RequestMatcherInterface
     /**
      * {@inheritdoc}
      */
-    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
-    {
-        $this->preGenerate($name, $parameters);
-
-        return $this->router->generate($name, $parameters, $referenceType);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRouteCollection(): RouteCollection
-    {
-        return $this->router->getRouteCollection();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function matchRequest(Request $request): array
+    public function matchRequest(Request $request)
     {
         $parameters = $this->router instanceof RequestMatcherInterface
             ? $this->router->matchRequest($request)
@@ -78,17 +67,38 @@ class RouterDecorator implements RouterInterface, RequestMatcherInterface
         return $parameters;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    {
+        $this->preGenerate($name, $parameters);
+
+        return $this->router->generate($name, $parameters, $referenceType);
+    }
+
     private function postMatch(array &$parameters): void
     {
+        if (!isset($parameters['_route'])) {
+            return;
+        }
+
         $route = $this->getRouteCollection()->get($parameters['_route']);
 
         if (null === $variable = $route->getOption('prefix_variable')) {
             return;
         }
 
-        $parameters[$variable] = '' === $parameters[$variable]
-            ? $route->getOption('prefix_default')
-            : rtrim($parameters[$variable], '/');
+        $value = $parameters[$variable];
+
+        if ('' === $value) {
+            $value = $route->getDefault($variable);
+        } else {
+            // remove / at the end
+            $value = substr($value, 0, -1);
+        }
+
+        $parameters[$variable] = $value;
     }
 
     private function preGenerate(string $name, array &$parameters): void
@@ -101,18 +111,18 @@ class RouterDecorator implements RouterInterface, RequestMatcherInterface
             return;
         }
 
-        if (!isset($parameters[$variable])) {
-            $parameters[$variable] = '';
+        $default = $route->getDefault($variable);
 
-            return;
+        $value = $parameters[$variable]
+            ?? $this->router->getContext()->getParameter($variable)
+            ?? $default;
+
+        if ($default === $value) {
+            $value = '';
+        } else {
+            $value .= '/';
         }
 
-        if ($route->getOption('prefix_default') === $parameters[$variable]) {
-            $parameters[$variable] = '';
-
-            return;
-        }
-
-        $parameters[$variable] .= '/';
+        $parameters[$variable] = $value;
     }
 }

@@ -7,9 +7,8 @@ namespace Ruwork\RouteOptionalPrefix;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Exception\InvalidParameterException;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
@@ -18,104 +17,282 @@ use Symfony\Component\Routing\RouterInterface;
 
 class RouterDecoratorTest extends TestCase
 {
-    /**
-     * @var RouterDecorator
-     */
-    private $router;
+    public function testSetContext(): void
+    {
+        $router = $this->createMock(RouterInterface::class);
+        $requestContext = $this->createMock(RequestContext::class);
 
-    protected function setUp(): void
+        $router->expects($this->once())
+            ->method('setContext')
+            ->with($requestContext);
+
+        $decorator = new RouterDecorator($router);
+
+        $decorator->setContext($requestContext);
+    }
+
+    public function testGetContext(): void
+    {
+        $router = $this->createMock(RouterInterface::class);
+        $requestContext = $this->createMock(RequestContext::class);
+
+        $router->expects($this->once())
+            ->method('getContext')
+            ->willReturn($requestContext);
+
+        $decorator = new RouterDecorator($router);
+
+        $this->assertSame($requestContext, $decorator->getContext());
+    }
+
+    public function testGetRouteCollection(): void
+    {
+        $router = $this->createMock(RouterInterface::class);
+        $collection = $this->createMock(RouteCollection::class);
+
+        $router->expects($this->once())
+            ->method('getRouteCollection')
+            ->willReturn($collection);
+
+        $decorator = new RouterDecorator($router);
+
+        $this->assertSame($collection, $decorator->getRouteCollection());
+    }
+
+    public function testMatch(): void
+    {
+        $router = $this->createMock(RouterInterface::class);
+        $pathInfo = '/path_info';
+        $parameters = ['a' => 1];
+
+        $router->expects($this->once())
+            ->method('match')
+            ->with($pathInfo)
+            ->willReturn($parameters);
+
+        $decorator = new RouterDecorator($router);
+
+        $this->assertSame($parameters, $decorator->match($pathInfo));
+    }
+
+    public function testMatchRequest(): void
+    {
+        $router = $this->createMock(RouterInterface::class);
+        $pathInfo = '/path_info';
+        $parameters = ['a' => 1];
+
+        $router->expects($this->once())
+            ->method('match')
+            ->with($pathInfo)
+            ->willReturn($parameters);
+
+        $decorator = new RouterDecorator($router);
+
+        $this->assertSame($parameters, $decorator->matchRequest(Request::create($pathInfo)));
+    }
+
+    public function testMatchRequestForRequestMatcherInterface(): void
+    {
+        $router = $this->createMock([RouterInterface::class, RequestMatcherInterface::class]);
+        $request = Request::create('/pathinfo');
+        $parameters = ['a' => 1];
+
+        $router->expects($this->once())
+            ->method('matchRequest')
+            ->with($request)
+            ->willReturn($parameters);
+
+        $decorator = new RouterDecorator($router);
+
+        $this->assertSame($parameters, $decorator->matchRequest($request));
+    }
+
+    public function testGenerate(): void
+    {
+        $name = 'route';
+        $parameters = ['a' => 1];
+        $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH;
+        $url = '/url';
+
+        $collection = $this->createMock(RouteCollection::class);
+        $collection->method('get')
+            ->willReturn(null);
+
+        $router = $this->createMock(RouterInterface::class);
+
+        $router->method('getRouteCollection')
+            ->willReturn($collection);
+
+        $router->expects($this->once())
+            ->method('generate')
+            ->with($name, $parameters, $referenceType)
+            ->willReturn($url);
+
+        $decorator = new RouterDecorator($router);
+
+        $this->assertSame($url, $decorator->generate($name, $parameters, $referenceType));
+    }
+
+    /**
+     * @dataProvider getMatchData
+     */
+    public function testMatchUrl(iterable $routes, string $url, array $expectedParameters): void
+    {
+        $loader = $this->createLoader($routes);
+        $router = new RouterDecorator(new Router($loader, 'res'));
+
+        $this->assertEquals($expectedParameters, $router->match($url));
+    }
+
+    public function getMatchData(): \Generator
+    {
+        yield [
+            ['unprefixed' => new Route('/unprefixed')],
+            '/unprefixed',
+            ['_route' => 'unprefixed'],
+        ];
+
+        yield [
+            [
+                'index' => new Route(
+                    '/{var}',
+                    ['var' => 'ru'],
+                    ['var' => '(en)/|'],
+                    ['prefix_variable' => 'var']
+                ),
+            ],
+            '/',
+            ['var' => 'ru', '_route' => 'index'],
+        ];
+
+        yield [
+            [
+                'index' => new Route(
+                    '/{var}',
+                    ['var' => 'ru'],
+                    ['var' => '(en)/|'],
+                    ['prefix_variable' => 'var']
+                ),
+            ],
+            '/en/',
+            ['var' => 'en', '_route' => 'index'],
+        ];
+    }
+
+    /**
+     * @dataProvider getGenerateData
+     */
+    public function testGenerateUrl(
+        iterable $routes,
+        array $contextParameters,
+        string $name,
+        array $parameters,
+        string $expectedUrl
+    ): void {
+        $loader = $this->createLoader($routes);
+        $router = new RouterDecorator(new Router($loader, 'res'));
+        $router->getContext()->setParameters($contextParameters);
+
+        $this->assertEquals($expectedUrl, $router->generate($name, $parameters));
+    }
+
+    public function getGenerateData()
+    {
+        yield [
+            ['unprefixed' => new Route('/unprefixed')],
+            [],
+            'unprefixed',
+            ['var' => 'en'],
+            '/unprefixed?var=en',
+        ];
+
+        yield [
+            [
+                'index' => new Route(
+                    '/{var}',
+                    ['var' => 'ru'],
+                    ['var' => '(en)/|'],
+                    ['prefix_variable' => 'var']
+                ),
+            ],
+            [],
+            'index',
+            [],
+            '/',
+        ];
+
+        yield [
+            [
+                'index' => new Route(
+                    '/{var}',
+                    ['var' => 'ru'],
+                    ['var' => '(en)/|'],
+                    ['prefix_variable' => 'var']
+                ),
+            ],
+            [],
+            'index',
+            ['var' => 'ru'],
+            '/',
+        ];
+
+        yield [
+            [
+                'index' => new Route(
+                    '/{var}',
+                    ['var' => 'ru'],
+                    ['var' => '(en)/|'],
+                    ['prefix_variable' => 'var']
+                ),
+            ],
+            ['var' => 'ru'],
+            'index',
+            [],
+            '/',
+        ];
+
+        yield [
+            [
+                'index' => new Route(
+                    '/{var}',
+                    ['var' => 'ru'],
+                    ['var' => '(en)/|'],
+                    ['prefix_variable' => 'var']
+                ),
+            ],
+            ['var' => 'en'],
+            'index',
+            [],
+            '/en/',
+        ];
+
+        yield [
+            [
+                'index' => new Route(
+                    '/{var}',
+                    ['var' => 'ru'],
+                    ['var' => '(en)/|'],
+                    ['prefix_variable' => 'var']
+                ),
+            ],
+            ['var' => 'ru'],
+            'index',
+            ['var' => 'en'],
+            '/en/',
+        ];
+    }
+
+    private function createLoader(iterable $routes): LoaderInterface
     {
         $collection = new RouteCollection();
 
-        $collection->add('prefixed', new Route('/', [], [], [
-            'prefix_variable' => '_locale',
-            'prefix_default' => 'ru',
-            'prefix_requirements' => 'en',
-        ]));
+        foreach ($routes as $name => $route) {
+            $collection->add($name, $route);
+        }
 
-        $collection->add('unprefixed', new Route('/unprefixed'));
+        $loader = $this->createMock(LoaderInterface::class);
+        $loader->method('load')->willReturn($collection);
 
-        $loader = $this->getMockBuilder(LoaderInterface::class)->getMock();
-        $loader->expects($this->any())->method('load')->willReturn($collection);
-        /** @var LoaderInterface $loader */
-        $loader = new LoaderDecorator($loader);
-
-        $this->router = new RouterDecorator(new Router($loader, 'resource'));
-    }
-
-    /**
-     * @dataProvider generateData
-     */
-    public function testGenerate(string $route, array $parameters, string $expectedUrl): void
-    {
-        $this->assertSame($expectedUrl, $this->router->generate($route, $parameters));
-    }
-
-    public function generateData(): array
-    {
-        return [
-            ['prefixed', ['_locale' => 'en'], '/en/'],
-            ['prefixed', [], '/'],
-            ['prefixed', ['_locale' => 'ru'], '/'],
-            ['unprefixed', ['_locale' => 'ru'], '/unprefixed?_locale=ru'],
-        ];
-    }
-
-    public function testGenerateRequirements(): void
-    {
-        $this->expectException(InvalidParameterException::class);
-
-        $this->router->generate('prefixed', ['_locale' => 'abc']);
-    }
-
-    public function testGenerateNoRoute(): void
-    {
-        $this->expectException(RouteNotFoundException::class);
-
-        $this->router->generate('non_existing_route');
-    }
-
-    /**
-     * @dataProvider matchData
-     */
-    public function testMatch(string $url, array $expectedParameters): void
-    {
-        $this->assertSame($expectedParameters, $this->router->match($url));
-        $this->assertSame($expectedParameters, $this->router->matchRequest(Request::create($url)));
-    }
-
-    public function matchData(): array
-    {
-        return [
-            ['/unprefixed', ['_route' => 'unprefixed']],
-            ['/', ['_locale' => 'ru', '_route' => 'prefixed']],
-            ['/en/', ['_locale' => 'en', '_route' => 'prefixed']],
-        ];
-    }
-
-    public function testMatchNoRoute(): void
-    {
-        $this->expectException(ResourceNotFoundException::class);
-
-        $this->router->match('/non-matching-path');
-    }
-
-    public function testDecoration(): void
-    {
-        $mock = $this->getMockBuilder(RouterInterface::class)->getMock();
-
-        $mock->expects($this->once())
-            ->method('getContext')
-            ->willReturn($context = new RequestContext());
-
-        $mock->expects($this->once())
-            ->method('setContext')
-            ->with($this->equalTo($context));
-
-        /** @var RouterInterface $mock */
-        $router = new RouterDecorator($mock);
-
-        $this->assertEquals($context, $router->getContext());
-        $router->setContext($context);
+        return $loader;
     }
 }

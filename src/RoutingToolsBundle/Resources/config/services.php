@@ -6,6 +6,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Ruwork\RouteOptionalPrefix\LoaderDecorator;
 use Ruwork\RouteOptionalPrefix\RouterDecorator;
+use Ruwork\RoutingToolsBundle\Controller\RemoveTrailingSlashController;
 use Ruwork\RoutingToolsBundle\RedirectFactory\RedirectFactory;
 use Ruwork\RoutingToolsBundle\RedirectFactory\RedirectFactoryInterface;
 use Ruwork\RoutingToolsBundle\Twig\RoutingHelpersExtension;
@@ -13,33 +14,40 @@ use Ruwork\RoutingToolsBundle\Twig\RoutingHelpersExtension;
 return function (ContainerConfigurator $container): void {
     $services = $container->services();
 
+    $services->defaults()
+        ->private();
+
     $services->set(RoutingHelpersExtension::class)
-        ->private()
         ->args([
             '$requestStack' => ref('request_stack'),
         ])
         ->tag('twig.extension');
 
     $services->set(LoaderDecorator::class)
-        ->private()
         ->decorate('routing.loader')
         ->args([
             '$loader' => ref(LoaderDecorator::class.'.inner'),
         ]);
 
     $services->set(RouterDecorator::class)
-        ->private()
         ->decorate('router')
         ->args([
             '$router' => ref(RouterDecorator::class.'.inner'),
         ]);
 
     $services->set('ruwork_routing_tools.redirect_factory', RedirectFactory::class)
-        ->private()
         ->args([
             '$urlGenerator' => ref('router'),
         ]);
 
-    $services->alias(RedirectFactoryInterface::class, 'ruwork_routing_tools.redirect_factory')
-        ->private();
+    $services->alias('redirect_factory', 'ruwork_routing_tools.redirect_factory');
+
+    $services->alias(RedirectFactoryInterface::class, 'redirect_factory');
+
+    $services->set('ruwork_routing_tools.controller.remove_trailing_slash')
+        ->class(RemoveTrailingSlashController::class)
+        ->public()
+        ->args([
+            '$redirectFactory' => ref('redirect_factory'),
+        ]);
 };

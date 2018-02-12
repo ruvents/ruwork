@@ -29,7 +29,7 @@ class MailUser implements MailUserInterface
     public function __construct($email, $name = null, $locale = 'ru')
     {
         $this->email = $email;
-        $this->names = (array)$name;
+        $this->names = (array) $name;
         $this->locale = $locale;
     }
 
@@ -37,7 +37,7 @@ class MailUser implements MailUserInterface
     {
         $name = reset($this->names);
 
-        return (string)$name;
+        return (string) $name;
     }
 
     /**

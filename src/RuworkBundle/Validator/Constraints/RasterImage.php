@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\ImageValidator;
 
 /**
- * @Annotation()
+ * @Annotation
  * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
  */
 class RasterImage extends Image

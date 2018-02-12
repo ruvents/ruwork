@@ -7,46 +7,46 @@ namespace Ruwork\RuworkBundle\Mailer;
 interface MessageBuilderInterface
 {
     /**
-     * @param string|MailUserInterface $from
+     * @param MailUserInterface|string $from
      *
      * @return MessageBuilderInterface
      */
-    public function setFrom($from): MessageBuilderInterface;
+    public function setFrom($from): self;
 
-    public function setSubjects(array $subjects): MessageBuilderInterface;
+    public function setSubjects(array $subjects): self;
 
-    public function addSubject(string $subject, string $locale = null): MessageBuilderInterface;
+    public function addSubject(string $subject, string $locale = null): self;
 
-    public function setTemplates(array $templates): MessageBuilderInterface;
+    public function setTemplates(array $templates): self;
 
-    public function addTemplate(string $template, string $locale = null): MessageBuilderInterface;
+    public function addTemplate(string $template, string $locale = null): self;
 
-    public function setParameters(array $parameters): MessageBuilderInterface;
+    public function setParameters(array $parameters): self;
 
-    public function addParameter(string $name, $value): MessageBuilderInterface;
+    public function addParameter(string $name, $value): self;
 
-    public function setContentType(string $contentType): MessageBuilderInterface;
+    public function setContentType(string $contentType): self;
 
     /**
      * @param \Swift_Mime_SimpleMimeEntity[] $attachments
      *
      * @return MessageBuilderInterface
      */
-    public function setAttachments(array $attachments): MessageBuilderInterface;
+    public function setAttachments(array $attachments): self;
 
-    public function addAttachment(\Swift_Mime_SimpleMimeEntity $attachment): MessageBuilderInterface;
+    public function addAttachment(\Swift_Mime_SimpleMimeEntity $attachment): self;
 
     /**
-     * @param string|MailUserInterface $to
+     * @param MailUserInterface|string $to
      *
      * @return \Swift_Mime_SimpleMessage
      */
     public function buildMessage($to): \Swift_Mime_SimpleMessage;
 
     /**
-     * @param string|MailUserInterface $to
+     * @param MailUserInterface|string $to
      *
      * @return MessageBuilderInterface
      */
-    public function sendTo($to): MessageBuilderInterface;
+    public function sendTo($to): self;
 }

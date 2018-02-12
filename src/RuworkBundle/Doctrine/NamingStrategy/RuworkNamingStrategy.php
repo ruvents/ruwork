@@ -58,7 +58,7 @@ final class RuworkNamingStrategy implements NamingStrategy
     /**
      * {@inheritdoc}
      */
-    function joinTableName($sourceEntity, $targetEntity, $propertyName = null)
+    public function joinTableName($sourceEntity, $targetEntity, $propertyName = null)
     {
         return $this->classToTableName($sourceEntity).'_link_'.$this->classToShortTableName($targetEntity);
     }
@@ -66,7 +66,7 @@ final class RuworkNamingStrategy implements NamingStrategy
     /**
      * {@inheritdoc}
      */
-    function joinKeyColumnName($entityName, $referencedColumnName = null)
+    public function joinKeyColumnName($entityName, $referencedColumnName = null)
     {
         return $this->classToShortTableName($entityName).'_'.($referencedColumnName ?: $this->referenceColumnName());
     }

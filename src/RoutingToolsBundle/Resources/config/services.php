@@ -9,7 +9,6 @@ use Ruwork\RouteOptionalPrefix\RouterDecorator;
 use Ruwork\RoutingToolsBundle\RedirectFactory\RedirectFactory;
 use Ruwork\RoutingToolsBundle\RedirectFactory\RedirectFactoryInterface;
 use Ruwork\RoutingToolsBundle\Twig\RoutingHelpersExtension;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 return function (ContainerConfigurator $container): void {
     $services = $container->services();

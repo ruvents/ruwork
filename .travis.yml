@@ -58,3 +58,6 @@ jobs:
                 - echo -e "machine github.com\n  login $GITHUB_API_TOKEN" >> ~/.netrc
             script:
                 - ./bin/publish
+
+notifications:
+    webhooks: https://fathomless-fjord-24024.herokuapp.com/notify

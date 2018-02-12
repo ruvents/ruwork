@@ -1,10 +1,12 @@
 <?php
 
-namespace Ruvents\RuworkBundle\HttpFoundation;
+declare(strict_types=1);
+
+namespace Ruwork\RuworkBundle\HttpFoundation;
 
 use Symfony\Component\HttpFoundation\File\File;
 
-class TmpFile extends File
+final class TmpFile extends File
 {
     public function __construct(string $contents = null)
     {

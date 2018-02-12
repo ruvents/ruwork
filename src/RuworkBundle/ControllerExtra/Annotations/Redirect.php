@@ -1,6 +1,8 @@
 <?php
 
-namespace Ruvents\RuworkBundle\ControllerExtra\Annotations;
+declare(strict_types=1);
+
+namespace Ruwork\RuworkBundle\ControllerExtra\Annotations;
 
 use Doctrine\Common\Annotations\Annotation\Required;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
@@ -8,8 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
 /**
  * @Annotation()
  */
-class Redirect extends ConfigurationAnnotation
+final class Redirect extends ConfigurationAnnotation
 {
+    const NAME = 'redirects';
+
     /**
      * @Required()
      *
@@ -25,16 +29,16 @@ class Redirect extends ConfigurationAnnotation
     private $url;
 
     /**
-     * @var bool
+     * @var int
      */
-    private $permanent = false;
+    private $status = 302;
 
     public function getCondition(): string
     {
         return $this->condition;
     }
 
-    public function setCondition(string $condition)
+    public function setCondition(string $condition): void
     {
         $this->condition = $condition;
     }
@@ -44,22 +48,22 @@ class Redirect extends ConfigurationAnnotation
         return $this->url;
     }
 
-    public function setUrl(string $url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
 
-    public function getPermanent(): bool
+    public function getStatus(): int
     {
-        return $this->permanent;
+        return $this->status;
     }
 
-    public function setPermanent(bool $permanent)
+    public function setStatus(int $status): void
     {
-        $this->permanent = $permanent;
+        $this->status = $status;
     }
 
-    public function setValue(string $value)
+    public function setValue(string $value): void
     {
         $this->setUrl($value);
     }
@@ -69,7 +73,7 @@ class Redirect extends ConfigurationAnnotation
      */
     public function getAliasName()
     {
-        return 'ruvents_ruwork.redirect';
+        return self::NAME;
     }
 
     /**

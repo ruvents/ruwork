@@ -1,11 +1,13 @@
 <?php
 
-namespace Ruvents\RuworkBundle\Controller;
+declare(strict_types=1);
+
+namespace Ruwork\RuworkBundle\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class RemoveTrailingSlashController
+final class RemoveTrailingSlashController
 {
     public function __invoke(Request $request): RedirectResponse
     {

@@ -1,24 +1,18 @@
 This value should not be null.: Значение не должно быть пустым.
-
 This collection should contain {{ limit }} element or more.|This collection should contain {{ limit }} elements or more.: >
     Это поле должно содержать {{ limit }} элемент или больше.|
     Это поле должно содержать {{ limit }} элемента или больше.|
     Это поле должно содержать {{ limit }} элементов или больше.
-
 This collection should contain {{ limit }} element or less.|This collection should contain {{ limit }} elements or less.: >
     Это поле должно содержать содержать {{ limit }} элемент или меньше.|
     Это поле должно содержать содержать {{ limit }} элемента или меньше.|
     Это поле должно содержать содержать {{ limit }} элементов или меньше.
-
 This collection should contain exactly {{ limit }} element.|This collection should contain exactly {{ limit }} elements.: >
     Это поле должно содержать содержать ровно {{ limit }} элемент.|
     Это поле должно содержать содержать ровно {{ limit }} элемента.|
     Это поле должно содержать содержать ровно {{ limit }} элементов.
 
 document_invalid_mime_type: Недопустимый тип файла. Разрешены только изображения JPEG, PNG, GIF, SVG и документы PDF, Word, Excel, PowerPoint.
-
 power_point_invalid_mime_type: Недопустимый тип файла. Разрешены только документы PowerPoint.
-
 raster_image_invalid_mime_type: Недопустимый тип файла. Разрешены только изображения JPEG, PNG.
-
 passwords_must_match: Пароли должны совпадать.

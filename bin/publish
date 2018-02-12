@@ -28,5 +28,6 @@ git push https://github.com/ruvents/ruwork-paginator.git `bin/.splitsh/splitsh-l
 git push https://github.com/ruvents/ruwork-route-optional-prefix.git `bin/.splitsh/splitsh-lite --prefix=src/RouteOptionalPrefix`:master
 git push https://github.com/ruvents/ruwork-routing-tools-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RoutingToolsBundle`:master
 git push https://github.com/ruvents/ruwork-runet-id-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RunetIdBundle`:master
+git push https://github.com/ruvents/ruwork-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RuworkBundle`:master
 git push https://github.com/ruvents/ruwork-upload-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/UploadBundle`:master
 git push https://github.com/ruvents/ruwork-wizard-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/WizardBundle`:master

@@ -1,6 +1,8 @@
 <?php
 
-namespace Ruvents\RuworkBundle\Mailer;
+declare(strict_types=1);
+
+namespace Ruwork\RuworkBundle\Mailer;
 
 interface MailUserInterface
 {

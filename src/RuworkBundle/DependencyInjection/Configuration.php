@@ -1,29 +1,25 @@
 <?php
 
-namespace Ruvents\RuworkBundle\DependencyInjection;
+declare(strict_types=1);
+
+namespace Ruwork\RuworkBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-class Configuration implements ConfigurationInterface
+final class Configuration implements ConfigurationInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
-        return (new TreeBuilder())
+        $builder = new TreeBuilder();
+
+        // @formatter:off
+        $builder
             ->root('ruvents_ruwork')
                 ->children()
-                    ->arrayNode('assets')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->scalarNode('web_dir')
-                                ->defaultValue('%kernel.project_dir%/public')
-                                ->cannotBeEmpty()
-                            ->end()
-                        ->end()
-                    ->end()
                     ->arrayNode('i18n')
                         ->canBeEnabled()
                         ->children()
@@ -75,5 +71,8 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
+        // @formatter:on
+
+        return $builder;
     }
 }

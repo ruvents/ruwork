@@ -1,26 +1,21 @@
 <?php
 
-namespace Ruvents\RuworkBundle\Serializer\Encoder;
+declare(strict_types=1);
+
+namespace Ruwork\RuworkBundle\Serializer\Encoder;
 
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
 
-class ExcelCsvEncoder implements EncoderInterface
+final class ExcelCsvEncoder implements EncoderInterface
 {
     const FORMAT = 'excel_csv';
 
-    /**
-     * @var CsvEncoder
-     */
     private $csvEncoder;
 
-    public function __construct(
-        string $delimiter = ';',
-        string $enclosure = '"',
-        string $escapeChar = '\\',
-        string $keySeparator = '.'
-    ) {
-        $this->csvEncoder = new CsvEncoder($delimiter, $enclosure, $escapeChar, $keySeparator);
+    public function __construct(CsvEncoder $csvEncoder)
+    {
+        $this->csvEncoder = $csvEncoder;
     }
 
     /**
@@ -36,6 +31,6 @@ class ExcelCsvEncoder implements EncoderInterface
      */
     public function supportsEncoding($format)
     {
-        return self::FORMAT === $format;
+        return self::FORMAT === $format && $this->csvEncoder->supportsEncoding($format);
     }
 }

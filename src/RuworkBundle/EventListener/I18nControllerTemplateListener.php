@@ -1,6 +1,8 @@
 <?php
 
-namespace Ruvents\RuworkBundle\EventListener;
+declare(strict_types=1);
+
+namespace Ruwork\RuworkBundle\EventListener;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -8,21 +10,10 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Environment;
 
-class I18nControllerTemplateListener implements EventSubscriberInterface
+final class I18nControllerTemplateListener implements EventSubscriberInterface
 {
-    /**
-     * @var Environment
-     */
     private $twig;
-
-    /**
-     * @var string[]
-     */
     private $locales;
-
-    /**
-     * @var string
-     */
     private $defaultLocale;
 
     public function __construct(Environment $twig, array $locales, string $defaultLocale)
@@ -42,7 +33,7 @@ class I18nControllerTemplateListener implements EventSubscriberInterface
         ];
     }
 
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(FilterControllerEvent $event): void
     {
         $request = $event->getRequest();
         $locale = $request->getLocale();
@@ -58,7 +49,7 @@ class I18nControllerTemplateListener implements EventSubscriberInterface
             return;
         }
 
-        $i18nTemplate = preg_replace('/(\.\w+\.twig)$/', '.'.$locale.'$1', (string)$config->getTemplate());
+        $i18nTemplate = preg_replace('/(\.\w+\.twig)$/', '.'.$locale.'$1', (string) $config->getTemplate());
 
         if ($this->twig->getLoader()->exists($i18nTemplate)) {
             $config->setTemplate($i18nTemplate);

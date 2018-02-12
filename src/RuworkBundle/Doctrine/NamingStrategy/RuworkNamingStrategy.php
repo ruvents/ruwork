@@ -1,11 +1,13 @@
 <?php
 
-namespace Ruvents\RuworkBundle\Doctrine\NamingStrategy;
+declare(strict_types=1);
+
+namespace Ruwork\RuworkBundle\Doctrine\NamingStrategy;
 
 use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ORM\Mapping\NamingStrategy;
 
-class RuworkNamingStrategy implements NamingStrategy
+final class RuworkNamingStrategy implements NamingStrategy
 {
     /**
      * {@inheritdoc}

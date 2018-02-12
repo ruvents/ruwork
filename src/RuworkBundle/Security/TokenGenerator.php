@@ -1,6 +1,8 @@
 <?php
 
-namespace Ruvents\RuworkBundle\Security;
+declare(strict_types=1);
+
+namespace Ruwork\RuworkBundle\Security;
 
 final class TokenGenerator
 {

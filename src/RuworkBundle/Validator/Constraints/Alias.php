@@ -1,6 +1,8 @@
 <?php
 
-namespace Ruvents\RuworkBundle\Validator\Constraints;
+declare(strict_types=1);
+
+namespace Ruwork\RuworkBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 

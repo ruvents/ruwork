@@ -1,9 +1,11 @@
 <?php
 
-namespace Ruvents\RuworkBundle\EventListener;
+declare(strict_types=1);
 
-use Ruvents\RuworkBundle\ControllerExtra\Annotations\Redirect;
-use Ruvents\RuworkBundle\ExpressionLanguage\UrlExpressionLanguage;
+namespace Ruwork\RuworkBundle\EventListener;
+
+use Ruwork\RuworkBundle\ControllerExtra\Annotations\Redirect;
+use Ruwork\RuworkBundle\ExpressionLanguage\UrlExpressionLanguage;
 use Sensio\Bundle\FrameworkExtraBundle\Security\ExpressionLanguage as SecurityExpressionLanguage;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -14,31 +16,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class RedirectControllerListener implements EventSubscriberInterface
+final class RedirectControllerListener implements EventSubscriberInterface
 {
-    /**
-     * @var SecurityExpressionLanguage
-     */
     private $conditionLanguage;
-
-    /**
-     * @var UrlExpressionLanguage
-     */
     private $urlLanguage;
-
-    /**
-     * @var AuthorizationCheckerInterface
-     */
     private $authChecker;
-
-    /**
-     * @var TokenStorageInterface
-     */
     private $tokenStorage;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
     private $urlGenerator;
 
     public function __construct(
@@ -66,7 +49,7 @@ class RedirectControllerListener implements EventSubscriberInterface
         ];
     }
 
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(FilterControllerEvent $event): void
     {
         // redirects don't make sense in sub-requests
         if (!$event->isMasterRequest()) {
@@ -75,7 +58,7 @@ class RedirectControllerListener implements EventSubscriberInterface
 
         $request = $event->getRequest();
 
-        $redirects = $request->attributes->get('_ruvents_ruwork.redirect', []);
+        $redirects = $request->attributes->get('_'.Redirect::NAME, []);
 
         foreach ($redirects as $redirect) {
             if (!$redirect instanceof Redirect) {
@@ -90,8 +73,7 @@ class RedirectControllerListener implements EventSubscriberInterface
             }
 
             $url = $this->urlLanguage->evaluate($redirect->getUrl(), $this->getUrlVars($request));
-
-            $response = new RedirectResponse($url, $redirect->getPermanent() ? 301 : 302);
+            $response = new RedirectResponse($url, $redirect->getStatus());
 
             $event->setController(function () use ($response) {
                 return $response;
@@ -105,25 +87,19 @@ class RedirectControllerListener implements EventSubscriberInterface
 
     private function getConditionVars(Request $request): array
     {
-        return array_merge(
-            $request->attributes->all(),
-            [
-                'request' => $request,
-                'object' => $request,
-                'user' => $this->tokenStorage->getToken()->getUser(),
-                'auth_checker' => $this->authChecker,
-            ]
-        );
+        return array_merge($request->attributes->all(), [
+            'request' => $request,
+            'object' => $request,
+            'user' => $this->tokenStorage->getToken()->getUser(),
+            'auth_checker' => $this->authChecker,
+        ]);
     }
 
     private function getUrlVars(Request $request): array
     {
-        return array_merge(
-            $request->attributes->all(),
-            [
-                'request' => $request,
-                'url_generator' => $this->urlGenerator,
-            ]
-        );
+        return array_merge($request->attributes->all(), [
+            'request' => $request,
+            'url_generator' => $this->urlGenerator,
+        ]);
     }
 }

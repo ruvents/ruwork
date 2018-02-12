@@ -26,6 +26,7 @@
         "ruwork/paginator-bundle": "self.version",
         "ruwork/route-optional-prefix": "self.version",
         "ruwork/routing-tools-bundle": "self.version",
+        "ruwork/ruwork-bundle": "self.version",
         "ruwork/upload-bundle": "self.version",
         "ruwork/wizard-bundle": "self.version"
     },

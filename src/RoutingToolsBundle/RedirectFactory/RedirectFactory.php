@@ -21,7 +21,7 @@ final class RedirectFactory implements RedirectFactoryInterface
      */
     public function create(
         string $url,
-        int $status = RedirectResponse::HTTP_TEMPORARY_REDIRECT,
+        int $status = RedirectResponse::HTTP_FOUND,
         array $headers = []
     ): RedirectResponse {
         return new RedirectResponse($url, $status, $headers);
@@ -33,7 +33,7 @@ final class RedirectFactory implements RedirectFactoryInterface
     public function createForRoute(
         string $name,
         array $parameters = [],
-        int $status = RedirectResponse::HTTP_TEMPORARY_REDIRECT,
+        int $status = RedirectResponse::HTTP_FOUND,
         array $headers = []
     ): RedirectResponse {
         $url = $this->urlGenerator->generate($name, $parameters);

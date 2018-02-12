@@ -10,14 +10,14 @@ interface RedirectFactoryInterface
 {
     public function create(
         string $url,
-        int $status = RedirectResponse::HTTP_TEMPORARY_REDIRECT,
+        int $status = RedirectResponse::HTTP_FOUND,
         array $headers = []
     ): RedirectResponse;
 
     public function createForRoute(
         string $name,
         array $parameters = [],
-        int $status = RedirectResponse::HTTP_TEMPORARY_REDIRECT,
+        int $status = RedirectResponse::HTTP_FOUND,
         array $headers = []
     ): RedirectResponse;
 }

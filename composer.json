@@ -30,6 +30,11 @@
         "ruwork/upload-bundle": "self.version",
         "ruwork/wizard-bundle": "self.version"
     },
+    "autoload": {
+        "psr-4": {
+            "Ruwork\\": "src/"
+        }
+    },
     "autoload-dev": {
         "psr-4": {
             "Ruwork\\": "tests/"

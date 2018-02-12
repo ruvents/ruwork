@@ -1,0 +1,33 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ruvents\RuworkBundle\Asset\VersionStrategy\FilemtimeStrategy: ~
+
+    Ruvents\RuworkBundle\Controller\RemoveTrailingSlashController: ~
+
+    Ruvents\RuworkBundle\Doctrine\NamingStrategy\RuworkNamingStrategy: ~
+
+    Ruvents\RuworkBundle\EventListener\RedirectControllerListener:
+        $conditionLanguage: "@sensio_framework_extra.security.expression_language"
+
+    Ruvents\RuworkBundle\ExpressionLanguage\UrlExpressionLanguage: ~
+
+    Ruvents\RuworkBundle\Form\TypeExtension\FormTypeNovalidateExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+    Ruvents\RuworkBundle\Mailer\Mailer:
+        $swift: "@mailer"
+
+    Ruvents\RuworkBundle\Monolog\Processor\RequestProcessor:
+        tags:
+            - { name: monolog.processor, method: processRecord, channel: request }
+
+    Ruvents\RuworkBundle\Security\UserPasswordHelper: ~
+
+    Ruvents\RuworkBundle\Serializer\Encoder\ExcelCsvEncoder: ~
+
+    Ruvents\RuworkBundle\Validator\Constraints\AliasValidator: ~

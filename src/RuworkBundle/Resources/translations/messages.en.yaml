@@ -1,0 +1,197 @@
+title:
+    about_conference: About the conference
+    about_exhibition: About the exhibition
+    about_forum: About the forum
+    accreditation: Accreditation
+    admin_panel: Admin panel
+    advertising: Advertising
+    all: All
+    all_rights_reserved: All rights reserved
+    all_speakers: All speakers
+    and: and
+    archive: Archive
+    chat: Chat
+    choose_additional_communication_language: Choose additional communication language
+    choose_main_communication_language: Choose the main communication language
+    cities: Cities
+    city: City
+    city_of_residence: City of residence
+    communication_languages: Communication languages
+    company: Company
+    company_location: Company location
+    conference: Conference
+    conference_timeline: Conference timeline
+    consent_to_processing_personal_data: Consent to processing personal data
+    contacts: Contacts
+    contest: Contest
+    coordination_of_activities: Coordination of activities
+    coorganizers: Coorganizers
+    cost: Cost
+    countries: Countries
+    countries_partners: Countries-partners
+    country: Country
+    date: Date
+    date_of_birth: Date of birth
+    date_of_expiry: Date of expiry
+    date_of_issue: Date of issue
+    daytime: Daytime
+    documents: Documents
+    email: Email
+    error_occurred: Error occurred
+    evening: Evening
+    exhibition: Exhibition
+    exhibition_participant: Exhibition participant
+    exhibition_space: Exhibition space
+    faq: Faq
+    feedback: Feedback
+    female: Female
+    first_name: First name
+    foreign_company: Foreign company
+    form: Form
+    free_hotline: Free hotline
+    gallery: Gallery
+    general_info: General info
+    general_partner: General partner
+    general_partners: General partners
+    getting_here: Getting here
+    grant_program_partner: Grant program partner
+    grant_program_partners: Grant program partners
+    highlights: Highlights
+    home: Home
+    hotel: Hotel
+    hotels: Hotels
+    i_accept_terms: I accept the terms
+    industrial_partners: Industrial partners
+    info_partner: Info partner
+    info_partners: Info partners
+    investors: Investors
+    job_position: Job position
+    jury: Jury
+    last_name: Last name
+    logistics: Logistics
+    male: Male
+    menu: Menu
+    message: Message
+    moderator: Moderator
+    moderator_in_sections: Moderator in sections
+    moderator_in_sessions: Moderator in sessions
+    moderators: Moderators
+    morning: Morning
+    name: Name
+    news: News
+    news_and_events: News and events
+    none: None
+    of_user_aggreement: of the user aggreement
+    official_partner: Official partner
+    official_partners: Official partners
+    or: or
+    organizer: Organizer
+    organizers: Organizers
+    our_partners: Our partners
+    page_not_found: Page not found
+    participant: Participant
+    participants: Participants
+    participants_and_payment: Participants and payment
+    participation_fee: Participation fee
+    partner: Partner
+    partners: Partners
+    partners_and_sponsors: Partners and sponsors
+    passport_date_of_expiry: Passport date of expiry
+    passport_date_of_issue: Passport date of issue
+    password: Password
+    password_recovery: Password recovery
+    patronymic: Patronymic
+    payment_status: Payment status
+    personal_account: Personal account
+    phone: Phone
+    photo: Photo
+    press_center: Press center
+    price: Price
+    price_for: Price for
+    profile: Profile
+    program: Program
+    promo_code: Promo code
+    registration: Registration
+    repeat_password: Repeat password
+    residency: Residency
+    review: Review
+    reviews: Reviews
+    russian_company: Russian company
+    section: Section
+    sections: Sections
+    session: Session
+    sex: Sex
+    speaker: Speaker
+    speaker_in_sections: Speaker in sections
+    speaker_in_sessions: Speaker in sessions
+    speakers: Speakers
+    sponsor: Sponsor
+    sponsors: Sponsors
+    statistics: Statistics
+    status: Status
+    strategic_partner: Strategic partner
+    strategic_partners: Strategic partners
+    subject: Subject
+    survey: Survey
+    terms_of_use_and_privacy_policy: Terms of use and privacy policy
+    time: Time
+    title: Title
+    to_home_page: To home page
+    to_program: To program
+    topic: Topic
+    total: Total
+    total_to_pay: Total to pay
+    video: Video
+    welcome: Welcome
+    you_are_logged_in_as: You are logged in as
+    your_browser_does_not_support_this_video: Your browser does not support this video
+
+action:
+    accept: Accept
+    add_to_order: Add to order
+    apply: Apply
+    appoint: Appoint
+    cancel: Cancel
+    click_or_drag: Click or drag
+    confirm_email: Confirm email
+    continue: Continue
+    continue_registration: Continue registration
+    decline: Decline
+    download: Download
+    download_file: Download file
+    edit_profile: Edit profile
+    exit_impersonation: Exit impersonation
+    filter: Filter
+    learn_more: Learn more
+    load_more: Load more
+    login: Login
+    logout: Logout
+    pay: Pay
+    print: Print
+    read: Read
+    recover: Recover
+    recover_password: Recover password
+    register: Register
+    save: Save
+    send_confirmation: Send confirmation
+    update: Update
+    upload: Upload
+    use_this_photo: Use this photo
+
+status:
+    all_selected: All selected
+    approved: Approved
+    confirmation_sent: Confirmation sent
+    free: Free
+    invitation_accepted: Invitation accepted
+    invitation_declined: Invitation declined
+    invitation_sent: Invitation sent
+    not_approved: Not approved
+    not_paid: Not paid
+    ordered: Ordered
+    paid: Paid
+    password_successfully_changed: Password successfully changed
+    request_sent: Request sent
+    selected: Selected
+    uploaded: Uploaded
+    wrong_email_or_password: Wrong email or password

@@ -1,0 +1,197 @@
+title:
+    about_conference: О конференции
+    about_exhibition: О выставке
+    about_forum: О Форуме
+    accreditation: Аккредитация
+    admin_panel: Админка
+    advertising: Реклама
+    all: Все
+    all_rights_reserved: Все права защищены
+    all_speakers: Все спикеры
+    and: и
+    archive: Архив
+    chat: Чат
+    choose_additional_communication_language: Выберите дополнительный язык коммуникации
+    choose_main_communication_language: Выберите основной язык коммуникации
+    cities: Города
+    city: Город
+    city_of_residence: Город проживания
+    communication_languages: Языки коммуникации
+    company: Компания
+    company_location: Местонахождение компании
+    conference: Конференция
+    conference_timeline: Таймлайн конференции
+    consent_to_processing_personal_data: Согласие на обработку персональных данных
+    contacts: Контакты
+    contest: Конкурс
+    coordination_of_activities: Координация деятельности
+    coorganizers: Соорганизаторы
+    cost: Стоимость
+    countries: Страны
+    countries_partners: Страны-партнеры
+    country: Страна
+    date: Дата
+    date_of_birth: Дата рождения
+    date_of_expiry: Срок действия
+    date_of_issue: Дата выдачи
+    daytime: День
+    documents: Документы
+    email: Email
+    error_occurred: Возникла ошибка
+    evening: Вечер
+    exhibition: Выставка
+    exhibition_participant: Участник выставки
+    exhibition_space: Выставочное пространство
+    faq: FAQ
+    feedback: Отзывы
+    female: Женский
+    first_name: Имя
+    foreign_company: Зарубежная компания
+    form: Форма
+    free_hotline: Бесплатная горячая линия
+    gallery: Галерея
+    general_info: Общая информация
+    general_partner: Генеральный партнер
+    general_partners: Генеральные партнеры
+    getting_here: Как добраться
+    grant_program_partner: Призовой партнер
+    grant_program_partners: Призовые партнеры
+    highlights: Самое интересное
+    home: Главная
+    hotel: Отель
+    hotels: Отели
+    i_accept_terms: Я принимаю условия
+    industrial_partners: Индустриальные партнеры
+    info_partner: Информационный партнер
+    info_partners: Информационные партнеры
+    investors: Инвесторы
+    job_position: Должность
+    jury: Жюри
+    last_name: Фамилия
+    logistics: Логистика
+    male: Мужской
+    menu: Меню
+    message: Сообщение
+    moderator: Модератор
+    moderator_in_sections: Модератор в секциях
+    moderator_in_sessions: Модератор в сессиях
+    moderators: Модераторы
+    morning: Утро
+    name: Имя
+    news: Новости
+    news_and_events: Новости и события
+    none: Нет
+    of_user_agreement: пользовательского соглашения
+    official_partner: Официальный партнер
+    official_partners: Официальные партнеры
+    or: или
+    organizer: Организатор
+    organizers: Организаторы
+    our_partners: Наши партнеры
+    page_not_found: Страница не найдена
+    participant: Участник
+    participants: Участники
+    participants_and_payment: Участники и оплата
+    participation_fee: Стоимость участия
+    partner: Партнер
+    partners: Партнеры
+    partners_and_sponsors: Партнеры и спонсоры
+    passport_date_of_expiry: Срок действия паспорта
+    passport_date_of_issue: Дата выдачи паспорта
+    password: Пароль
+    password_recovery: Восстановление пароля
+    patronymic: Отчество
+    payment_status: Статус оплаты
+    personal_account: Личный кабинет
+    phone: Телефон
+    photo: Фото
+    press_center: Пресс-центр
+    price: Цена
+    price_for: Цена за
+    profile: Профиль
+    program: Программа
+    promo_code: Промо-код
+    registration: Регистрация
+    repeat_password: Повторите пароль
+    residency: Резиденство
+    review: Отзыв
+    reviews: Отзывы
+    russian_company: Российская компания
+    section: Секция
+    sections: Секции
+    session: Сессия
+    sex: Пол
+    speaker: Спикер
+    speaker_in_sections: Спикер в секциях
+    speaker_in_sessions: Спикер в сессиях
+    speakers: Спикеры
+    sponsor: Спонсор
+    sponsors: Спонсоры
+    statistics: Статистика
+    status: Статус
+    strategic_partner: Стратегический партнер
+    strategic_partners: Стратегические партнеры
+    subject: Тема
+    survey: Опрос
+    terms_of_use_and_privacy_policy: Условия использования и политика конфиденциальности
+    time: Время
+    title: Название
+    to_home_page: Перейти на главную
+    to_program: К программе
+    topic: Тема
+    total: Итого
+    total_to_pay: Итого к оплате
+    video: Видео
+    welcome: Добро пожаловать
+    you_are_logged_in_as: Вы вошли как
+    your_browser_does_not_support_this_video: Ваш браузер не поддерживает это видео
+
+action:
+    accept: Принять
+    add_to_order: Добавить к заказу
+    apply: Применить
+    appoint: Назначить
+    cancel: Отменить
+    click_or_drag: Кликните или перетащите
+    confirm_email: Подтвердить email
+    continue: Продолжить
+    continue_registration: Продолжить регистрацию
+    decline: Отклонить
+    download: Скачать
+    download_file: Скачать файл
+    edit_profile: Редактировать профиль
+    exit_impersonation: Деавторизоваться
+    filter: Отфильтровать
+    learn_more: Узнать больше
+    load_more: Загрузить еще
+    login: Войти
+    logout: Выйти
+    pay: Оплатить
+    print: Распечатать
+    read: Прочитать
+    recover: Восстановить
+    recover_password: Восстановить пароль
+    register: Зарегистрироваться
+    save: Сохранить
+    send_confirmation: Отправить подтверждение
+    update: Обновить
+    upload: Загрузить
+    use_this_photo: Использовать эту фотографию
+
+status:
+    all_selected: Все выбраны
+    approved: Подтвержден
+    confirmation_sent: Подтверждение отправлено
+    free: Бесплатно
+    invitation_accepted: Приглашение принято
+    invitation_declined: Приглашение отклонено
+    invitation_sent: Приглашение отправлено
+    not_approved: Не подтвержден
+    not_paid: Не оплачено
+    ordered: Заказано
+    paid: Оплачено
+    password_successfully_changed: Пароль успешно изменен
+    request_sent: Запрос отправлен
+    selected: Выбрано
+    uploaded: Загружено
+    wrong_email_or_password: Неверный email или пароль

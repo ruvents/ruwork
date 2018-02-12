@@ -39,6 +39,9 @@
         <testsuite name="RunetIdBundle">
             <directory>./tests/RunetIdBundle</directory>
         </testsuite>
+        <testsuite name="RuworkBundle">
+            <directory>./tests/RuworkBundle</directory>
+        </testsuite>
         <testsuite name="UploadBundle">
             <directory>./tests/UploadBundle</directory>
         </testsuite>

@@ -108,7 +108,7 @@ class RouterDecorator implements RouterInterface, RequestMatcherInterface
         }
 
         if ($route->getOption('prefix_default') === $parameters[$variable]) {
-            unset($parameters[$variable]);
+            $parameters[$variable] = '';
 
             return;
         }

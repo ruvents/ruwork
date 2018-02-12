@@ -4,6 +4,8 @@ services:
         autoconfigure: true
         public: false
 
+    Ruwork\RuworkBundle\Asset\VersionStrategy\FilemtimeStrategy: ~
+
     Ruwork\RuworkBundle\Doctrine\NamingStrategy\RuworkNamingStrategy: ~
 
     Ruwork\RuworkBundle\EventListener\RedirectControllerListener:

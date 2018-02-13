@@ -20,6 +20,11 @@ final class UniqueEmail extends Constraint
     public $client = 'default';
 
     /**
+     * @var null|bool
+     */
+    public $visible;
+
+    /**
      * @var string
      */
     public $message = 'runet_id.user_with_email_is_already_registered';

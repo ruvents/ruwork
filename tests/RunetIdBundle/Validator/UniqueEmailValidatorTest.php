@@ -61,7 +61,7 @@ class UniqueEmailValidatorTest extends ConstraintValidatorTestCase
         $email = 'mail@mail.com';
 
         $this->setUsers([[
-            'Email' => $email,
+            'Id' => 1,
         ]]);
 
         $constraint = new UniqueEmail([

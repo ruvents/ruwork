@@ -38,7 +38,7 @@ final class UniqueEmailValidator extends ConstraintValidator
             return;
         }
 
-        if ($this->emailExists($constraint->client, $value)) {
+        if ($this->emailExists($constraint, $value)) {
             $this->context->buildViolation($constraint->message)
                 ->setCode(UniqueEmail::NOT_UNIQUE_ERROR)
                 ->setParameter('{{ value }}', $this->formatValue($value, self::OBJECT_TO_STRING | self::PRETTY_DATE))
@@ -58,6 +58,6 @@ final class UniqueEmailValidator extends ConstraintValidator
             ->getResult()
             ->Users;
 
-        return iterator_to_array($users) > 0;
+        return iterator_count($users) > 0;
     }
 }

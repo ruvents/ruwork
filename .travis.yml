@@ -1,63 +1,59 @@
 language: php
-
-git:
-    depth: 5
-
-php: 7.1
-
 sudo: false
 
 cache:
     directories:
         - $HOME/.composer/cache/files
-        - $HOME/vendor/bin/.phpunit
+        - $HOME/symfony-bridge/.phpunit
+
+env:
+    global:
+        - PHPUNIT_FLAGS="-v"
+        - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
+
+matrix:
+    fast_finish: true
+    include:
+        #- php: 7.2
+        #  env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
+
+        - php: 7.1
+          env: PHP_CS=true SPLITTEST=true
+
+        - php: 7.2
+          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover=coverage.xml"
+
+        - php: 7.2
+          env: PUBLISH=true DEPENDENCIES="symfony/lts:^3"
+          git:
+              depth: false
+
+        #- php: 7.2
+        #  env: STABILITY="dev"
+
+    allow_failures:
+        - env: STABILITY="dev"
+
+before_install:
+    - echo -e "machine github.com\n  login $GITHUB_API_TOKEN" >> ~/.netrc
+    - if [[ $PUBLISH = true && $TRAVIS_PULL_REQUEST = false ]]; then ./bin/publish; fi
+    - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
+    - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi
+    - if ! [ -z "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi
+    - if [[ $PHP_CS = true ]]; then composer require --no-update friendsofphp/php-cs-fixer; fi
 
 install:
-    - composer update --prefer-dist --no-interaction
-    - bin/phpunit install
+    # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
+    - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
+    - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
+    - ./bin/phpunit install
 
 script:
-    - bin/phpunit
+    - if [[ $SPLITTEST = true ]]; then ./bin/splittest; else ./bin/phpunit $PHPUNIT_FLAGS; fi
+    - if [[ $PHP_CS = true ]]; then vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no; fi
 
-jobs:
-    include:
-        # Split test
-        -
-            before_install:
-                - phpenv config-rm xdebug.ini
-            script:
-                - bin/splittest
-
-        # Symfony LTS 3 requirement test, code style test, code coverage report
-        -
-            php: 7.2
-            before_install:
-                - composer require --no-update symfony/lts:^3
-                - composer require --no-update friendsofphp/php-cs-fixer
-            script:
-                - bin/phpunit -v --coverage-clover=coverage.xml
-                - phpenv config-rm xdebug.ini
-                - vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no
-            after_success:
-                - bash <(curl -s https://codecov.io/bash)
-
-        # Latest package versions test
-        -
-            php: 7.2
-            before_install:
-                - phpenv config-rm xdebug.ini
-                - composer config minimum-stability dev
-
-        # Publishing to mini repos
-        -
-            stage: publish
-            git:
-                depth: false
-            install: skip
-            before_script:
-                - echo -e "machine github.com\n  login $GITHUB_API_TOKEN" >> ~/.netrc
-            script:
-                - ./bin/publish
+after_success:
+    - if [[ $COVERAGE = true ]]; then bash <(curl -s https://codecov.io/bash); fi
 
 notifications:
     webhooks: https://fathomless-fjord-24024.herokuapp.com/notify

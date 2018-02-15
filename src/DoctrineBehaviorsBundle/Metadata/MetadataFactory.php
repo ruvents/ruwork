@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ruwork\DoctrineBehaviorsBundle\Metadata;
 
 use Doctrine\Common\Annotations\Reader;
+use Doctrine\Common\Util\ClassUtils;
 use Ruwork\DoctrineBehaviorsBundle\Mapping\Author;
 use Ruwork\DoctrineBehaviorsBundle\Mapping\Multilingual;
 use Ruwork\DoctrineBehaviorsBundle\Mapping\PersistTimestamp;
@@ -25,6 +26,7 @@ class MetadataFactory implements MetadataFactoryInterface
      */
     public function getMetadata(string $class): Metadata
     {
+        $class = ClassUtils::getRealClass($class);
         $reflectionClass = new \ReflectionClass($class);
         $metadata = new Metadata($class);
 

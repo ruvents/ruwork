@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ruwork\DoctrineBehaviorsBundle\Metadata;
 
+use Doctrine\Common\Util\ClassUtils;
 use Psr\Cache\CacheItemPoolInterface;
 
 class LazyLoadingMetadataFactory implements MetadataFactoryInterface
@@ -23,6 +24,8 @@ class LazyLoadingMetadataFactory implements MetadataFactoryInterface
      */
     public function getMetadata(string $class): Metadata
     {
+        $class = ClassUtils::getRealClass($class);
+
         if (isset($this->metadata[$class])) {
             return $this->metadata[$class];
         }

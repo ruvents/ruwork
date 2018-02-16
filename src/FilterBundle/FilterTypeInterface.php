@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\DoctrineFilterBundle\Type;
+namespace Ruwork\FilterBundle;
 
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -12,5 +12,5 @@ interface FilterTypeInterface
 {
     public function createForm(FormFactoryInterface $factory, array $options): FormInterface;
 
-    public function configureOptions(OptionsResolver $resolver);
+    public function configureOptions(OptionsResolver $resolver): void;
 }

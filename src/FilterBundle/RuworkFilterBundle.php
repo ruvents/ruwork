@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\DoctrineFilterBundle;
+namespace Ruwork\FilterBundle;
 
-use Ruwork\DoctrineFilterBundle\DependencyInjection\Compiler\FilterPass;
+use Ruwork\FilterBundle\DependencyInjection\Compiler\RegisterFilterTypesPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class RuworkDoctrineFilterBundle extends Bundle
+final class RuworkFilterBundle extends Bundle
 {
     /**
      * {@inheritdoc}
      */
     public function build(ContainerBuilder $container): void
     {
-        $container->addCompilerPass(new FilterPass());
+        $container->addCompilerPass(new RegisterFilterTypesPass());
     }
 }

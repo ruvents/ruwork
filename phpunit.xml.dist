@@ -18,8 +18,8 @@
         <testsuite name="BundleTest">
             <directory>./tests/BundleTest</directory>
         </testsuite>
-        <testsuite name="DoctrineFilterBundle">
-            <directory>./tests/DoctrineFilterBundle</directory>
+        <testsuite name="FilterBundle">
+            <directory>./tests/FilterBundle</directory>
         </testsuite>
         <testsuite name="FrujaxBundle">
             <directory>./tests/FrujaxBundle</directory>

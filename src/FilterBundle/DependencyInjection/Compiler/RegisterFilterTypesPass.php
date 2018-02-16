@@ -27,7 +27,7 @@ final class RegisterFilterTypesPass implements CompilerPassInterface
         foreach ($filterTypes as $id => $attributes) {
             $class = $container->getDefinition($id)->getClass();
 
-            if (!class_implements($class, FilterTypeInterface::class)) {
+            if (!is_subclass_of($class, FilterTypeInterface::class)) {
                 throw new \InvalidArgumentException(sprintf('Filter type "%s" must implement "%s".', $class, FilterTypeInterface::class));
             }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ruwork\FilterBundle;
 
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 final class Filter implements FilterInterface
@@ -36,10 +37,12 @@ final class Filter implements FilterInterface
 
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($form as $name => $child) {
+                /** @var FormInterface $child */
+
                 $method = $name.self::METHOD_SUFFIX;
 
                 if (method_exists($this->type, $method)) {
-                    ($this->type->$method)($child, $object, $this->options);
+                    $this->type->$method($child->getData(), $object, $this->options, $form);
                 }
             }
         }

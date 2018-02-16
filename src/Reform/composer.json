@@ -1,0 +1,29 @@
+{
+    "name": "ruwork/reform",
+    "description": "Ruwork Reform",
+    "type": "library",
+    "keywords": ["ruwork"],
+    "homepage": "https://ruvents.github.io/ruwork/",
+    "license": "MIT",
+    "authors": [
+        {"name": "Valentin Udaltsov", "email": "udaltsov@ruvents.com"}
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "ruwork/polyfill-form-dti": "^0.2",
+        "symfony/form": "^3.4 || ^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ruwork\\Reform\\": ""
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}

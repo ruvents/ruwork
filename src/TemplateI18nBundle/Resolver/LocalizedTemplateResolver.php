@@ -32,7 +32,7 @@ final class LocalizedTemplateResolver implements LocalizedTemplateResolverInterf
 
         $names[] = $name;
 
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        /* @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->twig->resolveTemplate($names);
     }
 }

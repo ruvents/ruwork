@@ -6,7 +6,7 @@ namespace Ruwork\ManualAuthBundle;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class ManualAuthenticator
+final class ManualAuthScheduler
 {
     private $tokens = [];
 

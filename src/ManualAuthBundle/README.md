@@ -24,20 +24,28 @@ security:
 ```php
 <?php
 
-namespace AppBundle\Controller;
+declare(strict_types=1);
 
-use Ruwork\ManualAuthBundle\ManualAuthenticator;
+namespace App\Controller;
+
+use Ruwork\ManualAuthBundle\ManualAuthScheduler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class RegistrationController
+final class RegistrationController
 {
+    private $manualAuthScheduler;
+    
+    public function __construct(ManualAuthScheduler $manualAuthScheduler) {
+        $this->manualAuthScheduler = $manualAuthScheduler;
+    }
+    
     /**
      * @Route("/registration")
      */
-    public function __invoke(ManualAuthenticator $authenticator)
+    public function __invoke()
     {
         // registration form handling
         
@@ -47,10 +55,12 @@ class RegistrationController
          */
         
         if ($form->isSubmitted() && $form->isValid()) {
+            // save user
+            
             // you have to create relevant Tokens
             // f.e. PostAuthGuardToken for a firewall with guard authentication
             $token = new UsernamePasswordToken($user, $user->getPassword(), 'main', $user->getRoles());
-            $authenticator->schedule('main', $token);
+            $this->manualAuthScheduler->schedule('main', $token);
             
             // redirect to next page
         }

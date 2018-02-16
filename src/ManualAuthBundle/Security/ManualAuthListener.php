@@ -2,58 +2,70 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\ManualAuthBundle;
+namespace Ruwork\ManualAuthBundle\Security;
 
+use Ruwork\ManualAuthBundle\ManualAuthScheduler;
 use Symfony\Bundle\SecurityBundle\Security\FirewallConfig;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 use Symfony\Component\Security\Http\RememberMe\RememberMeServicesInterface;
 
-class Listener implements ListenerInterface
+final class ManualAuthListener implements ListenerInterface
 {
-    private $authenticator;
-    private $firewallConfig;
     private $manager;
+    private $firewallConfig;
+    private $scheduler;
 
     /**
      * @var null|RememberMeServicesInterface
      */
     private $rememberMeServices;
 
-    public function __construct(ManualAuthenticator $authenticator, FirewallConfig $firewallConfig, AuthenticationManagerInterface $manager)
-    {
-        $this->authenticator = $authenticator;
-        $this->firewallConfig = $firewallConfig;
+    public function __construct(
+        AuthenticationManagerInterface $manager,
+        FirewallConfig $firewallConfig,
+        ManualAuthScheduler $scheduler
+    ) {
         $this->manager = $manager;
+        $this->firewallConfig = $firewallConfig;
+        $this->scheduler = $scheduler;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function handle(GetResponseEvent $event): void
+    public function handle(GetResponseEvent $event)
     {
     }
 
     public function onKernelResponse(FilterResponseEvent $event): void
     {
-        if (!$event->isMasterRequest()
-            || !($request = $event->getRequest())->hasSession()
-            || $this->firewallConfig->isStateless()
-            || null === $token = $this->authenticator->getForFirewall($this->firewallConfig->getName())
-        ) {
+        if (!$event->isMasterRequest()) {
             return;
         }
 
-        try {
-            $token = $this->manager->authenticate($token);
-        } catch (AuthenticationException $exception) {
+        $request = $event->getRequest();
+
+        if (!$request->hasSession()) {
             return;
         }
 
-        $request->getSession()->set('_security_'.$this->firewallConfig->getContext(), serialize($token));
+        if ($this->firewallConfig->isStateless()) {
+            return;
+        }
+
+        $token = $this->scheduler->getForFirewall($this->firewallConfig->getName());
+
+        if (null === $token) {
+            return;
+        }
+
+        $token = $this->manager->authenticate($token);
+        $context = $this->firewallConfig->getContext();
+
+        $request->getSession()->set('_security_'.$context, serialize($token));
 
         if (null !== $this->rememberMeServices) {
             $this->rememberMeServices->loginSuccess($request, $event->getResponse(), $token);

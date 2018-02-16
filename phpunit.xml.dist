@@ -48,6 +48,9 @@
         <testsuite name="RuworkBundle">
             <directory>./tests/RuworkBundle</directory>
         </testsuite>
+        <testsuite name="TemplateI18nBundle">
+            <directory>./tests/TemplateI18nBundle</directory>
+        </testsuite>
         <testsuite name="UploadBundle">
             <directory>./tests/UploadBundle</directory>
         </testsuite>

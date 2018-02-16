@@ -15,22 +15,22 @@ if [ ! -f bin/.splitsh/splitsh-lite ]; then
     chmod 755 bin/.splitsh/splitsh-lite
 fi
 
-git push https://github.com/ruvents/ruwork-admin-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/AdminBundle`:master --tags
-git push https://github.com/ruvents/ruwork-api-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/ApiBundle`:master --tags
-git push https://github.com/ruvents/ruwork-bundle-test.git `bin/.splitsh/splitsh-lite --prefix=src/BundleTest`:master --tags
-git push https://github.com/ruvents/ruwork-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RuworkBundle`:master --tags
-git push https://github.com/ruvents/ruwork-doctrine-behaviors-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/DoctrineBehaviorsBundle`:master --tags
-git push https://github.com/ruvents/ruwork-doctrine-postgresql-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/DoctrinePostgresqlBundle`:master --tags
-git push https://github.com/ruvents/ruwork-filter-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/FilterBundle`:master --tags
-git push https://github.com/ruvents/ruwork-frujax-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/FrujaxBundle`:master --tags
-git push https://github.com/ruvents/ruwork-manual-auth-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/ManualAuthBundle`:master --tags
-git push https://github.com/ruvents/ruwork-paginator-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/PaginatorBundle`:master --tags
-git push https://github.com/ruvents/ruwork-paginator.git `bin/.splitsh/splitsh-lite --prefix=src/Paginator`:master --tags
-git push https://github.com/ruvents/ruwork-reform-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/ReformBundle`:master --tags
-git push https://github.com/ruvents/ruwork-reform.git `bin/.splitsh/splitsh-lite --prefix=src/Reform`:master --tags
-git push https://github.com/ruvents/ruwork-route-optional-prefix.git `bin/.splitsh/splitsh-lite --prefix=src/RouteOptionalPrefix`:master --tags
-git push https://github.com/ruvents/ruwork-routing-tools-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RoutingToolsBundle`:master --tags
-git push https://github.com/ruvents/ruwork-runet-id-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RunetIdBundle`:master --tags
-git push https://github.com/ruvents/ruwork-template-i18n-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/TemplateI18nBundle`:master --tags
-git push https://github.com/ruvents/ruwork-upload-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/UploadBundle`:master --tags
-git push https://github.com/ruvents/ruwork-wizard-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/WizardBundle`:master --tags
+git push https://github.com/ruvents/ruwork-admin-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/AdminBundle`:master
+git push https://github.com/ruvents/ruwork-api-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/ApiBundle`:master
+git push https://github.com/ruvents/ruwork-bundle-test.git `bin/.splitsh/splitsh-lite --prefix=src/BundleTest`:master
+git push https://github.com/ruvents/ruwork-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RuworkBundle`:master
+git push https://github.com/ruvents/ruwork-doctrine-behaviors-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/DoctrineBehaviorsBundle`:master
+git push https://github.com/ruvents/ruwork-doctrine-postgresql-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/DoctrinePostgresqlBundle`:master
+git push https://github.com/ruvents/ruwork-filter-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/FilterBundle`:master
+git push https://github.com/ruvents/ruwork-frujax-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/FrujaxBundle`:master
+git push https://github.com/ruvents/ruwork-manual-auth-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/ManualAuthBundle`:master
+git push https://github.com/ruvents/ruwork-paginator-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/PaginatorBundle`:master
+git push https://github.com/ruvents/ruwork-paginator.git `bin/.splitsh/splitsh-lite --prefix=src/Paginator`:master
+git push https://github.com/ruvents/ruwork-reform-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/ReformBundle`:master
+git push https://github.com/ruvents/ruwork-reform.git `bin/.splitsh/splitsh-lite --prefix=src/Reform`:master
+git push https://github.com/ruvents/ruwork-route-optional-prefix.git `bin/.splitsh/splitsh-lite --prefix=src/RouteOptionalPrefix`:master
+git push https://github.com/ruvents/ruwork-routing-tools-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RoutingToolsBundle`:master
+git push https://github.com/ruvents/ruwork-runet-id-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RunetIdBundle`:master
+git push https://github.com/ruvents/ruwork-template-i18n-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/TemplateI18nBundle`:master
+git push https://github.com/ruvents/ruwork-upload-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/UploadBundle`:master
+git push https://github.com/ruvents/ruwork-wizard-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/WizardBundle`:master

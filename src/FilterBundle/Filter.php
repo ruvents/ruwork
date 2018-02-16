@@ -38,7 +38,6 @@ final class Filter implements FilterInterface
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($form as $name => $child) {
                 /** @var FormInterface $child */
-
                 $method = $name.self::METHOD_SUFFIX;
 
                 if (method_exists($this->type, $method)) {

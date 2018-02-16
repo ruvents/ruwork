@@ -30,6 +30,12 @@
         <testsuite name="PaginatorBundle">
             <directory>./tests/PaginatorBundle</directory>
         </testsuite>
+        <testsuite name="Reform">
+            <directory>./tests/Reform</directory>
+        </testsuite>
+        <testsuite name="ReformBundle">
+            <directory>./tests/ReformBundle</directory>
+        </testsuite>
         <testsuite name="RouteOptionalPrefix">
             <directory>./tests/RouteOptionalPrefix</directory>
         </testsuite>

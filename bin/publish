@@ -26,6 +26,8 @@ git push https://github.com/ruvents/ruwork-frujax-bundle.git `bin/.splitsh/split
 git push https://github.com/ruvents/ruwork-manual-auth-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/ManualAuthBundle`:master
 git push https://github.com/ruvents/ruwork-paginator-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/PaginatorBundle`:master
 git push https://github.com/ruvents/ruwork-paginator.git `bin/.splitsh/splitsh-lite --prefix=src/Paginator`:master
+git push https://github.com/ruvents/ruwork-reform-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/ReformBundle`:master
+git push https://github.com/ruvents/ruwork-reform.git `bin/.splitsh/splitsh-lite --prefix=src/Reform`:master
 git push https://github.com/ruvents/ruwork-route-optional-prefix.git `bin/.splitsh/splitsh-lite --prefix=src/RouteOptionalPrefix`:master
 git push https://github.com/ruvents/ruwork-routing-tools-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RoutingToolsBundle`:master
 git push https://github.com/ruvents/ruwork-runet-id-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RunetIdBundle`:master

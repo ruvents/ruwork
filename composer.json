@@ -24,6 +24,8 @@
         "ruwork/manual-auth-bundle": "self.version",
         "ruwork/paginator": "self.version",
         "ruwork/paginator-bundle": "self.version",
+        "ruwork/reform": "self.version",
+        "ruwork/reform-bundle": "self.version",
         "ruwork/route-optional-prefix": "self.version",
         "ruwork/routing-tools-bundle": "self.version",
         "ruwork/ruwork-bundle": "self.version",

@@ -22,7 +22,7 @@
         "php-http/discovery": "^1.3",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/mock-client": "^1.1",
-        "ruwork/bundle-test": "dev-master",
+        "ruwork/bundle-test": "^0.1",
         "symfony/validator": "^3.4 || ^4.0",
         "webthink/psr-test-container": "^1.0"
     },

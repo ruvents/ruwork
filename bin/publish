@@ -19,7 +19,7 @@ while getopts ":t:" opt; do
   case $opt in
     t)
       splitsh_flags="--target=tags/$OPTARG"
-      git_flags="--tags"
+      git_flags=$OPTARG
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2

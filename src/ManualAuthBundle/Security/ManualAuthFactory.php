@@ -9,6 +9,7 @@ use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 final class ManualAuthFactory implements SecurityFactoryInterface
 {
@@ -21,6 +22,10 @@ final class ManualAuthFactory implements SecurityFactoryInterface
 
         $container->setDefinition($listenerId, new ChildDefinition('ruwork_manual_auth.listener'))
             ->setArgument('$firewallConfig', new Reference('security.firewall.map.config.'.$id))
+            ->addTag('kernel.event_listener', [
+                'event' => KernelEvents::RESPONSE,
+                'priority' => -4000,
+            ])
             ->addTag('security.remember_me_aware', [
                 'id' => $id,
                 'provider' => $userProvider,

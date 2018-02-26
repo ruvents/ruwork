@@ -28,7 +28,11 @@ class UploadFileValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, AbstractUpload::class);
         }
 
-        $file = $value->getUploadedFile() ?? $value->getPath();
+        try {
+            $file = $value->getUploadedFile();
+        } catch (\Throwable $exception) {
+            $file = $value->getPath();
+        }
 
         $this->context
             ->getValidator()

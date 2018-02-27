@@ -35,14 +35,12 @@ final class Filter implements FilterInterface
             ->createForm($this->formFactory, $this->options)
             ->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            foreach ($form as $name => $child) {
-                /** @var FormInterface $child */
-                $method = $name.self::METHOD_SUFFIX;
+        foreach ($form as $name => $child) {
+            /** @var FormInterface $child */
+            $method = $name.self::METHOD_SUFFIX;
 
-                if (method_exists($this->type, $method)) {
-                    $this->type->$method($child->getData(), $object, $this->options, $form);
-                }
+            if (method_exists($this->type, $method)) {
+                $this->type->$method($child->getData(), $object, $this->options, $form);
             }
         }
 

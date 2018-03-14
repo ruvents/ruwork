@@ -34,6 +34,7 @@ class UploadDoctrineListener implements EventSubscriber
             Events::prePersist,
             Events::onFlush,
             Events::postFlush,
+            Events::postRemove,
         ];
     }
 
@@ -66,6 +67,15 @@ class UploadDoctrineListener implements EventSubscriber
             if ($entity instanceof AbstractUpload) {
                 $this->setValue($entity, 'uploadedFile', null);
             }
+        }
+    }
+
+    public function postRemove(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+
+        if ($entity instanceof AbstractUpload) {
+            @unlink($this->manager->getPathname($entity));
         }
     }
 

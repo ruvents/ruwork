@@ -12,10 +12,12 @@ final class ExcelCsvEncoder implements EncoderInterface
     const FORMAT = 'excel_csv';
 
     private $csvEncoder;
+    private $defaultDelimiter;
 
-    public function __construct(CsvEncoder $csvEncoder)
+    public function __construct(CsvEncoder $csvEncoder = null, string $defaultDelimiter = ';')
     {
-        $this->csvEncoder = $csvEncoder;
+        $this->csvEncoder = $csvEncoder ?? new CsvEncoder();
+        $this->defaultDelimiter = $defaultDelimiter;
     }
 
     /**
@@ -23,6 +25,10 @@ final class ExcelCsvEncoder implements EncoderInterface
      */
     public function encode($data, $format, array $context = [])
     {
+        if (!isset($context[CsvEncoder::DELIMITER_KEY])) {
+            $context[CsvEncoder::DELIMITER_KEY] = $this->defaultDelimiter;
+        }
+
         return "\xEF\xBB\xBF".$this->csvEncoder->encode($data, $format, $context);
     }
 
@@ -31,6 +37,6 @@ final class ExcelCsvEncoder implements EncoderInterface
      */
     public function supportsEncoding($format)
     {
-        return self::FORMAT === $format && $this->csvEncoder->supportsEncoding($format);
+        return self::FORMAT === $format;
     }
 }

@@ -24,6 +24,7 @@ class RuworkApiExtension extends Extension
             ->setPublic(false)
             ->addTag('kernel.event_subscriber');
 
-        $container->autowire(DocsController::class);
+        $container->autowire(DocsController::class)
+            ->setPublic(true);
     }
 }

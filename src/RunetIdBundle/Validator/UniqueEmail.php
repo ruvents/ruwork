@@ -20,9 +20,9 @@ final class UniqueEmail extends Constraint
     public $client = 'default';
 
     /**
-     * @var int|string
+     * @var null|int|string
      */
-    public $eventId = 'Current';
+    public $eventId;
 
     /**
      * @var null|bool

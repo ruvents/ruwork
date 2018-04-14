@@ -53,8 +53,9 @@ final class UniqueEmailValidator extends ConstraintValidator
 
         $users = $client
             ->userSearch()
-            ->setQuery($email)
+            ->setEventId($constraint->eventId)
             ->setVisible($constraint->visible)
+            ->setQuery($email)
             ->getResult()
             ->Users;
 

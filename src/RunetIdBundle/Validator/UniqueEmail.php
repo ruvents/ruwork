@@ -20,6 +20,11 @@ final class UniqueEmail extends Constraint
     public $client = 'default';
 
     /**
+     * @var int|string
+     */
+    public $eventId = 'Current';
+
+    /**
      * @var null|bool
      */
     public $visible;

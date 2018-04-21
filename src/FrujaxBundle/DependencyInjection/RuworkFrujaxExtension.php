@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class RuworkFrujaxExtension extends Extension
+final class RuworkFrujaxExtension extends Extension
 {
     /**
      * {@inheritdoc}

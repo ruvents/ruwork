@@ -11,9 +11,9 @@ class FrujaxRedirectResponse extends Response
 {
     private $targetUrl;
 
-    public function __construct(string $url, int $status = 200, array $headers = [])
+    public function __construct(string $url, array $headers = [])
     {
-        parent::__construct('', $status, $headers);
+        parent::__construct('', self::HTTP_OK, $headers);
         $this->setTargetUrl($url);
     }
 
@@ -21,16 +21,11 @@ class FrujaxRedirectResponse extends Response
     {
         $frujax = new self($redirect->getTargetUrl());
 
-        $frujax->setProtocolVersion($redirect->getProtocolVersion());
-
-        if (null !== $charset = $redirect->getCharset()) {
-            $frujax->setCharset($charset);
-        }
-
+        $frujax->version = $redirect->version;
+        $frujax->charset = $redirect->charset;
         $frujax->headers = clone $redirect->headers;
         $frujax->headers->remove('Location');
 
-        // we must set url again after replacing the headers
         $frujax->setTargetUrl($redirect->getTargetUrl());
 
         return $frujax;
@@ -43,12 +38,14 @@ class FrujaxRedirectResponse extends Response
 
     public function setTargetUrl(string $targetUrl)
     {
-        if ('' === trim($targetUrl)) {
+        $targetUrl = \trim($targetUrl);
+
+        if ('' === $targetUrl) {
             throw new \InvalidArgumentException('Cannot redirect to an empty URL.');
         }
 
         $this->targetUrl = $targetUrl;
-        $this->headers->set('Frujax-Redirect-Url', $targetUrl);
+        $this->headers->set(FrujaxHeaders::FRUJAX_REDIRECT_URL, $targetUrl);
 
         return $this;
     }

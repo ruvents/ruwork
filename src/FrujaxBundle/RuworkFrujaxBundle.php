@@ -6,6 +6,6 @@ namespace Ruwork\FrujaxBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class RuworkFrujaxBundle extends Bundle
+final class RuworkFrujaxBundle extends Bundle
 {
 }

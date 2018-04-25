@@ -20,6 +20,5 @@ return function (ContainerConfigurator $container): void {
         ->tag('kernel.event_subscriber');
 
     $services->set(FrujaxTemplateListener::class)
-        ->arg('$twig', ref('twig'))
         ->tag('kernel.event_subscriber');
 };

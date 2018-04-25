@@ -12,17 +12,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Twig\Environment;
 
 final class FrujaxTemplateListener implements EventSubscriberInterface
 {
-    private $twig;
-
-    public function __construct(Environment $twig)
-    {
-        $this->twig = $twig;
-    }
-
     /**
      * {@inheritdoc}
      */

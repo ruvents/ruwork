@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
 /**
  * @Annotation
  */
-final class FrujaxBlocks extends ConfigurationAnnotation
+final class Frujax extends ConfigurationAnnotation
 {
     private $blocks = [];
 
@@ -33,7 +33,7 @@ final class FrujaxBlocks extends ConfigurationAnnotation
      */
     public function getAliasName()
     {
-        return 'frujax_blocks';
+        return 'frujax';
     }
 
     /**

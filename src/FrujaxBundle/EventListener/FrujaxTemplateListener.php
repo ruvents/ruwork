@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Ruwork\FrujaxBundle\EventListener;
 
-use Ruwork\FrujaxBundle\Annotation\FrujaxBlocks;
+use Ruwork\FrujaxBundle\Annotation\Frujax;
 use Ruwork\FrujaxBundle\HttpFoundation\FrujaxHeaders;
 use Ruwork\FrujaxBundle\HttpFoundation\FrujaxRequestChecker;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Environment;
 
@@ -42,39 +41,21 @@ final class FrujaxTemplateListener implements EventSubscriberInterface
             return;
         }
 
+        $template = $request->attributes->get('_template');
+        $frujax = $request->attributes->get('_frujax');
         $block = $request->headers->get(FrujaxHeaders::FRUJAX_BLOCK);
 
-        if (null === $block) {
+        if (!$template instanceof Template || !$frujax instanceof Frujax || null === $block) {
             return;
         }
 
-        $template = $request->attributes->get('_template');
-
-        if (!$template instanceof Template) {
-            return;
-        }
-
-        if (!$tpl = $template->getTemplate()) {
-            throw new \UnexpectedValueException('Template is not set.');
-        }
-
-        $frujaxBlocks = $request->attributes->get('_frujax_blocks');
-
-        if (!$frujaxBlocks instanceof FrujaxBlocks) {
-            throw new AccessDeniedHttpException(\sprintf('Rendering of block "%s" is not allowed. Add @FrujaxBlocks annotation to the action.', $block));
-        }
-
-        if (!\in_array($block, $frujaxBlocks->getBlocks(), true)) {
-            throw new AccessDeniedHttpException(\sprintf('Rendering of block "%s" is not allowed by the @FrujaxBlocks annotation.', $block));
-        }
-
-        if (!$this->twig->loadTemplate($tpl)->hasBlock($block, [])) {
-            throw new NotFoundHttpException(\sprintf('Block "%s" does not exist in "%s".', $block, $tpl));
+        if (!\in_array($block, $frujax->getBlocks(), true)) {
+            throw new AccessDeniedHttpException(\sprintf('Rendering of block "%s" is not allowed by the @Frujax annotation.', $block));
         }
 
         $request->attributes->add([
             '_frujax_block' => $block,
-            '_frujax_template' => $tpl,
+            '_frujax_template' => $template->getTemplate(),
         ]);
 
         $template->setTemplate('@RuworkFrujax/frujax_block.html.twig');

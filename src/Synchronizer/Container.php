@@ -64,6 +64,8 @@ final class Container
     public function clear(): void
     {
         $this->cache->deleteMultiple(array_keys($this->idsMap));
+        $this->idsMap = [];
+        $this->allLoaded = false;
     }
 
     private function loadAll(): void

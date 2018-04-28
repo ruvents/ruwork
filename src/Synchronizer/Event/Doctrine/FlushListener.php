@@ -10,7 +10,7 @@ use Ruwork\Synchronizer\Event\SyncEvent;
 use Ruwork\Synchronizer\Event\SyncEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class FlushSubscriber implements EventSubscriberInterface
+final class FlushListener implements EventSubscriberInterface
 {
     private const COUNT = 'doctrine_entity_count';
 

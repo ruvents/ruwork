@@ -30,6 +30,14 @@ final class Context implements ContextInterface
         $this->attributes = $attributes;
     }
 
+    public function __destruct()
+    {
+        /** @var SynchronizerInterface $synchronizer */
+        foreach ($this->synchronizers as $synchronizer) {
+            $synchronizer->clearCache();
+        }
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -67,13 +75,5 @@ final class Context implements ContextInterface
     public function setAttribute(string $name, $value): void
     {
         $this->attributes[$name] = $value;
-    }
-
-    public function __destruct()
-    {
-        /** @var SynchronizerInterface $synchronizer */
-        foreach ($this->synchronizers as $synchronizer) {
-            $synchronizer->clearCache();
-        }
     }
 }

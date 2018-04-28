@@ -11,10 +11,10 @@ use Ruwork\Synchronizer\Provider\ProviderInterface;
 
 final class EntityProvider implements ProviderInterface, ByIdProviderInterface
 {
-    protected const ALIAS = 'entity';
+    private const ALIAS = 'entity';
 
-    protected $entityManager;
-    protected $class;
+    private $entityManager;
+    private $class;
 
     public function __construct(EntityManagerInterface $entityManager, string $class)
     {

@@ -7,7 +7,7 @@ namespace Ruwork\Synchronizer\Provider;
 interface ByIdProviderInterface
 {
     /**
-     * @param int|float|string $id
+     * @param float|int|string $id
      *
      * @return null|mixed
      */

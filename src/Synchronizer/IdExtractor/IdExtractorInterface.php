@@ -9,7 +9,7 @@ interface IdExtractorInterface
     /**
      * @param mixed $item
      *
-     * @return int|float|string
+     * @return float|int|string
      */
     public function extractId($item);
 }

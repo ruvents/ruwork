@@ -15,7 +15,7 @@ final class Context implements ContextInterface
     private $types;
     private $cacheFactory;
     private $eventDispatcher;
-    private $synchronizers;
+    private $synchronizers = [];
     private $attributes;
 
     public function __construct(

@@ -48,6 +48,7 @@ git push https://github.com/ruvents/ruwork-reform.git `bin/.splitsh/splitsh-lite
 git push https://github.com/ruvents/ruwork-route-optional-prefix.git `bin/.splitsh/splitsh-lite --prefix=src/RouteOptionalPrefix ${splitsh_flags}`:master ${git_flags}
 git push https://github.com/ruvents/ruwork-routing-tools-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RoutingToolsBundle ${splitsh_flags}`:master ${git_flags}
 git push https://github.com/ruvents/ruwork-runet-id-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RunetIdBundle ${splitsh_flags}`:master ${git_flags}
+git push https://github.com/ruvents/ruwork-synchronizer-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/SynchronizerBundle ${splitsh_flags}`:master ${git_flags}
 git push https://github.com/ruvents/ruwork-synchronizer.git `bin/.splitsh/splitsh-lite --prefix=src/Synchronizer ${splitsh_flags}`:master ${git_flags}
 git push https://github.com/ruvents/ruwork-template-i18n-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/TemplateI18nBundle ${splitsh_flags}`:master ${git_flags}
 git push https://github.com/ruvents/ruwork-upload-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/UploadBundle ${splitsh_flags}`:master ${git_flags}

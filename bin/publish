@@ -38,6 +38,7 @@ git push https://github.com/ruvents/ruwork-bundle-test.git `bin/.splitsh/splitsh
 git push https://github.com/ruvents/ruwork-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RuworkBundle ${splitsh_flags}`:master ${git_flags}
 git push https://github.com/ruvents/ruwork-doctrine-behaviors-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/DoctrineBehaviorsBundle ${splitsh_flags}`:master ${git_flags}
 git push https://github.com/ruvents/ruwork-doctrine-postgresql-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/DoctrinePostgresqlBundle ${splitsh_flags}`:master ${git_flags}
+git push https://github.com/ruvents/ruwork-feature-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/FeatureBundle ${splitsh_flags}`:master ${git_flags}
 git push https://github.com/ruvents/ruwork-filter-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/FilterBundle ${splitsh_flags}`:master ${git_flags}
 git push https://github.com/ruvents/ruwork-frujax-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/FrujaxBundle ${splitsh_flags}`:master ${git_flags}
 git push https://github.com/ruvents/ruwork-manual-auth-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/ManualAuthBundle ${splitsh_flags}`:master ${git_flags}

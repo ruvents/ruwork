@@ -19,6 +19,7 @@
         "ruwork/bundle-test": "*",
         "ruwork/doctrine-behaviors-bundle": "*",
         "ruwork/doctrine-postgresql-bundle": "*",
+        "ruwork/feature-bundle": "*",
         "ruwork/filter-bundle": "*",
         "ruwork/frujax-bundle": "*",
         "ruwork/manual-auth-bundle": "*",

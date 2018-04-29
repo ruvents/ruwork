@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\FrujaxBundle\HttpFoundation;
+namespace Ruwork\FrujaxBundle;
 
+use Ruwork\FrujaxBundle\HttpFoundation\FrujaxHeaders;
 use Symfony\Component\HttpFoundation\Request;
 
-final class FrujaxRequestChecker
+final class FrujaxUtils
 {
-    public static function isFrujaxRequest(Request $request)
+    public static function isFrujaxRequest(Request $request): bool
     {
         return $request->isXmlHttpRequest() && $request->headers->has(FrujaxHeaders::FRUJAX);
     }

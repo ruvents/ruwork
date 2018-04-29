@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Ruwork\FrujaxBundle\EventListener;
 
 use Ruwork\FrujaxBundle\Annotation\Frujax;
+use Ruwork\FrujaxBundle\FrujaxUtils;
 use Ruwork\FrujaxBundle\HttpFoundation\FrujaxHeaders;
-use Ruwork\FrujaxBundle\HttpFoundation\FrujaxRequestChecker;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-final class FrujaxTemplateListener implements EventSubscriberInterface
+final class FrujaxAnnotationListener implements EventSubscriberInterface
 {
     /**
      * {@inheritdoc}
@@ -29,7 +29,7 @@ final class FrujaxTemplateListener implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (!FrujaxRequestChecker::isFrujaxRequest($request)) {
+        if (!FrujaxUtils::isFrujaxRequest($request)) {
             return;
         }
 
@@ -46,14 +46,14 @@ final class FrujaxTemplateListener implements EventSubscriberInterface
         }
 
         $request->attributes->add([
-            '_frujax_block' => $block,
-            '_frujax_template' => $template->getTemplate(),
+            '_ruwork_frujax_block' => $block,
+            '_ruwork_frujax_template' => $template->getTemplate(),
         ]);
 
         $template->setTemplate('@RuworkFrujax/frujax_block.html.twig');
         $template->setVars(\array_merge($template->getVars(), [
-            '_frujax_block',
-            '_frujax_template',
+            '_ruwork_frujax_block',
+            '_ruwork_frujax_template',
         ]));
     }
 }

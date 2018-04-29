@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Ruwork\FrujaxBundle\EventListener;
 
+use Ruwork\FrujaxBundle\FrujaxUtils;
 use Ruwork\FrujaxBundle\HttpFoundation\FrujaxHeaders;
 use Ruwork\FrujaxBundle\HttpFoundation\FrujaxRedirectResponse;
-use Ruwork\FrujaxBundle\HttpFoundation\FrujaxRequestChecker;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -28,7 +28,7 @@ final class FrujaxRedirectListener implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (!FrujaxRequestChecker::isFrujaxRequest($request)) {
+        if (!FrujaxUtils::isFrujaxRequest($request)) {
             return;
         }
 

@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
 
 /**
  * @Annotation
+ * @Target({"CLASS", "METHOD"})
  */
 final class Frujax extends ConfigurationAnnotation
 {

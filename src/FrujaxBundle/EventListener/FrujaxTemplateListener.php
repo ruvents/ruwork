@@ -34,7 +34,7 @@ final class FrujaxTemplateListener implements EventSubscriberInterface
         }
 
         $template = $request->attributes->get('_template');
-        $frujax = $request->attributes->get('_frujax');
+        $frujax = $request->attributes->get('_ruwork_frujax');
         $block = $request->headers->get(FrujaxHeaders::FRUJAX_BLOCK);
 
         if (!$template instanceof Template || !$frujax instanceof Frujax || null === $block) {

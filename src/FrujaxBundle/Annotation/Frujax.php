@@ -33,7 +33,7 @@ final class Frujax extends ConfigurationAnnotation
      */
     public function getAliasName()
     {
-        return 'frujax';
+        return 'ruwork_frujax';
     }
 
     /**

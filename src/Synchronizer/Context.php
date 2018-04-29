@@ -15,8 +15,12 @@ final class Context implements ContextInterface
     private $types;
     private $cacheFactory;
     private $eventDispatcher;
-    private $synchronizers = [];
     private $attributes;
+
+    /**
+     * @var SynchronizerInterface[]
+     */
+    private $synchronizers = [];
 
     public function __construct(
         ContainerInterface $types,
@@ -32,7 +36,6 @@ final class Context implements ContextInterface
 
     public function __destruct()
     {
-        /** @var SynchronizerInterface $synchronizer */
         foreach ($this->synchronizers as $synchronizer) {
             $synchronizer->clearCache();
         }

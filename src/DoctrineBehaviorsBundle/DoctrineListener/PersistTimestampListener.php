@@ -37,11 +37,12 @@ final class PersistTimestampListener implements EventSubscriber
         $metadata = $args
             ->getEntityManager()
             ->getClassMetadata($class);
+
+        /** @var PersistTimestamp[] $timestamps */
         $timestamps = $this->metadataFactory
             ->getMetadata($class)
             ->getPropertyMappings(PersistTimestamp::getName());
 
-        /** @var PersistTimestamp $timestamp */
         foreach ($timestamps as $property => $timestamp) {
             if ($timestamp->overwrite || !$metadata->getFieldValue($entity, $property)) {
                 $type = (string) $metadata->getTypeOfField($property);

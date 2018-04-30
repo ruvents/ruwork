@@ -32,8 +32,8 @@ final class MultilingualListener implements EventSubscriber
     public function getSubscribedEvents()
     {
         return [
-            Events::postLoad,
             Events::prePersist,
+            Events::postLoad,
         ];
     }
 
@@ -49,17 +49,23 @@ final class MultilingualListener implements EventSubscriber
         $metadata = $args
             ->getEntityManager()
             ->getClassMetadata($class);
-        $propertyMultilinguals = $this->metadataFactory
+
+        /** @var Multilingual[] $multilinguals */
+        $multilinguals = $this->metadataFactory
             ->getMetadata($class)
             ->getPropertyMappings(Multilingual::getName());
 
-        /** @var Multilingual $multilingual */
-        foreach ($propertyMultilinguals as $property => $multilingual) {
+        foreach ($multilinguals as $property => $multilingual) {
             $value = $metadata->getFieldValue($entity, $property);
 
             if ($value instanceof CurrentLocaleAwareInterface) {
                 $this->requestListener->register($value);
             }
         }
+    }
+
+    public function postLoad(LifecycleEventArgs $args): void
+    {
+        $this->prePersist($args);
     }
 }

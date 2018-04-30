@@ -42,11 +42,12 @@ final class AuthorListener implements EventSubscriber
         $metadata = $args
             ->getEntityManager()
             ->getClassMetadata($class);
+
+        /** @var Author[] $authors */
         $authors = $this->metadataFactory
             ->getMetadata($class)
             ->getPropertyMappings(Author::getName());
 
-        /** @var Author $author */
         foreach ($authors as $property => $author) {
             if ($author->overwrite || !$metadata->getFieldValue($entity, $property)) {
                 $value = $this->provider->getAuthor($metadata, $property);

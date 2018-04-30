@@ -38,11 +38,12 @@ final class UpdateTimestampListener implements EventSubscriber
         $metadata = $args
             ->getEntityManager()
             ->getClassMetadata($class);
+
+        /** @var UpdateTimestamp[] $timestamps */
         $timestamps = $this->metadataFactory
             ->getMetadata($class)
             ->getPropertyMappings(PersistTimestamp::getName());
 
-        /** @var UpdateTimestamp $timestamp */
         foreach ($timestamps as $property => $timestamp) {
             if ($timestamp->overwrite || !$metadata->getFieldValue($entity, $property)) {
                 $type = (string) $metadata->getTypeOfField($property);

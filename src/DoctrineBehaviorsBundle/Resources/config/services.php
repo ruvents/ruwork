@@ -8,6 +8,7 @@ use Ruwork\DoctrineBehaviorsBundle\Author\SecurityTokenAuthorProvider;
 use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\AuthorListener;
 use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\MultilingualListener;
 use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\PersistTimestampListener;
+use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\SearchIndexListener;
 use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\UpdateTimestampListener;
 use Ruwork\DoctrineBehaviorsBundle\EventListener\MultilingualRequestListener;
 use Ruwork\DoctrineBehaviorsBundle\Metadata\CachedMetadataFactory;
@@ -81,6 +82,14 @@ return function (ContainerConfigurator $container): void {
         ->args([
             '$metadataFactory' => ref('ruwork_doctrine_behaviors.metadata_factory'),
             '$requestListener' => ref('ruwork_doctrine_behaviors.multilingual_request_listener'),
+        ])
+        ->tag('doctrine.event_subscriber');
+
+    $services->set('ruwork_doctrine_behaviors.search_index_listener')
+        ->class(SearchIndexListener::class)
+        ->args([
+            '$metadataFactory' => ref('ruwork_doctrine_behaviors.metadata_factory'),
+            '$accessor' => ref('property_accessor'),
         ])
         ->tag('doctrine.event_subscriber');
 };

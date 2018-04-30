@@ -17,10 +17,10 @@ final class MultilingualRequestListener implements EventSubscriberInterface
     private $objects;
     private $currentLocale;
 
-    public function __construct()
+    public function __construct(string $defaultLocale)
     {
         $this->objects = new \SplObjectStorage();
-        $this->currentLocale = \Locale::getDefault();
+        $this->currentLocale = $defaultLocale;
     }
 
     /**

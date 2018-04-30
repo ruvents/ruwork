@@ -71,6 +71,9 @@ return function (ContainerConfigurator $container): void {
 
     $services->set('ruwork_doctrine_behaviors.multilingual_request_listener')
         ->class(MultilingualRequestListener::class)
+        ->args([
+            '$defaultLocale' => '%kernel.default_locale%',
+        ])
         ->tag('kernel.event_subscriber');
 
     $services->set('ruwork_doctrine_behaviors.multilingual_listener')

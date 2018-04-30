@@ -68,7 +68,7 @@ final class SearchIndexListener implements EventSubscriber
         $this->prePersist($args);
     }
 
-    private function processValue($value, array & $values): void
+    private function processValue($value, array &$values): void
     {
         if (is_iterable($value)) {
             foreach ($value as $item) {

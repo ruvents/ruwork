@@ -40,16 +40,21 @@ final class MultilingualListener implements EventSubscriber
     public function prePersist(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
+
+        if ($entity instanceof CurrentLocaleAwareInterface) {
+            $this->requestListener->register($entity);
+        }
+
         $class = ClassUtils::getClass($entity);
         $metadata = $args
             ->getEntityManager()
             ->getClassMetadata($class);
-        $multilinguals = $this->metadataFactory
+        $propertyMultilinguals = $this->metadataFactory
             ->getMetadata($class)
             ->getPropertyMappings(Multilingual::getName());
 
         /** @var Multilingual $multilingual */
-        foreach ($multilinguals as $property => $multilingual) {
+        foreach ($propertyMultilinguals as $property => $multilingual) {
             $value = $metadata->getFieldValue($entity, $property);
 
             if ($value instanceof CurrentLocaleAwareInterface) {

@@ -5,20 +5,15 @@ declare(strict_types=1);
 namespace Ruwork\DoctrineBehaviorsBundle\Metadata;
 
 use Doctrine\Common\Annotations\Reader;
-use Doctrine\Common\Util\ClassUtils;
-use Ruwork\DoctrineBehaviorsBundle\Mapping\Author;
-use Ruwork\DoctrineBehaviorsBundle\Mapping\Multilingual;
-use Ruwork\DoctrineBehaviorsBundle\Mapping\PersistTimestamp;
-use Ruwork\DoctrineBehaviorsBundle\Mapping\SearchColumn;
-use Ruwork\DoctrineBehaviorsBundle\Mapping\UpdateTimestamp;
+use Ruwork\DoctrineBehaviorsBundle\Mapping\MappingInterface;
 
-class MetadataFactory implements MetadataFactoryInterface
+final class MetadataFactory implements MetadataFactoryInterface
 {
-    private $annotationReader;
+    private $reader;
 
-    public function __construct(Reader $annotationReader)
+    public function __construct(Reader $reader)
     {
-        $this->annotationReader = $annotationReader;
+        $this->reader = $reader;
     }
 
     /**
@@ -26,32 +21,26 @@ class MetadataFactory implements MetadataFactoryInterface
      */
     public function getMetadata(string $class): Metadata
     {
-        $class = ClassUtils::getRealClass($class);
         $reflectionClass = new \ReflectionClass($class);
-        $metadata = new Metadata($class);
+        $classMappings = [];
+        $propertyMappings = [];
 
-        foreach ($this->annotationReader->getClassAnnotations($reflectionClass) as $annotation) {
-            if ($annotation instanceof SearchColumn) {
-                $metadata->addSearchColumn($annotation);
+        foreach ($this->reader->getClassAnnotations($reflectionClass) as $annotation) {
+            if ($annotation instanceof MappingInterface) {
+                $classMappings[$annotation::getName()] = $annotation;
             }
         }
 
         foreach ($reflectionClass->getProperties() as $reflectionProperty) {
             $name = $reflectionProperty->getName();
 
-            foreach ($this->annotationReader->getPropertyAnnotations($reflectionProperty) as $annotation) {
-                if ($annotation instanceof Author) {
-                    $metadata->addAuthor($name, $annotation);
-                } elseif ($annotation instanceof Multilingual) {
-                    $metadata->addMultilingual($name, $annotation);
-                } elseif ($annotation instanceof PersistTimestamp) {
-                    $metadata->addPersistTimestamp($name, $annotation);
-                } elseif ($annotation instanceof UpdateTimestamp) {
-                    $metadata->addUpdateTimestamp($name, $annotation);
+            foreach ($this->reader->getPropertyAnnotations($reflectionProperty) as $annotation) {
+                if ($annotation instanceof MappingInterface) {
+                    $propertyMappings[$annotation::getName()][$name] = $annotation;
                 }
             }
         }
 
-        return $metadata;
+        return new Metadata($classMappings, $propertyMappings);
     }
 }

@@ -4,75 +4,43 @@ declare(strict_types=1);
 
 namespace Ruwork\DoctrineBehaviorsBundle\Multilingual;
 
-abstract class AbstractMultilingual implements MultilingualInterface
+abstract class AbstractMultilingual implements CurrentLocaleAwareInterface
 {
-    private $currentLocale;
+    use CurrentLocaleAwareTrait;
 
-    public function __toString(): string
+    public function __construct()
     {
-        return (string) $this->getCurrent();
-    }
-
-    public function has(string $locale): bool
-    {
-        return property_exists($this, $locale);
-    }
-
-    public function get(string $locale)
-    {
-        if (!$this->has($locale)) {
-            throw new \OutOfBoundsException(sprintf('@Multilingual "%s" does not support locale "%s".', get_class($this), $locale));
-        }
-
-        return $this->$locale;
-    }
-
-    public function set(string $locale, $value)
-    {
-        if (!$this->has($locale)) {
-            throw new \OutOfBoundsException(sprintf('@Multilingual "%s" does not support locale "%s".', get_class($this), $locale));
-        }
-
-        $this->$locale = $value;
-
-        return $this;
-    }
-
-    public function setCurrentLocale(string $locale)
-    {
-        if ($this->has($locale)) {
-            $this->currentLocale = $locale;
-        }
-
-        return $this;
+        $this->currentLocale = \Locale::getDefault();
     }
 
     public function getCurrent(bool $fallback = true)
     {
-        $currentLocale = $this->getCurrentLocale();
+        $localesMap = array_flip($this->getLocales());
+        $currentLocale = $this->currentLocale;
 
-        if ($current = $this->get($currentLocale)) {
-            return $current;
+        if (isset($localesMap[$currentLocale])) {
+            if ($this->$currentLocale || !$fallback) {
+                return $this->$currentLocale;
+            }
+
+            unset($localesMap[$currentLocale]);
         }
 
-        if ($fallback) {
-            foreach ($this->getFallbackLocales() as $locale) {
-                if ($current = $this->get($locale)) {
-                    break;
-                }
+        if (!$fallback) {
+            return null;
+        }
+
+        foreach ($localesMap as $locale => $nb) {
+            if ($this->$locale) {
+                return $this->$locale;
             }
         }
 
-        return $current;
-    }
-
-    protected function getCurrentLocale(): string
-    {
-        return $this->currentLocale ?? $this->getFallbackLocales()->current();
+        return null;
     }
 
     /**
-     * @return \Generator|string[]
+     * @return string[]
      */
-    abstract protected function getFallbackLocales(): \Generator;
+    abstract protected function getLocales(): array;
 }

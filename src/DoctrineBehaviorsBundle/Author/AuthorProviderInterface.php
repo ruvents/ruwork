@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\DoctrineBehaviorsBundle\Strategy\AuthorStrategy;
+namespace Ruwork\DoctrineBehaviorsBundle\Author;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-interface AuthorStrategyInterface
+interface AuthorProviderInterface
 {
     /**
      * @return null|object|string

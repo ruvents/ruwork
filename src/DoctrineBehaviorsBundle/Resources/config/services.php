@@ -4,85 +4,80 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Ruwork\DoctrineBehaviorsBundle\DependencyInjection\RuworkDoctrineBehaviorsExtension as DI;
-use Ruwork\DoctrineBehaviorsBundle\EventListener\AuthorListener;
-use Ruwork\DoctrineBehaviorsBundle\EventListener\MultilingualListener;
-use Ruwork\DoctrineBehaviorsBundle\EventListener\PersistTimestampListener;
-use Ruwork\DoctrineBehaviorsBundle\EventListener\SearchColumnListener;
-use Ruwork\DoctrineBehaviorsBundle\EventListener\UpdateTimestampListener;
-use Ruwork\DoctrineBehaviorsBundle\Metadata\LazyLoadingMetadataFactory;
+use Ruwork\DoctrineBehaviorsBundle\Author\SecurityTokenAuthorProvider;
+use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\AuthorListener;
+use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\MultilingualListener;
+use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\PersistTimestampListener;
+use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\UpdateTimestampListener;
+use Ruwork\DoctrineBehaviorsBundle\EventListener\MultilingualRequestListener;
+use Ruwork\DoctrineBehaviorsBundle\Metadata\CachedMetadataFactory;
 use Ruwork\DoctrineBehaviorsBundle\Metadata\MetadataFactory;
 use Ruwork\DoctrineBehaviorsBundle\Metadata\MetadataFactoryInterface;
-use Ruwork\DoctrineBehaviorsBundle\Search\SearchManager;
-use Ruwork\DoctrineBehaviorsBundle\Strategy\AuthorStrategy\SecurityTokenAuthorStrategy;
-use Ruwork\DoctrineBehaviorsBundle\Strategy\TimestampStrategy\FieldTypeTimestampStrategy;
 
 return function (ContainerConfigurator $container): void {
-    $container->services()
-        ->set($cacheId = 'cache.ruwork_doctrine_behaviors')
+    $container
+        ->services()
+        ->set('ruwork_doctrine_behaviors.metadata_cache')
         ->parent('cache.system')
-        ->private()
         ->tag('cache.pool');
 
     $services = $container->services()
         ->defaults()
         ->private();
 
-    $services->set(MetadataFactory::class)
+    $services->set('ruwork_doctrine_behaviors.metadata_factory')
+        ->class(MetadataFactory::class)
         ->args([
-            '$annotationReader' => ref('annotation_reader'),
+            '$reader' => ref('annotation_reader'),
         ]);
 
-    $services->set(LazyLoadingMetadataFactory::class)
+    $services->set('ruwork_doctrine_behaviors.metadata_cached_factory')
+        ->class(CachedMetadataFactory::class)
+        ->decorate('ruwork_doctrine_behaviors.metadata_factory')
         ->args([
-            '$factory' => ref(MetadataFactory::class),
-            '$cache' => ref($cacheId),
+            '$factory' => ref('ruwork_doctrine_behaviors.metadata_cached_factory.inner'),
+            '$cache' => ref('ruwork_doctrine_behaviors.metadata_cache'),
         ]);
 
-    $services->alias(MetadataFactoryInterface::class, LazyLoadingMetadataFactory::class);
+    $services->alias(MetadataFactoryInterface::class, 'ruwork_doctrine_behaviors.metadata_factory');
 
-    $services->set(SecurityTokenAuthorStrategy::class)
+    $services->set('ruwork_doctrine_behaviors.security_token_author_provider')
+        ->class(SecurityTokenAuthorProvider::class)
         ->args([
             '$tokenStorage' => ref('security.token_storage'),
         ]);
 
-    $services->set(FieldTypeTimestampStrategy::class);
-
-    $services->set(DI::LISTENER.'search_column', SearchColumnListener::class)
-        ->abstract()
+    $services->set('ruwork_doctrine_behaviors.author_listener')
+        ->class(AuthorListener::class)
         ->args([
-            '$factory' => ref(MetadataFactoryInterface::class),
-        ]);
+            '$metadataFactory' => ref('ruwork_doctrine_behaviors.metadata_factory'),
+            '$provider' => ref('ruwork_doctrine_behaviors.security_token_author_provider'),
+        ])
+        ->tag('doctrine.event_subscriber');
 
-    $services->set(DI::LISTENER.'author', AuthorListener::class)
-        ->abstract()
+    $services->set('ruwork_doctrine_behaviors.persist_timestamp_listener')
+        ->class(PersistTimestampListener::class)
         ->args([
-            '$factory' => ref(MetadataFactoryInterface::class),
-        ]);
+            '$metadataFactory' => ref('ruwork_doctrine_behaviors.metadata_factory'),
+        ])
+        ->tag('doctrine.event_subscriber');
 
-    $services->set(DI::LISTENER.'multilingual', MultilingualListener::class)
-        ->abstract()
+    $services->set('ruwork_doctrine_behaviors.update_timestamp_listener')
+        ->class(UpdateTimestampListener::class)
         ->args([
-            '$factory' => ref(MetadataFactoryInterface::class),
-            '$requestStack' => ref('request_stack'),
-        ]);
+            '$metadataFactory' => ref('ruwork_doctrine_behaviors.metadata_factory'),
+        ])
+        ->tag('doctrine.event_subscriber');
 
-    $services->set(DI::LISTENER.'persist_timestamp', PersistTimestampListener::class)
-        ->abstract()
-        ->args([
-            '$factory' => ref(MetadataFactoryInterface::class),
-        ]);
+    $services->set('ruwork_doctrine_behaviors.multilingual_request_listener')
+        ->class(MultilingualRequestListener::class)
+        ->tag('kernel.event_subscriber');
 
-    $services->set(DI::LISTENER.'update_timestamp', UpdateTimestampListener::class)
-        ->abstract()
+    $services->set('ruwork_doctrine_behaviors.multilingual_listener')
+        ->class(MultilingualListener::class)
         ->args([
-            '$factory' => ref(MetadataFactoryInterface::class),
-        ]);
-
-    $services->set(SearchManager::class)
-        ->args([
-            '$doctrine' => ref('doctrine'),
-            '$factory' => ref(MetadataFactoryInterface::class),
-            '$accessor' => ref('property_accessor'),
-        ]);
+            '$metadataFactory' => ref('ruwork_doctrine_behaviors.metadata_factory'),
+            '$requestListener' => ref('ruwork_doctrine_behaviors.multilingual_request_listener'),
+        ])
+        ->tag('doctrine.event_subscriber');
 };

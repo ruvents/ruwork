@@ -6,6 +6,6 @@ namespace Ruwork\DoctrineBehaviorsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class RuworkDoctrineBehaviorsBundle extends Bundle
+final class RuworkDoctrineBehaviorsBundle extends Bundle
 {
 }

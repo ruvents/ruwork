@@ -8,6 +8,13 @@ namespace Ruwork\DoctrineBehaviorsBundle\Mapping;
  * @Annotation
  * @Target("PROPERTY")
  */
-final class Multilingual
+final class Multilingual implements MappingInterface
 {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getName(): string
+    {
+        return 'multilingual';
+    }
 }

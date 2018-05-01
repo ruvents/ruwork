@@ -10,6 +10,7 @@ final class CachedMetadataFactory implements MetadataFactoryInterface
 {
     private $factory;
     private $cache;
+    private $metadatas = [];
 
     public function __construct(MetadataFactoryInterface $factory, CacheItemPoolInterface $cache)
     {
@@ -22,13 +23,17 @@ final class CachedMetadataFactory implements MetadataFactoryInterface
      */
     public function getMetadata(string $class): Metadata
     {
+        if (isset($this->metadatas[$class])) {
+            return $this->metadatas[$class];
+        }
+
         $item = $this->cache->getItem(str_replace('\\', '.', $class));
 
         if ($item->isHit()) {
-            return $item->get();
+            return $this->metadatas[$class] = $item->get();
         }
 
-        $metadata = $this->factory->getMetadata($class);
+        $metadata = $this->metadatas[$class] = $this->factory->getMetadata($class);
         $item->set($metadata);
 
         $this->cache->save($item);

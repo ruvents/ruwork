@@ -9,30 +9,31 @@ use Ruwork\DoctrineBehaviorsBundle\Mapping\MappingInterface;
 final class Metadata
 {
     private $classMappings;
-    private $propertyMappings;
+    private $propertiesMappings;
 
-    /**
-     * @param MappingInterface[]   $classMappings
-     * @param MappingInterface[][] $propertyMappings
-     */
-    public function __construct(array $classMappings, array $propertyMappings)
+    public function __construct(array $classMappings, array $propertiesMappings)
     {
         $this->classMappings = $classMappings;
-        $this->propertyMappings = $propertyMappings;
+        $this->propertiesMappings = $propertiesMappings;
     }
 
-    public function getClassMapping(string $mappingName): ?MappingInterface
+    public function getClassMapping(string $mapping): ?MappingInterface
     {
-        return $this->classMappings[$mappingName] ?? null;
+        return $this->classMappings[$mapping] ?? null;
     }
 
     /**
-     * @param string $mappingName
+     * @param string $mapping
      *
      * @return MappingInterface[]
      */
-    public function getPropertyMappings(string $mappingName): array
+    public function getPropertiesMappings(string $mapping): array
     {
-        return $this->propertyMappings[$mappingName] ?? [];
+        return $this->propertiesMappings[$mapping] ?? [];
+    }
+
+    public function getPropertyMapping(string $property, string $mapping): ?MappingInterface
+    {
+        return $this->propertiesMappings[$mapping][$property] ?? null;
     }
 }

@@ -23,7 +23,7 @@ final class MetadataFactory implements MetadataFactoryInterface
     {
         $reflectionClass = new \ReflectionClass($class);
         $classMappings = [];
-        $propertyMappings = [];
+        $propertiesMappings = [];
 
         foreach ($this->reader->getClassAnnotations($reflectionClass) as $annotation) {
             if ($annotation instanceof MappingInterface) {
@@ -36,11 +36,11 @@ final class MetadataFactory implements MetadataFactoryInterface
 
             foreach ($this->reader->getPropertyAnnotations($reflectionProperty) as $annotation) {
                 if ($annotation instanceof MappingInterface) {
-                    $propertyMappings[$annotation::getName()][$name] = $annotation;
+                    $propertiesMappings[$annotation::getName()][$name] = $annotation;
                 }
             }
         }
 
-        return new Metadata($classMappings, $propertyMappings);
+        return new Metadata($classMappings, $propertiesMappings);
     }
 }

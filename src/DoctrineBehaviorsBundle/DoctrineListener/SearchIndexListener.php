@@ -47,7 +47,7 @@ final class SearchIndexListener implements EventSubscriber
         /** @var SearchIndex[] $searchIndices */
         $searchIndices = $this->metadataFactory
             ->getMetadata($class)
-            ->getPropertyMappings(SearchIndex::getName());
+            ->getPropertiesMappings(SearchIndex::getName());
 
         foreach ($searchIndices as $property => $searchIndex) {
             $values = [];

@@ -53,7 +53,7 @@ final class MultilingualListener implements EventSubscriber
         /** @var Multilingual[] $multilinguals */
         $multilinguals = $this->metadataFactory
             ->getMetadata($class)
-            ->getPropertyMappings(Multilingual::getName());
+            ->getPropertiesMappings(Multilingual::getName());
 
         foreach ($multilinguals as $property => $multilingual) {
             $value = $metadata->getFieldValue($entity, $property);

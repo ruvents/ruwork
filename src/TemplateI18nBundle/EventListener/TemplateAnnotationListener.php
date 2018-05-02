@@ -25,7 +25,7 @@ final class TemplateAnnotationListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['onKernelView', 1],
+            KernelEvents::VIEW => ['onKernelView', 10],
         ];
     }
 

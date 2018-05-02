@@ -23,7 +23,7 @@ final class NamingStrategy implements NamingStrategyInterface
      */
     public function getLocalizedName(string $name, string $locale): string
     {
-        $replacement = $locale === $this->noSuffixLocale ? '' : '.'.preg_quote($locale, '#');
+        $replacement = $locale === $this->noSuffixLocale ? '' : '.'.$locale;
 
         return preg_replace($this->pattern, $replacement.'$3', $name);
     }

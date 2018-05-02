@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Template;
 
-class LocalizedTemplateListenerTest extends TestCase
+class TemplateAnnotationListenerTest extends TestCase
 {
     public function testEventPriorityHigher(): void
     {

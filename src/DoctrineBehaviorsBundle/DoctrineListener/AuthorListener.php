@@ -9,6 +9,7 @@ use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Ruwork\DoctrineBehaviorsBundle\Author\AuthorProviderInterface;
+use Ruwork\DoctrineBehaviorsBundle\Exception\NotMappedException;
 use Ruwork\DoctrineBehaviorsBundle\Mapping\Author;
 use Ruwork\DoctrineBehaviorsBundle\Metadata\MetadataFactoryInterface;
 
@@ -49,6 +50,10 @@ final class AuthorListener implements EventSubscriber
             ->getPropertiesMappings(Author::getName());
 
         foreach ($authors as $property => $author) {
+            if (!$metadata->hasField($property) && !$metadata->hasAssociation($property)) {
+                throw new NotMappedException($class, $property);
+            }
+
             if ($author->overwrite || !$metadata->getFieldValue($entity, $property)) {
                 $value = $this->provider->getAuthor($metadata, $property);
                 $metadata->setFieldValue($entity, $property, $value);

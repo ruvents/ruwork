@@ -9,6 +9,7 @@ use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Ruwork\DoctrineBehaviorsBundle\EventListener\MultilingualRequestListener;
+use Ruwork\DoctrineBehaviorsBundle\Exception\NotMappedException;
 use Ruwork\DoctrineBehaviorsBundle\Mapping\Multilingual;
 use Ruwork\DoctrineBehaviorsBundle\Metadata\MetadataFactoryInterface;
 use Ruwork\DoctrineBehaviorsBundle\Multilingual\CurrentLocaleAwareInterface;
@@ -56,6 +57,10 @@ final class MultilingualListener implements EventSubscriber
             ->getPropertiesMappings(Multilingual::getName());
 
         foreach ($multilinguals as $property => $multilingual) {
+            if (!$metadata->hasField($property) && !$metadata->hasAssociation($property)) {
+                throw new NotMappedException($class, $property);
+            }
+
             $value = $metadata->getFieldValue($entity, $property);
 
             if ($value instanceof CurrentLocaleAwareInterface) {

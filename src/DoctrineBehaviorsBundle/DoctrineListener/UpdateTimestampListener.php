@@ -8,6 +8,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
+use Ruwork\DoctrineBehaviorsBundle\Exception\NotMappedException;
 use Ruwork\DoctrineBehaviorsBundle\Mapping\PersistTimestamp;
 use Ruwork\DoctrineBehaviorsBundle\Mapping\UpdateTimestamp;
 use Ruwork\DoctrineBehaviorsBundle\Metadata\MetadataFactoryInterface;
@@ -45,6 +46,10 @@ final class UpdateTimestampListener implements EventSubscriber
             ->getPropertiesMappings(PersistTimestamp::getName());
 
         foreach ($timestamps as $property => $timestamp) {
+            if (!$metadata->hasField($property)) {
+                throw new NotMappedException($class, $property);
+            }
+
             if ($timestamp->overwrite || !$metadata->getFieldValue($entity, $property)) {
                 $type = (string) $metadata->getTypeOfField($property);
                 $value = false !== strpos($type, 'immutable')

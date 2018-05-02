@@ -8,6 +8,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
+use Ruwork\DoctrineBehaviorsBundle\Exception\NotMappedException;
 use Ruwork\DoctrineBehaviorsBundle\Mapping\SearchIndex;
 use Ruwork\DoctrineBehaviorsBundle\Metadata\MetadataFactoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -50,6 +51,10 @@ final class SearchIndexListener implements EventSubscriber
             ->getPropertiesMappings(SearchIndex::getName());
 
         foreach ($searchIndices as $property => $searchIndex) {
+            if (!$metadata->hasField($property)) {
+                throw new NotMappedException($class, $property);
+            }
+
             $values = [];
 
             foreach ($searchIndex->paths as $path) {

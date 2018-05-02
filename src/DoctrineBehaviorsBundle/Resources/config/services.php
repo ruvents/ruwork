@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Ruwork\DoctrineBehaviorsBundle\Author\SecurityTokenAuthorProvider;
+use Ruwork\DoctrineBehaviorsBundle\AuthorIp\MasterRequestAuthorIpProvider;
+use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\AuthorIpListener;
 use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\AuthorListener;
 use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\MultilingualListener;
 use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\PersistTimestampListener;
@@ -53,6 +55,20 @@ return function (ContainerConfigurator $container): void {
         ->args([
             '$metadataFactory' => ref('ruwork_doctrine_behaviors.metadata_factory'),
             '$provider' => ref('ruwork_doctrine_behaviors.security_token_author_provider'),
+        ])
+        ->tag('doctrine.event_subscriber');
+
+    $services->set('ruwork_doctrine_behaviors.master_request_author_ip_provider')
+        ->class(MasterRequestAuthorIpProvider::class)
+        ->args([
+            '$requestStack' => ref('request_stack'),
+        ]);
+
+    $services->set('ruwork_doctrine_behaviors.author_ip_listener')
+        ->class(AuthorIpListener::class)
+        ->args([
+            '$metadataFactory' => ref('ruwork_doctrine_behaviors.metadata_factory'),
+            '$provider' => ref('ruwork_doctrine_behaviors.master_request_author_ip_provider'),
         ])
         ->tag('doctrine.event_subscriber');
 

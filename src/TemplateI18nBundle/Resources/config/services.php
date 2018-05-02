@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Ruwork\TemplateI18nBundle\Controller\TemplateI18nController;
 use Ruwork\TemplateI18nBundle\EventListener\TemplateAnnotationListener;
 use Ruwork\TemplateI18nBundle\NamingStrategy\NamingStrategy;
 use Ruwork\TemplateI18nBundle\Resolver\LocalizedTemplateResolver;
@@ -35,4 +36,12 @@ return function (ContainerConfigurator $container): void {
             '$resolver' => ref(LocalizedTemplateResolverInterface::class),
         ])
         ->tag('kernel.event_subscriber');
+
+    $services->set('ruwork_template_i18n.controller')
+        ->class(TemplateI18nController::class)
+        ->public()
+        ->args([
+            '$twig' => ref('twig'),
+            '$resolver' => ref(LocalizedTemplateResolverInterface::class),
+        ]);
 };

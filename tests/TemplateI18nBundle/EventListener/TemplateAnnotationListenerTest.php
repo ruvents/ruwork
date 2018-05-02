@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Twig\Template;
 
 class TemplateAnnotationListenerTest extends TestCase
 {
@@ -28,15 +27,10 @@ class TemplateAnnotationListenerTest extends TestCase
 
     public function testChangesTemplate(): void
     {
-        $template = $this->createMock(Template::class);
-        $template->expects($this->once())
-            ->method('getTemplateName')
-            ->willReturn('new.html.twig');
-
         $resolver = $this->createMock(LocalizedTemplateResolverInterface::class);
         $resolver->expects($this->once())
             ->method('resolve')
-            ->willReturn($template);
+            ->willReturn('new.html.twig');
 
         $config = new TemplateConfig(['template' => 'old.html.twig']);
 

@@ -21,8 +21,10 @@ return function (ContainerConfigurator $container): void {
     $services->set('ruwork_template_i18n.resolver')
         ->class(LocalizedTemplateResolver::class)
         ->args([
-            '$strategy' => ref('ruwork_template_i18n.naming_strategy'),
+            '$namingStrategy' => ref('ruwork_template_i18n.naming_strategy'),
             '$twig' => ref('twig'),
+            '$requestStack' => ref('request_stack'),
+            '$defaultLocale' => '%kernel.default_locale%',
         ]);
 
     $services->alias(LocalizedTemplateResolverInterface::class, 'ruwork_template_i18n.resolver');
@@ -30,7 +32,7 @@ return function (ContainerConfigurator $container): void {
     $services->set('ruwork_template_i18n.annotation_listener')
         ->class(TemplateAnnotationListener::class)
         ->args([
-            '$resolver' => ref('ruwork_template_i18n.resolver'),
+            '$resolver' => ref(LocalizedTemplateResolverInterface::class),
         ])
         ->tag('kernel.event_subscriber');
 };

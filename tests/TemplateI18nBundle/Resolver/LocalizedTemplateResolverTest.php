@@ -6,6 +6,8 @@ namespace Ruwork\TemplateI18nBundle\Resolver;
 
 use PHPUnit\Framework\TestCase;
 use Ruwork\TemplateI18nBundle\NamingStrategy\NamingStrategyInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 use Twig\Template;
 
@@ -14,6 +16,9 @@ class LocalizedTemplateResolverTest extends TestCase
     public function testResolve(): void
     {
         $expectedTemplate = $this->createMock(Template::class);
+        $expectedTemplate->expects($this->once())
+            ->method('getTemplateName')
+            ->willReturn('index.en.html.twig');
 
         $twig = $this->createMock(Environment::class);
         $twig->expects($this->once())
@@ -33,10 +38,15 @@ class LocalizedTemplateResolverTest extends TestCase
                 'index.fr.html.twig'
             );
 
-        $resolver = new LocalizedTemplateResolver($strategy, $twig);
+        $requestStack = new RequestStack();
+        $request = new Request();
+        $request->setLocale('en');
+        $requestStack->push($request);
 
-        $actualTemplate = $resolver->resolve('index.html.twig', ['en', 'fr']);
+        $resolver = new LocalizedTemplateResolver($strategy, $twig, $requestStack, 'fr');
 
-        $this->assertSame($expectedTemplate, $actualTemplate);
+        $actualTemplate = $resolver->resolve('index.html.twig');
+
+        $this->assertSame('index.en.html.twig', $actualTemplate);
     }
 }

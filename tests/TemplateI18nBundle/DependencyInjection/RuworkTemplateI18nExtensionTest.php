@@ -54,7 +54,7 @@ class RuworkTemplateI18nExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'ruwork_template_i18n.resolver',
-            '$strategy',
+            '$namingStrategy',
             new Reference('ruwork_template_i18n.naming_strategy')
         );
 
@@ -62,6 +62,18 @@ class RuworkTemplateI18nExtensionTest extends AbstractExtensionTestCase
             'ruwork_template_i18n.resolver',
             '$twig',
             new Reference('twig')
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'ruwork_template_i18n.resolver',
+            '$requestStack',
+            new Reference('request_stack')
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'ruwork_template_i18n.resolver',
+            '$defaultLocale',
+            '%kernel.default_locale%'
         );
 
         $this->assertContainerBuilderHasAlias(
@@ -77,7 +89,7 @@ class RuworkTemplateI18nExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'ruwork_template_i18n.annotation_listener',
             '$resolver',
-            new Reference('ruwork_template_i18n.resolver')
+            new Reference(LocalizedTemplateResolverInterface::class)
         );
     }
 
@@ -92,7 +104,7 @@ class RuworkTemplateI18nExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             'ruwork_template_i18n.resolver',
-            '$strategy',
+            '$namingStrategy',
             new Reference('service')
         );
     }

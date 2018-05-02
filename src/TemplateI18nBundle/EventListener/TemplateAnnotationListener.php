@@ -31,18 +31,16 @@ final class TemplateAnnotationListener implements EventSubscriberInterface
 
     public function onKernelView(GetResponseForControllerResultEvent $event): void
     {
-        $request = $event->getRequest();
-        $config = $request->attributes->get('_template');
+        $config = $event->getRequest()
+            ->attributes
+            ->get('_template');
 
         if (!$config instanceof Template) {
             return;
         }
 
-        $template = $this->resolver->resolve($config->getTemplate(), [
-            $request->getLocale(),
-            $request->getDefaultLocale(),
-        ]);
+        $template = $this->resolver->resolve($config->getTemplate());
 
-        $config->setTemplate($template->getTemplateName());
+        $config->setTemplate($template);
     }
 }

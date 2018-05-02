@@ -30,7 +30,7 @@ final class RuworkTemplateI18nExtension extends ConfigurableExtension
                 ]);
         } else {
             $container->findDefinition('ruwork_template_i18n.resolver')
-                ->replaceArgument('$strategy', new Reference($service));
+                ->replaceArgument('$namingStrategy', new Reference($service));
         }
 
         if (!class_exists(Template::class)) {

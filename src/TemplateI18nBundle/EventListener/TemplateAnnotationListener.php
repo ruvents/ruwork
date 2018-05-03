@@ -7,7 +7,7 @@ namespace Ruwork\TemplateI18nBundle\EventListener;
 use Ruwork\TemplateI18nBundle\Resolver\LocalizedTemplateResolverInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 final class TemplateAnnotationListener implements EventSubscriberInterface
@@ -25,11 +25,11 @@ final class TemplateAnnotationListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['onKernelView', 10],
+            KernelEvents::CONTROLLER => ['onKernelController', -200],
         ];
     }
 
-    public function onKernelView(GetResponseForControllerResultEvent $event): void
+    public function onKernelController(FilterControllerEvent $event): void
     {
         $config = $event->getRequest()
             ->attributes

@@ -9,19 +9,19 @@ use Ruwork\TemplateI18nBundle\Resolver\LocalizedTemplateResolverInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template as TemplateConfig;
 use Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class TemplateAnnotationListenerTest extends TestCase
 {
     public function testEventPriorityHigher(): void
     {
-        $sensioEventConfig = TemplateListener::getSubscribedEvents()[KernelEvents::VIEW];
+        $sensioEventConfig = TemplateListener::getSubscribedEvents()[KernelEvents::CONTROLLER];
         $sensioPriority = is_array($sensioEventConfig) ? ($sensioEventConfig[1] ?? 0) : 0;
 
-        $this->assertGreaterThan(
+        $this->assertLessThan(
             $sensioPriority,
-            TemplateAnnotationListener::getSubscribedEvents()[KernelEvents::VIEW][1] ?? 0
+            TemplateAnnotationListener::getSubscribedEvents()[KernelEvents::CONTROLLER][1] ?? 0
         );
     }
 
@@ -36,12 +36,12 @@ class TemplateAnnotationListenerTest extends TestCase
 
         $request = new Request([], [], ['_template' => $config]);
 
-        $event = $this->createMock(GetResponseForControllerResultEvent::class);
+        $event = $this->createMock(FilterControllerEvent::class);
         $event->expects($this->once())
             ->method('getRequest')
             ->willReturn($request);
 
-        (new TemplateAnnotationListener($resolver))->onKernelView($event);
+        (new TemplateAnnotationListener($resolver))->onKernelController($event);
 
         $this->assertSame('new.html.twig', $config->getTemplate());
     }
@@ -50,12 +50,12 @@ class TemplateAnnotationListenerTest extends TestCase
     {
         $resolver = $this->createMock(LocalizedTemplateResolverInterface::class);
 
-        $event = $this->createMock(GetResponseForControllerResultEvent::class);
+        $event = $this->createMock(FilterControllerEvent::class);
         $event->expects($this->once())
             ->method('getRequest')
             ->willReturn(new Request());
 
-        (new TemplateAnnotationListener($resolver))->onKernelView($event);
+        (new TemplateAnnotationListener($resolver))->onKernelController($event);
 
         $this->addToAssertionCount(1);
     }

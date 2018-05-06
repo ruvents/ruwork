@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ruwork\ManualAuthBundle;
 
-use Ruwork\ManualAuthBundle\Security\ManualAuthFactory;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;

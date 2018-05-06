@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\ManualAuthBundle\Security;
+namespace Ruwork\ManualAuthBundle;
 
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

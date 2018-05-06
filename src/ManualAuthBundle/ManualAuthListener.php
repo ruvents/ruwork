@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\ManualAuthBundle\Security;
+namespace Ruwork\ManualAuthBundle;
 
-use Ruwork\ManualAuthBundle\ManualAuthScheduler;
 use Symfony\Bundle\SecurityBundle\Security\FirewallConfig;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -16,7 +15,7 @@ final class ManualAuthListener implements ListenerInterface
 {
     private $manager;
     private $firewallConfig;
-    private $scheduler;
+    private $tokens;
 
     /**
      * @var null|RememberMeServicesInterface
@@ -26,11 +25,11 @@ final class ManualAuthListener implements ListenerInterface
     public function __construct(
         AuthenticationManagerInterface $manager,
         FirewallConfig $firewallConfig,
-        ManualAuthScheduler $scheduler
+        ManualAuthTokens $tokens
     ) {
         $this->manager = $manager;
         $this->firewallConfig = $firewallConfig;
-        $this->scheduler = $scheduler;
+        $this->tokens = $tokens;
     }
 
     /**
@@ -42,10 +41,6 @@ final class ManualAuthListener implements ListenerInterface
 
     public function onKernelResponse(FilterResponseEvent $event): void
     {
-        if (!$event->isMasterRequest()) {
-            return;
-        }
-
         $request = $event->getRequest();
 
         if (!$request->hasSession()) {
@@ -56,7 +51,7 @@ final class ManualAuthListener implements ListenerInterface
             return;
         }
 
-        $token = $this->scheduler->getForFirewall($this->firewallConfig->getName());
+        $token = $this->tokens->pop($this->firewallConfig->getName());
 
         if (null === $token) {
             return;

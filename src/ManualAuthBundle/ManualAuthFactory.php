@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\ManualAuthBundle\Security;
+namespace Ruwork\ManualAuthBundle;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
@@ -20,7 +20,8 @@ final class ManualAuthFactory implements SecurityFactoryInterface
     {
         $listenerId = 'ruwork.manual_auth.listener.'.$id;
 
-        $container->setDefinition($listenerId, new ChildDefinition('ruwork_manual_auth.listener'))
+        $container
+            ->setDefinition($listenerId, new ChildDefinition('ruwork_manual_auth.listener'))
             ->setArgument('$firewallConfig', new Reference('security.firewall.map.config.'.$id))
             ->addTag('kernel.event_listener', [
                 'event' => KernelEvents::RESPONSE,

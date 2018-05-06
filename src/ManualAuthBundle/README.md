@@ -28,7 +28,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Ruwork\ManualAuthBundle\ManualAuthScheduler;
+use Ruwork\ManualAuthBundle\ManualAuthTokens;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -36,10 +36,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 final class RegistrationController
 {
-    private $manualAuthScheduler;
+    private $manualAuthTokens;
     
-    public function __construct(ManualAuthScheduler $manualAuthScheduler) {
-        $this->manualAuthScheduler = $manualAuthScheduler;
+    public function __construct(ManualAuthTokens $manualAuthTokens) {
+        $this->manualAuthTokens = $manualAuthTokens;
     }
     
     /**
@@ -57,10 +57,10 @@ final class RegistrationController
         if ($form->isSubmitted() && $form->isValid()) {
             // save user
             
-            // you have to create relevant Tokens
+            // you have to create a relevant token
             // f.e. PostAuthGuardToken for a firewall with guard authentication
             $token = new UsernamePasswordToken($user, $user->getPassword(), 'main', $user->getRoles());
-            $this->manualAuthScheduler->schedule('main', $token);
+            $this->manualAuthTokens->set('main', $token);
             
             // redirect to next page
         }

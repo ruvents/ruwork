@@ -1,0 +1,29 @@
+{
+    "name": "ruwork/annotation-tools",
+    "description": "Ruwork Annotation Tools",
+    "type": "library",
+    "keywords": ["ruwork"],
+    "homepage": "https://ruvents.github.io/ruwork/",
+    "license": "MIT",
+    "authors": [
+        {"name": "Valentin Udaltsov", "email": "udaltsov@ruvents.com"}
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "psr/cache": "^1.0",
+        "doctrine/annotations": "^1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ruwork\\AnnotationTools\\": ""
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}

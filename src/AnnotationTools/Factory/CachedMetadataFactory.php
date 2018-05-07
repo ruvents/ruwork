@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\DoctrineBehaviorsBundle\Metadata;
+namespace Ruwork\AnnotationTools\Factory;
 
 use Psr\Cache\CacheItemPoolInterface;
+use Ruwork\AnnotationTools\Metadata\ClassMetadata;
 
 final class CachedMetadataFactory implements MetadataFactoryInterface
 {
@@ -21,7 +22,7 @@ final class CachedMetadataFactory implements MetadataFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getMetadata(string $class): Metadata
+    public function getMetadata(string $class): ClassMetadata
     {
         if (isset($this->metadatas[$class])) {
             return $this->metadatas[$class];

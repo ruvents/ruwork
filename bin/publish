@@ -33,6 +33,7 @@ while getopts ":t:" opt; do
 done
 
 git push https://github.com/ruvents/ruwork-admin-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/AdminBundle ${splitsh_flags}`:master ${git_flags}
+git push https://github.com/ruvents/ruwork-annotation-tools.git `bin/.splitsh/splitsh-lite --prefix=src/AnnotationTools ${splitsh_flags}`:master ${git_flags}
 git push https://github.com/ruvents/ruwork-api-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/ApiBundle ${splitsh_flags}`:master ${git_flags}
 git push https://github.com/ruvents/ruwork-bundle-test.git `bin/.splitsh/splitsh-lite --prefix=src/BundleTest ${splitsh_flags}`:master ${git_flags}
 git push https://github.com/ruvents/ruwork-bundle.git `bin/.splitsh/splitsh-lite --prefix=src/RuworkBundle ${splitsh_flags}`:master ${git_flags}

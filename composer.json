@@ -15,6 +15,7 @@
     },
     "replace": {
         "ruwork/admin-bundle": "*",
+        "ruwork/annotation-tools": "*",
         "ruwork/api-bundle": "*",
         "ruwork/bundle-test": "*",
         "ruwork/doctrine-behaviors-bundle": "*",

@@ -29,9 +29,11 @@
         "ruwork/reform-bundle": "*",
         "ruwork/route-optional-prefix": "*",
         "ruwork/routing-tools-bundle": "*",
+        "ruwork/runet-id-bundle": "*",
         "ruwork/ruwork-bundle": "*",
         "ruwork/synchronizer": "*",
         "ruwork/synchronizer-bundle": "*",
+        "ruwork/template-i18n-bundle": "*",
         "ruwork/upload-bundle": "*",
         "ruwork/wizard-bundle": "*"
     },

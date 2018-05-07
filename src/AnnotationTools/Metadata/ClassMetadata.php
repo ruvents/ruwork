@@ -59,7 +59,7 @@ final class ClassMetadata
                 yield $property => $mapping;
 
                 if ($single) {
-                    continue(2);
+                    continue 2;
                 }
             }
         }
@@ -91,7 +91,7 @@ final class ClassMetadata
                 yield $method => $mapping;
 
                 if ($single) {
-                    continue(2);
+                    continue 2;
                 }
             }
         }

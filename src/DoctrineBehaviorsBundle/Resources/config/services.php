@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Ruwork\AnnotationTools\Factory\CachedMetadataFactory;
 use Ruwork\DoctrineBehaviorsBundle\Author\SecurityTokenAuthorProvider;
-use Ruwork\DoctrineBehaviorsBundle\AuthorIp\MasterRequestAuthorIpProvider;
+use Ruwork\DoctrineBehaviorsBundle\AuthorIp\RequestAuthorIpProvider;
 use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\AuthorIpListener;
 use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\AuthorListener;
 use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\MultilingualListener;
@@ -13,15 +14,14 @@ use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\PersistTimestampListener;
 use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\SearchIndexListener;
 use Ruwork\DoctrineBehaviorsBundle\DoctrineListener\UpdateTimestampListener;
 use Ruwork\DoctrineBehaviorsBundle\EventListener\MultilingualRequestListener;
-use Ruwork\DoctrineBehaviorsBundle\Metadata\CachedMetadataFactory;
 use Ruwork\DoctrineBehaviorsBundle\Metadata\MetadataFactory;
-use Ruwork\DoctrineBehaviorsBundle\Metadata\MetadataFactoryInterface;
 
 return function (ContainerConfigurator $container): void {
     $container
         ->services()
         ->set('ruwork_doctrine_behaviors.metadata_cache')
         ->parent('cache.system')
+        ->private()
         ->tag('cache.pool');
 
     $services = $container->services()
@@ -42,8 +42,6 @@ return function (ContainerConfigurator $container): void {
             '$cache' => ref('ruwork_doctrine_behaviors.metadata_cache'),
         ]);
 
-    $services->alias(MetadataFactoryInterface::class, 'ruwork_doctrine_behaviors.metadata_factory');
-
     $services->set('ruwork_doctrine_behaviors.security_token_author_provider')
         ->class(SecurityTokenAuthorProvider::class)
         ->args([
@@ -58,8 +56,8 @@ return function (ContainerConfigurator $container): void {
         ])
         ->tag('doctrine.event_subscriber');
 
-    $services->set('ruwork_doctrine_behaviors.master_request_author_ip_provider')
-        ->class(MasterRequestAuthorIpProvider::class)
+    $services->set('ruwork_doctrine_behaviors.request_author_ip_provider')
+        ->class(RequestAuthorIpProvider::class)
         ->args([
             '$requestStack' => ref('request_stack'),
         ]);
@@ -68,7 +66,7 @@ return function (ContainerConfigurator $container): void {
         ->class(AuthorIpListener::class)
         ->args([
             '$metadataFactory' => ref('ruwork_doctrine_behaviors.metadata_factory'),
-            '$provider' => ref('ruwork_doctrine_behaviors.master_request_author_ip_provider'),
+            '$provider' => ref('ruwork_doctrine_behaviors.request_author_ip_provider'),
         ])
         ->tag('doctrine.event_subscriber');
 

@@ -8,10 +8,10 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
+use Ruwork\AnnotationTools\Factory\MetadataFactoryInterface;
 use Ruwork\DoctrineBehaviorsBundle\AuthorIp\AuthorIpProviderInterface;
 use Ruwork\DoctrineBehaviorsBundle\Exception\NotMappedException;
 use Ruwork\DoctrineBehaviorsBundle\Mapping\AuthorIp;
-use Ruwork\DoctrineBehaviorsBundle\Metadata\MetadataFactoryInterface;
 
 final class AuthorIpListener implements EventSubscriber
 {
@@ -40,23 +40,23 @@ final class AuthorIpListener implements EventSubscriber
     {
         $entity = $args->getEntity();
         $class = ClassUtils::getClass($entity);
-        $metadata = $args
+        $entityMetadata = $args
             ->getEntityManager()
             ->getClassMetadata($class);
 
         /** @var AuthorIp[] $authorIps */
         $authorIps = $this->metadataFactory
             ->getMetadata($class)
-            ->getPropertiesMappings(AuthorIp::getName());
+            ->getPropertyMappingsByName(AuthorIp::getName(), true);
 
         foreach ($authorIps as $property => $authorIp) {
-            if (!$metadata->hasField($property) && !$metadata->hasAssociation($property)) {
+            if (!$entityMetadata->hasField($property) && !$entityMetadata->hasAssociation($property)) {
                 throw new NotMappedException($class, $property);
             }
 
-            if ($authorIp->overwrite || !$metadata->getFieldValue($entity, $property)) {
-                $value = $this->provider->getAuthorIp($metadata, $property);
-                $metadata->setFieldValue($entity, $property, $value);
+            if ($authorIp->overwrite || !$entityMetadata->getFieldValue($entity, $property)) {
+                $value = $this->provider->getAuthorIp($entityMetadata, $property);
+                $entityMetadata->setFieldValue($entity, $property, $value);
             }
         }
     }

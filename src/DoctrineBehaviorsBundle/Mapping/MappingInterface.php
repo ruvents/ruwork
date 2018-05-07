@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ruwork\DoctrineBehaviorsBundle\Mapping;
 
-interface MappingInterface
+interface MappingInterface extends \Ruwork\AnnotationTools\Mapping\MappingInterface
 {
-    public static function getName(): string;
 }

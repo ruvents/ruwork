@@ -7,7 +7,7 @@ namespace Ruwork\DoctrineBehaviorsBundle\AuthorIp;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-final class MasterRequestAuthorIpProvider implements AuthorIpProviderInterface
+final class RequestAuthorIpProvider implements AuthorIpProviderInterface
 {
     private $requestStack;
 

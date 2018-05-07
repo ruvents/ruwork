@@ -4,43 +4,26 @@ declare(strict_types=1);
 
 namespace Ruwork\DoctrineBehaviorsBundle\Metadata;
 
-use Doctrine\Common\Annotations\Reader;
+use Ruwork\AnnotationTools\Factory\AbstractMetadataFactory;
 use Ruwork\DoctrineBehaviorsBundle\Mapping\MappingInterface;
 
-final class MetadataFactory implements MetadataFactoryInterface
+final class MetadataFactory extends AbstractMetadataFactory
 {
-    private $reader;
-
-    public function __construct(Reader $reader)
+    /**
+     * {@inheritdoc}
+     */
+    protected function getTargets(): array
     {
-        $this->reader = $reader;
+        return [
+            self::TARGET_PROPERTY,
+        ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getMetadata(string $class): Metadata
+    protected function supports($mapping, int $target): bool
     {
-        $reflectionClass = new \ReflectionClass($class);
-        $classMappings = [];
-        $propertiesMappings = [];
-
-        foreach ($this->reader->getClassAnnotations($reflectionClass) as $annotation) {
-            if ($annotation instanceof MappingInterface) {
-                $classMappings[$annotation::getName()] = $annotation;
-            }
-        }
-
-        foreach ($reflectionClass->getProperties() as $reflectionProperty) {
-            $name = $reflectionProperty->getName();
-
-            foreach ($this->reader->getPropertyAnnotations($reflectionProperty) as $annotation) {
-                if ($annotation instanceof MappingInterface) {
-                    $propertiesMappings[$annotation::getName()][$name] = $annotation;
-                }
-            }
-        }
-
-        return new Metadata($classMappings, $propertiesMappings);
+        return $mapping instanceof MappingInterface;
     }
 }

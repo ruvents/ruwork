@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ruwork\DoctrineBehaviorsBundle\Multilingual;
 
-interface CurrentLocaleAwareInterface
+interface MultilingualInterface
 {
     public function setCurrentLocale(string $locale): void;
 }

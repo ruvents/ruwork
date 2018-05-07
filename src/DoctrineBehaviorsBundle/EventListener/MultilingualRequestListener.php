@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ruwork\DoctrineBehaviorsBundle\EventListener;
 
-use Ruwork\DoctrineBehaviorsBundle\Multilingual\CurrentLocaleAwareInterface;
+use Ruwork\DoctrineBehaviorsBundle\Multilingual\MultilingualInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -12,14 +12,14 @@ use Symfony\Component\HttpKernel\KernelEvents;
 final class MultilingualRequestListener implements EventSubscriberInterface
 {
     /**
-     * @var CurrentLocaleAwareInterface[]
+     * @var MultilingualInterface[]
      */
-    private $objects;
+    private $multilinguals;
     private $currentLocale;
 
     public function __construct(string $defaultLocale)
     {
-        $this->objects = new \SplObjectStorage();
+        $this->multilinguals = new \SplObjectStorage();
         $this->currentLocale = $defaultLocale;
     }
 
@@ -33,17 +33,17 @@ final class MultilingualRequestListener implements EventSubscriberInterface
         ];
     }
 
-    public function register(CurrentLocaleAwareInterface $object): void
+    public function register(MultilingualInterface $object): void
     {
         $object->setCurrentLocale($this->currentLocale);
-        $this->objects->attach($object);
+        $this->multilinguals->attach($object);
     }
 
     public function onRequest(GetResponseEvent $event): void
     {
         $this->currentLocale = $event->getRequest()->getLocale();
 
-        foreach ($this->objects as $object) {
+        foreach ($this->multilinguals as $object) {
             $object->setCurrentLocale($this->currentLocale);
         }
     }

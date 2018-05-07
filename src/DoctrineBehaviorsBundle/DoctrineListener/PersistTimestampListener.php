@@ -8,9 +8,9 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
+use Ruwork\AnnotationTools\Factory\MetadataFactoryInterface;
 use Ruwork\DoctrineBehaviorsBundle\Exception\NotMappedException;
 use Ruwork\DoctrineBehaviorsBundle\Mapping\PersistTimestamp;
-use Ruwork\DoctrineBehaviorsBundle\Metadata\MetadataFactoryInterface;
 
 final class PersistTimestampListener implements EventSubscriber
 {
@@ -35,26 +35,26 @@ final class PersistTimestampListener implements EventSubscriber
     {
         $entity = $args->getEntity();
         $class = ClassUtils::getClass($entity);
-        $metadata = $args
+        $entityMetadata = $args
             ->getEntityManager()
             ->getClassMetadata($class);
 
         /** @var PersistTimestamp[] $timestamps */
         $timestamps = $this->metadataFactory
             ->getMetadata($class)
-            ->getPropertiesMappings(PersistTimestamp::getName());
+            ->getPropertyMappingsByName(PersistTimestamp::getName(), true);
 
         foreach ($timestamps as $property => $timestamp) {
-            if (!$metadata->hasField($property)) {
+            if (!$entityMetadata->hasField($property)) {
                 throw new NotMappedException($class, $property);
             }
 
-            if ($timestamp->overwrite || !$metadata->getFieldValue($entity, $property)) {
-                $type = (string) $metadata->getTypeOfField($property);
+            if ($timestamp->overwrite || !$entityMetadata->getFieldValue($entity, $property)) {
+                $type = (string) $entityMetadata->getTypeOfField($property);
                 $value = false !== strpos($type, 'immutable')
                     ? new \DateTimeImmutable()
                     : new \DateTime();
-                $metadata->setFieldValue($entity, $property, $value);
+                $entityMetadata->setFieldValue($entity, $property, $value);
             }
         }
     }

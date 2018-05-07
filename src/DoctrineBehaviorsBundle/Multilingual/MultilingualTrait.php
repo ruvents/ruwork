@@ -9,7 +9,7 @@ trait MultilingualTrait
     protected $currentLocale;
 
     /**
-     * @see CurrentLocaleAwareInterface::setCurrentLocale()
+     * @see MultilingualInterface::setCurrentLocale()
      */
     public function setCurrentLocale(string $locale): void
     {

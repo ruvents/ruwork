@@ -8,11 +8,11 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
+use Ruwork\AnnotationTools\Factory\MetadataFactoryInterface;
 use Ruwork\DoctrineBehaviorsBundle\EventListener\MultilingualRequestListener;
 use Ruwork\DoctrineBehaviorsBundle\Exception\NotMappedException;
 use Ruwork\DoctrineBehaviorsBundle\Mapping\Multilingual;
-use Ruwork\DoctrineBehaviorsBundle\Metadata\MetadataFactoryInterface;
-use Ruwork\DoctrineBehaviorsBundle\Multilingual\CurrentLocaleAwareInterface;
+use Ruwork\DoctrineBehaviorsBundle\Multilingual\MultilingualInterface;
 
 final class MultilingualListener implements EventSubscriber
 {
@@ -41,29 +41,27 @@ final class MultilingualListener implements EventSubscriber
     public function prePersist(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
-
-        if ($entity instanceof CurrentLocaleAwareInterface) {
-            $this->requestListener->register($entity);
-        }
-
         $class = ClassUtils::getClass($entity);
-        $metadata = $args
+        $entityMetadata = $args
             ->getEntityManager()
             ->getClassMetadata($class);
 
-        /** @var Multilingual[] $multilinguals */
+        if ($entity instanceof MultilingualInterface) {
+            $this->requestListener->register($entity);
+        }
+
         $multilinguals = $this->metadataFactory
             ->getMetadata($class)
-            ->getPropertiesMappings(Multilingual::getName());
+            ->getPropertyMappingsByName(Multilingual::getName(), true);
 
         foreach ($multilinguals as $property => $multilingual) {
-            if (!$metadata->hasField($property) && !$metadata->hasAssociation($property)) {
+            if (!$entityMetadata->hasField($property) && !$entityMetadata->hasAssociation($property)) {
                 throw new NotMappedException($class, $property);
             }
 
-            $value = $metadata->getFieldValue($entity, $property);
+            $value = $entityMetadata->getFieldValue($entity, $property);
 
-            if ($value instanceof CurrentLocaleAwareInterface) {
+            if ($value instanceof MultilingualInterface) {
                 $this->requestListener->register($value);
             }
         }

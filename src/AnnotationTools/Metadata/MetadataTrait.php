@@ -30,11 +30,11 @@ trait MetadataTrait
      */
     public function getMappingsByName(string $name): array
     {
-        return $this->mappings[$name];
+        return $this->mappings[$name] ?? [];
     }
 
     public function getMappingByName(string $name): ?MappingInterface
     {
-        return $this->mappings[$name];
+        return $this->mappings[$name] ?? null;
     }
 }

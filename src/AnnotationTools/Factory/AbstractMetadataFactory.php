@@ -35,13 +35,13 @@ abstract class AbstractMetadataFactory implements MetadataFactoryInterface
         $methods = [];
 
         if (isset($targetsMap[self::TARGET_CLASS])) {
-            $classMappings = iterator_to_array($this->getClassMappings($reflectionClass));
+            $classMappings = $this->getClassMappings($reflectionClass);
         }
 
         if (isset($targetsMap[self::TARGET_PROPERTY])) {
             foreach ($reflectionClass->getProperties() as $reflectionProperty) {
                 $name = $reflectionProperty->getName();
-                $mappings = iterator_to_array($this->getPropertyMappings($reflectionProperty));
+                $mappings = $this->getPropertyMappings($reflectionProperty);
                 $properties[$name] = new PropertyMetadata($name, $mappings);
             }
         }
@@ -49,7 +49,7 @@ abstract class AbstractMetadataFactory implements MetadataFactoryInterface
         if (isset($targetsMap[self::TARGET_METHOD])) {
             foreach ($reflectionClass->getMethods() as $reflectionMethod) {
                 $name = $reflectionMethod->getName();
-                $mappings = iterator_to_array($this->getMethodMappings($reflectionMethod));
+                $mappings = $this->getMethodMappings($reflectionMethod);
                 $methods[$name] = new MethodMetadata($name, $mappings);
             }
         }
@@ -61,36 +61,48 @@ abstract class AbstractMetadataFactory implements MetadataFactoryInterface
 
     abstract protected function supports($mapping, int $target): bool;
 
-    private function getClassMappings(\ReflectionClass $reflectionClass): \Generator
+    private function getClassMappings(\ReflectionClass $reflectionClass): array
     {
+        $mappings = [];
+
         foreach ($this->reader->getClassAnnotations($reflectionClass) as $annotation) {
             if ($annotation instanceof MappingInterface &&
                 $this->supports($annotation, self::TARGET_CLASS)
             ) {
-                yield $annotation::getName() => $annotation;
+                $mappings[$annotation::getName()][] = $annotation;
             }
         }
+
+        return $mappings;
     }
 
-    private function getPropertyMappings(\ReflectionProperty $reflectionProperty): \Generator
+    private function getPropertyMappings(\ReflectionProperty $reflectionProperty): array
     {
+        $mappings = [];
+
         foreach ($this->reader->getPropertyAnnotations($reflectionProperty) as $annotation) {
             if ($annotation instanceof MappingInterface &&
                 $this->supports($annotation, self::TARGET_PROPERTY)
             ) {
-                yield $annotation::getName() => $annotation;
+                $mappings[$annotation::getName()][] = $annotation;
             }
         }
+
+        return $mappings;
     }
 
-    private function getMethodMappings(\ReflectionMethod $reflectionMethod): \Generator
+    private function getMethodMappings(\ReflectionMethod $reflectionMethod): array
     {
+        $mappings = [];
+
         foreach ($this->reader->getMethodAnnotations($reflectionMethod) as $annotation) {
             if ($annotation instanceof MappingInterface &&
                 $this->supports($annotation, self::TARGET_METHOD)
             ) {
-                yield $annotation::getName() => $annotation;
+                $mappings[$annotation::getName()][] = $annotation;
             }
         }
+
+        return $mappings;
     }
 }

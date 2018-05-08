@@ -19,7 +19,7 @@ use Ruwork\DoctrineBehaviorsBundle\Metadata\MetadataFactory;
 return function (ContainerConfigurator $container): void {
     $container
         ->services()
-        ->set('ruwork_doctrine_behaviors.metadata_cache')
+        ->set('cache.ruwork_doctrine_behaviors')
         ->parent('cache.system')
         ->private()
         ->tag('cache.pool');
@@ -34,12 +34,12 @@ return function (ContainerConfigurator $container): void {
             '$reader' => ref('annotation_reader'),
         ]);
 
-    $services->set('ruwork_doctrine_behaviors.metadata_cached_factory')
+    $services->set('ruwork_doctrine_behaviors.cached_metadata_factory')
         ->class(CachedMetadataFactory::class)
         ->decorate('ruwork_doctrine_behaviors.metadata_factory')
         ->args([
-            '$factory' => ref('ruwork_doctrine_behaviors.metadata_cached_factory.inner'),
-            '$cache' => ref('ruwork_doctrine_behaviors.metadata_cache'),
+            '$factory' => ref('ruwork_doctrine_behaviors.cached_metadata_factory.inner'),
+            '$cache' => ref('cache.ruwork_doctrine_behaviors'),
         ]);
 
     $services->set('ruwork_doctrine_behaviors.security_token_author_provider')

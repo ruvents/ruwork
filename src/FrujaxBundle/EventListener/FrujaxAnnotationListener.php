@@ -51,9 +51,5 @@ final class FrujaxAnnotationListener implements EventSubscriberInterface
         ]);
 
         $template->setTemplate('@RuworkFrujax/frujax_block.html.twig');
-        $template->setVars(\array_merge($template->getVars(), [
-            '_ruwork_frujax_block',
-            '_ruwork_frujax_template',
-        ]));
     }
 }

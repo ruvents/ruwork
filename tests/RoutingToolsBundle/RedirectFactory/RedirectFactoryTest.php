@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace Ruwork\RoutingToolsBundle\RedirectFactory;
 
 use PHPUnit\Framework\TestCase;
+use Ruwork\RoutingToolsBundle\RedirectFactory;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RedirectFactoryTest extends TestCase
 {
     public function testCreateDefault()
     {
-        $factory = new RedirectFactory($this->createMock(UrlGeneratorInterface::class));
+        $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+        $requestStack = $this->createMock(RequestStack::class);
+        $factory = new RedirectFactory($urlGenerator, $requestStack);
 
-        $redirect = $factory->create('/url');
+        $redirect = $factory->url('/url');
 
         $this->assertSame('/url', $redirect->getTargetUrl());
         $this->assertSame(302, $redirect->getStatusCode());
@@ -21,9 +25,11 @@ class RedirectFactoryTest extends TestCase
 
     public function testCreate()
     {
-        $factory = new RedirectFactory($this->createMock(UrlGeneratorInterface::class));
+        $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+        $requestStack = $this->createMock(RequestStack::class);
+        $factory = new RedirectFactory($urlGenerator, $requestStack);
 
-        $redirect = $factory->create('/url', 301, ['header' => 'value']);
+        $redirect = $factory->url('/url', 301, ['header' => 'value']);
 
         $this->assertSame('/url', $redirect->getTargetUrl());
         $this->assertSame(301, $redirect->getStatusCode());
@@ -32,15 +38,16 @@ class RedirectFactoryTest extends TestCase
 
     public function testCreateForRouteDefault()
     {
-        $generator = $this->createMock(UrlGeneratorInterface::class);
-        $generator->expects($this->once())
+        $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+        $urlGenerator->expects($this->once())
             ->method('generate')
             ->with('route', [], UrlGeneratorInterface::ABSOLUTE_PATH)
             ->willReturn('/url');
+        $requestStack = $this->createMock(RequestStack::class);
 
-        $factory = new RedirectFactory($generator);
+        $factory = new RedirectFactory($urlGenerator, $requestStack);
 
-        $redirect = $factory->createForRoute('route');
+        $redirect = $factory->route('route');
 
         $this->assertSame('/url', $redirect->getTargetUrl());
         $this->assertSame(302, $redirect->getStatusCode());
@@ -53,10 +60,11 @@ class RedirectFactoryTest extends TestCase
             ->method('generate')
             ->with('route', ['a' => 1], UrlGeneratorInterface::ABSOLUTE_PATH)
             ->willReturn('/url');
+        $requestStack = $this->createMock(RequestStack::class);
 
-        $factory = new RedirectFactory($generator);
+        $factory = new RedirectFactory($generator, $requestStack);
 
-        $redirect = $factory->createForRoute('route', ['a' => 1], 301, ['header' => 'value']);
+        $redirect = $factory->route('route', ['a' => 1], 301, ['header' => 'value']);
 
         $this->assertSame('/url', $redirect->getTargetUrl());
         $this->assertSame(301, $redirect->getStatusCode());

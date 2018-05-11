@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ruwork\RoutingToolsBundle\Controller;
 
-use Ruwork\RoutingToolsBundle\RedirectFactory\RedirectFactoryInterface;
+use Ruwork\RoutingToolsBundle\RedirectFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,7 +12,7 @@ final class RemoveTrailingSlashController
 {
     private $redirectFactory;
 
-    public function __construct(RedirectFactoryInterface $redirectFactory)
+    public function __construct(RedirectFactory $redirectFactory)
     {
         $this->redirectFactory = $redirectFactory;
     }
@@ -24,6 +24,6 @@ final class RemoveTrailingSlashController
         $query = $request->getQueryString();
         $uri = $request->getUriForPath($pathInfo).($query ? '?'.$query : '');
 
-        return $this->redirectFactory->create($uri, RedirectResponse::HTTP_MOVED_PERMANENTLY);
+        return $this->redirectFactory->url($uri, RedirectResponse::HTTP_MOVED_PERMANENTLY);
     }
 }

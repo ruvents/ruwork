@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\RoutingToolsBundle\RedirectFactory;
+namespace Ruwork\RoutingToolsBundle;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-final class RedirectFactory implements RedirectFactoryInterface
+class RedirectFactory
 {
     private $urlGenerator;
+    private $requestStack;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    public function __construct(UrlGeneratorInterface $urlGenerator, RequestStack $requestStack)
     {
         $this->urlGenerator = $urlGenerator;
+        $this->requestStack = $requestStack;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function create(
+    public function url(
         string $url,
         int $status = RedirectResponse::HTTP_FOUND,
         array $headers = []
@@ -27,10 +27,7 @@ final class RedirectFactory implements RedirectFactoryInterface
         return new RedirectResponse($url, $status, $headers);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function createForRoute(
+    public function route(
         string $name,
         array $parameters = [],
         int $status = RedirectResponse::HTTP_FOUND,
@@ -38,6 +35,15 @@ final class RedirectFactory implements RedirectFactoryInterface
     ): RedirectResponse {
         $url = $this->urlGenerator->generate($name, $parameters);
 
-        return $this->create($url, $status, $headers);
+        return $this->url($url, $status, $headers);
+    }
+
+    public function current(
+        int $status = RedirectResponse::HTTP_FOUND,
+        array $headers = []
+    ): RedirectResponse {
+        $url = $this->requestStack->getMasterRequest()->getRequestUri();
+
+        return $this->url($url, $status, $headers);
     }
 }

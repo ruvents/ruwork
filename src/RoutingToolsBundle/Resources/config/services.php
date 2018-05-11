@@ -37,6 +37,7 @@ return function (ContainerConfigurator $container): void {
     $services->set('ruwork_routing_tools.redirect_factory', RedirectFactory::class)
         ->args([
             '$urlGenerator' => ref('router'),
+            '$requestStack' => ref('request_stack'),
         ]);
 
     $services->alias('redirect_factory', 'ruwork_routing_tools.redirect_factory');

@@ -9,43 +9,46 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FrujaxRedirectResponse extends Response
 {
-    private $targetUrl;
-
-    public function __construct(string $url, array $headers = [])
+    public function __construct(string $location, array $headers = [])
     {
         parent::__construct('', self::HTTP_OK, $headers);
-        $this->setTargetUrl($url);
+        $this->setRedirectLocation($location);
     }
 
-    public static function createFromRedirectResponse(RedirectResponse $redirect): self
+    public static function createFromRedirect(RedirectResponse $redirect): self
     {
-        $frujax = new self($redirect->getTargetUrl());
+        $frujax = new self('');
 
         $frujax->version = $redirect->version;
         $frujax->charset = $redirect->charset;
         $frujax->headers = clone $redirect->headers;
         $frujax->headers->remove('Location');
 
-        $frujax->setTargetUrl($redirect->getTargetUrl());
-
-        return $frujax;
+        return $frujax
+            ->setRedirectLocation($redirect->getTargetUrl())
+            ->setRedirectStatusCode($redirect->getStatusCode());
     }
 
-    public function getTargetUrl(): string
+    public function getRedirectLocation(): string
     {
-        return $this->targetUrl;
+        return $this->headers->get(FrujaxHeaders::FRUJAX_REDIRECT_LOCATION);
     }
 
-    public function setTargetUrl(string $targetUrl)
+    public function setRedirectLocation(string $location)
     {
-        $targetUrl = \trim($targetUrl);
+        $this->headers->set(FrujaxHeaders::FRUJAX_REDIRECT_LOCATION, $location);
 
-        if ('' === $targetUrl) {
-            throw new \InvalidArgumentException('Cannot redirect to an empty URL.');
-        }
+        return $this;
+    }
 
-        $this->targetUrl = $targetUrl;
-        $this->headers->set(FrujaxHeaders::FRUJAX_REDIRECT_URL, $targetUrl);
+    public function getRedirectStatusCode(): int
+    {
+        return (int) $this->headers->get(FrujaxHeaders::FRUJAX_REDIRECT_STATUS_CODE);
+    }
+
+    public function setRedirectStatusCode(int $statusCode)
+    {
+        $this->headers->set(FrujaxHeaders::FRUJAX_REDIRECT_STATUS_CODE, $statusCode);
 
         return $this;
     }

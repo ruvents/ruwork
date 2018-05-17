@@ -38,10 +38,10 @@ final class FrujaxRedirectListener implements EventSubscriberInterface
             return;
         }
 
-        if (!$request->headers->has(FrujaxHeaders::FRUJAX_INTERCEPT_REDIRECT)) {
+        if (!$request->headers->get(FrujaxHeaders::FRUJAX_INTERCEPT_REDIRECT, false)) {
             return;
         }
 
-        $event->setResponse(FrujaxRedirectResponse::createFromRedirectResponse($response));
+        $event->setResponse(FrujaxRedirectResponse::createFromRedirect($response));
     }
 }

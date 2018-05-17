@@ -9,7 +9,8 @@ final class FrujaxHeaders
     public const FRUJAX = 'Frujax';
     public const FRUJAX_BLOCK = 'Frujax-Block';
     public const FRUJAX_INTERCEPT_REDIRECT = 'Frujax-Intercept-Redirect';
-    public const FRUJAX_REDIRECT_URL = 'Frujax-Redirect-Url';
+    public const FRUJAX_REDIRECT_LOCATION = 'Frujax-Redirect-Location';
+    public const FRUJAX_REDIRECT_STATUS_CODE = 'Frujax-Redirect-Status-Code';
     public const FRUJAX_TITLE = 'Frujax-Title';
     public const FRUJAX_URL = 'Frujax-Url';
 

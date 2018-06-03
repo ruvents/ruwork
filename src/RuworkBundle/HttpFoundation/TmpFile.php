@@ -10,7 +10,7 @@ final class TmpFile extends File
 {
     public function __construct(string $contents = null)
     {
-        $pathname = rtrim(sys_get_temp_dir(), '/\\').DIRECTORY_SEPARATOR.uniqid();
+        $pathname = rtrim(sys_get_temp_dir(), '/\\').\DIRECTORY_SEPARATOR.uniqid();
 
         file_put_contents($pathname, $contents);
 

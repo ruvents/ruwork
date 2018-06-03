@@ -6,7 +6,6 @@ namespace Ruwork\FrujaxBundle\EventListener;
 
 use Ruwork\FrujaxBundle\Annotation\Frujax;
 use Ruwork\FrujaxBundle\FrujaxUtils;
-use Ruwork\FrujaxBundle\HttpFoundation\FrujaxHeaders;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -29,15 +28,11 @@ final class FrujaxAnnotationListener implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (!FrujaxUtils::isFrujaxRequest($request)) {
-            return;
-        }
-
-        $template = $request->attributes->get('_template');
-        $frujax = $request->attributes->get('_ruwork_frujax');
-        $block = $request->headers->get(FrujaxHeaders::FRUJAX_BLOCK);
-
-        if (!$template instanceof Template || !$frujax instanceof Frujax || null === $block) {
+        if (!FrujaxUtils::isFrujaxRequest($request) ||
+            !($template = $request->attributes->get('_template')) instanceof Template ||
+            !($frujax = $request->attributes->get('_ruwork_frujax')) instanceof Frujax ||
+            null === $block = FrujaxUtils::getFrujaxBlock($request)
+        ) {
             return;
         }
 

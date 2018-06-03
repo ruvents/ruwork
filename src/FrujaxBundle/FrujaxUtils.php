@@ -13,4 +13,9 @@ final class FrujaxUtils
     {
         return $request->isXmlHttpRequest() && $request->headers->has(FrujaxHeaders::FRUJAX);
     }
+
+    public static function getFrujaxBlock(Request $request): ?string
+    {
+        return $request->headers->get(FrujaxHeaders::FRUJAX_BLOCK) ?: null;
+    }
 }

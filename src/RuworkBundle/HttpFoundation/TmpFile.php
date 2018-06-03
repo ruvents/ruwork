@@ -22,7 +22,7 @@ final class TmpFile extends File
         $this->unlink();
     }
 
-    public static function createFromResource(resource $handle): self
+    public static function createFromResource($handle): self
     {
         return new self(stream_get_contents($handle, -1, 0));
     }

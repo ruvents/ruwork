@@ -23,5 +23,9 @@ return function (ContainerConfigurator $container): void {
     $services->set(FrujaxResponseListener::class)
         ->tag('kernel.event_subscriber');
 
-    $services->set(FrujaxBlockAwareRenderer::class);
+    $services->set(FrujaxBlockAwareRenderer::class)
+        ->args([
+            '$twig' => ref('twig'),
+            '$requestStack' => ref('request_stack'),
+        ]);
 };

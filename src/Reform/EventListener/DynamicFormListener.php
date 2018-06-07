@@ -30,7 +30,6 @@ final class DynamicFormListener implements EventSubscriberInterface
     public function onPostSubmit(FormEvent $event): void
     {
         $form = $event->getForm();
-
-        ($this->callable)($form->getData(), $form);
+        ($this->callable)($form->getData(), $form, $event->getData());
     }
 }

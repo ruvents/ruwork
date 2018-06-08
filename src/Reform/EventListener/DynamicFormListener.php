@@ -23,13 +23,20 @@ final class DynamicFormListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
+            FormEvents::PRE_SET_DATA => 'onPreSetData',
             FormEvents::POST_SUBMIT => 'onPostSubmit',
         ];
+    }
+
+    public function onPreSetData(FormEvent $event): void
+    {
+        ($this->callable)($event->getData(), $event->getForm());
     }
 
     public function onPostSubmit(FormEvent $event): void
     {
         $form = $event->getForm();
-        ($this->callable)($form->getData(), $form, $event->getData());
+
+        ($this->callable)($form->getData(), $form);
     }
 }

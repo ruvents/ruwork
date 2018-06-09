@@ -20,7 +20,7 @@ final class CheckboxTypeFalseValueExtension extends AbstractTypeExtension
     {
         $resolver
             ->setDefined('false_value')
-            ->setDefault('false_values', function (Options $options, $defaultFalseValues): array {
+            ->setDefault('false_values', function (Options $options, $defaultFalseValues = null): array {
                 if (isset($options['false_value'])) {
                     return [$options['false_value']];
                 }

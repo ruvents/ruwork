@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Ruwork\Reform\Extension\CheckboxTypeFalseValueExtension;
 use Ruwork\Reform\Extension\DateTimeTypeDefaultDTIExtension;
 use Ruwork\Reform\Extension\DateTypeDefaultDTIExtension;
 use Ruwork\Reform\Extension\FormTypeNovalidateExtension;
 use Ruwork\Reform\Extension\TimeTypeDefaultDTIExtension;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -18,6 +20,13 @@ return function (ContainerConfigurator $container): void {
 
     $services->defaults()
         ->private();
+
+    $services->set('ruwork_reform.extension.checkbox_false_value')
+        ->class(CheckboxTypeFalseValueExtension::class)
+        ->tag('form.type_extension', [
+            'extended_type' => CheckboxType::class,
+            'priority' => 512,
+        ]);
 
     $services->set('ruwork_reform.extension.form_novalidate')
         ->class(FormTypeNovalidateExtension::class)

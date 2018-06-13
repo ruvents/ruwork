@@ -10,7 +10,6 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 use Ruwork\AnnotationTools\Factory\MetadataFactoryInterface;
 use Ruwork\DoctrineBehaviorsBundle\Exception\NotMappedException;
-use Ruwork\DoctrineBehaviorsBundle\Mapping\PersistTimestamp;
 use Ruwork\DoctrineBehaviorsBundle\Mapping\UpdateTimestamp;
 
 final class UpdateTimestampListener implements EventSubscriber
@@ -43,7 +42,7 @@ final class UpdateTimestampListener implements EventSubscriber
         /** @var UpdateTimestamp[] $timestamps */
         $timestamps = $this->metadataFactory
             ->getMetadata($class)
-            ->getPropertyMappingsByName(PersistTimestamp::getName(), true);
+            ->getPropertyMappingsByName(UpdateTimestamp::getName(), true);
 
         foreach ($timestamps as $property => $timestamp) {
             if (!$entityMetadata->hasField($property)) {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Ruwork\UploadBundle\PathGenerator;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 interface PathGeneratorInterface
 {
-    public function generatePath(UploadedFile $uploadedFile): string;
+    public const EXTENSION = 'path_generator.extension';
+
+    public function generate(array $attributes): string;
 }

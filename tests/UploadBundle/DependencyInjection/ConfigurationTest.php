@@ -6,8 +6,6 @@ namespace Ruwork\UploadBundle\DependencyInjection;
 
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\FormTypeInterface;
 
 class ConfigurationTest extends TestCase
 {
@@ -22,7 +20,6 @@ class ConfigurationTest extends TestCase
             [
                 'public_dir' => '%kernel.project_dir%/public',
                 'uploads_dir' => 'uploads',
-                'default_form_type' => null,
             ]
         );
     }
@@ -33,7 +30,6 @@ class ConfigurationTest extends TestCase
             [
                 'public_dir' => '%kernel.project_dir%/web',
                 'uploads_dir' => 'dir/uploads',
-                'default_form_type' => FormType::class,
             ],
         ]);
     }
@@ -54,15 +50,6 @@ class ConfigurationTest extends TestCase
                 'uploads_dir' => '',
             ],
         ], 'ruwork_upload.uploads_dir" cannot contain an empty value');
-    }
-
-    public function testDefaultFormTypeError(): void
-    {
-        $this->assertConfigurationIsInvalid([
-            [
-                'default_form_type' => self::class,
-            ],
-        ], sprintf('"%s" must implement "%s".', addcslashes(self::class, '\\'), FormTypeInterface::class));
     }
 
     /**

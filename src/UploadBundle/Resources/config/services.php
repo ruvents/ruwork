@@ -96,6 +96,7 @@ return function (ContainerConfigurator $container): void {
         ->args([
             '$factory' => ref(CachedMetadataFactory::class.'.inner'),
             '$cache' => ref('cache.ruwork_upload'),
+            '$debug' => '%kernel.debug%',
         ]);
 
     $services

@@ -10,11 +10,16 @@ final class CachedMetadataFactory implements MetadataFactoryInterface
 {
     private $factory;
     private $cache;
+    private $debug;
 
-    public function __construct(MetadataFactoryInterface $factory, CacheItemPoolInterface $cache)
-    {
+    public function __construct(
+        MetadataFactoryInterface $factory,
+        CacheItemPoolInterface $cache,
+        bool $debug = false
+    ) {
         $this->factory = $factory;
         $this->cache = $cache;
+        $this->debug = $debug;
     }
 
     /**
@@ -25,15 +30,22 @@ final class CachedMetadataFactory implements MetadataFactoryInterface
         $item = $this->cache->getItem(str_replace('\\', '.', $class));
 
         if ($item->isHit()) {
-            $value = $item->get();
+            [$mTime, $metadata] = $item->get();
 
-            return $value;
+            if (!$this->debug || $mTime >= $classMTime = $this->getClassMTime($class)) {
+                return $metadata;
+            }
         }
 
         $metadata = $this->factory->getMetadata($class);
-        $item->set($metadata);
+        $item->set([$classMTime ?? $this->getClassMTime($class), $metadata]);
         $this->cache->save($item);
 
         return $metadata;
+    }
+
+    private function getClassMTime(string $class): int
+    {
+        return filemtime((new \ReflectionClass($class))->getFileName());
     }
 }

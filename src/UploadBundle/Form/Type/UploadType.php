@@ -73,17 +73,14 @@ final class UploadType extends AbstractType
                 'required' => false,
                 'file_type' => FileType::class,
                 'file_options' => [],
-                'on_valid_upload' => function () {
-                },
-                'on_invalid_upload' => function () {
+                'submit_handler' => function () {
                 },
             ])
             ->setAllowedTypes('empty_data', 'callable')
             ->setAllowedTypes('file_type', 'string')
             ->setAllowedTypes('file_options', 'array')
             ->setAllowedTypes('upload_finder', 'callable')
-            ->setAllowedTypes('on_valid_upload', 'callable')
-            ->setAllowedTypes('on_invalid_upload', 'callable');
+            ->setAllowedTypes('submit_handler', 'callable');
     }
 
     /**

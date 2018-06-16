@@ -7,7 +7,7 @@ namespace Ruwork\UploadBundle\Manager;
 interface UploadManagerInterface
 {
     /**
-     * @param string|object $object
+     * @param object|string $object
      */
     public function isUpload($object): bool;
 

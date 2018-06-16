@@ -151,5 +151,4 @@ final class UploadManager implements UploadManagerInterface
         $this->resolvedSources[$object]->write($target);
         $this->detach($object);
     }
-
 }

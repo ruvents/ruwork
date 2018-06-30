@@ -12,19 +12,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
  */
 final class Frujax extends ConfigurationAnnotation
 {
-    private $blocks = [];
+    private $blocks;
 
-    public function getBlocks(): array
+    public function getBlocks(): ?array
     {
         return $this->blocks;
     }
 
-    public function setBlocks(array $blocks): void
+    public function setBlocks(?array $blocks): void
     {
         $this->blocks = $blocks;
     }
 
-    public function setValue(array $value): void
+    public function setValue(?array $value): void
     {
         $this->setBlocks($value);
     }

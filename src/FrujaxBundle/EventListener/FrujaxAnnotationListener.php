@@ -36,7 +36,9 @@ final class FrujaxAnnotationListener implements EventSubscriberInterface
             return;
         }
 
-        if (!\in_array($block, $frujax->getBlocks(), true)) {
+        $blocks = $frujax->getBlocks();
+
+        if (null !== $blocks && !\in_array($block, $blocks, true)) {
             throw new AccessDeniedHttpException(\sprintf('Rendering of block "%s" is not allowed by the @Frujax annotation.', $block));
         }
 

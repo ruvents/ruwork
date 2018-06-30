@@ -25,6 +25,7 @@ final class FrujaxFormTypeExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        $view->vars['root'] = $form->isRoot();
         $view->vars['root_action'] = $view->parent->vars['root_action'] ?? $form->getRoot()->getConfig()->getAction();
     }
 

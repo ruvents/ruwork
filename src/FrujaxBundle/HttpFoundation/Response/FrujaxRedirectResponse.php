@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\FrujaxBundle\HttpFoundation;
+namespace Ruwork\FrujaxBundle\HttpFoundation\Response;
 
+use Ruwork\FrujaxBundle\HttpFoundation\FrujaxHeaders;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 

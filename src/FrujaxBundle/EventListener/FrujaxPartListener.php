@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ruwork\FrujaxBundle\EventListener;
 
+use Ruwork\FrujaxBundle\HttpFoundation\FrujaxHeaders;
 use Ruwork\FrujaxBundle\HttpFoundation\FrujaxUtils;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,10 +12,10 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-final class FrujaxTemplateListener implements EventSubscriberInterface
+final class FrujaxPartListener implements EventSubscriberInterface
 {
-    private $name;
-    private $code;
+    private $expectedPart;
+    private $content;
 
     /**
      * {@inheritdoc}
@@ -36,26 +37,26 @@ final class FrujaxTemplateListener implements EventSubscriberInterface
             return;
         }
 
-        $this->name = $request->headers->get('Frujax-Name');
+        $this->expectedPart = $request->headers->get(FrujaxHeaders::FRUJAX_PART);
     }
 
     public function onResponse(FilterResponseEvent $event): void
     {
-        if (null !== $this->code) {
-            $event->setResponse(new Response($this->code));
+        if (null !== $this->content) {
+            $event->setResponse(new Response($this->content));
         }
     }
 
     public function onFinishRequest(): void
     {
-        $this->name = null;
-        $this->code = null;
+        $this->expectedPart = null;
+        $this->content = null;
     }
 
-    public function register(string $name, string $code): void
+    public function onPart(string $name, string $content): void
     {
-        if ($this->name === $name) {
-            $this->code = $code;
+        if ($this->expectedPart === $name) {
+            $this->content = $content;
         }
     }
 }

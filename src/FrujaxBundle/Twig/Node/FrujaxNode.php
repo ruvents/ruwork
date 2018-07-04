@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ruwork\FrujaxBundle\Twig\Node;
 
-use Ruwork\FrujaxBundle\EventListener\FrujaxTemplateListener;
+use Ruwork\FrujaxBundle\EventListener\FrujaxPartListener;
 use Twig\Compiler;
 use Twig\Node\Node;
 
@@ -24,12 +24,12 @@ final class FrujaxNode extends Node
             ->addDebugInfo($this)
             ->write("ob_start();\n")
             ->subcompile($this->getNode('body'))
-            ->write("\$frujax = ob_get_flush();\n")
+            ->write("\$frujaxPartContent = ob_get_flush();\n")
             ->write('$this->env->getRuntime(')
-            ->string(FrujaxTemplateListener::class)
-            ->raw(')->register(')
+            ->string(FrujaxPartListener::class)
+            ->raw(')->onPart(')
             ->subcompile($this->getNode('name'))
-            ->write(", \$frujax);\n")
-            ->write("unset(\$frujax);\n");
+            ->write(", \$frujaxPartContent);\n")
+            ->write("unset(\$frujaxPartContent);\n");
     }
 }

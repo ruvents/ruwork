@@ -3,10 +3,10 @@
 
     $(document)
         .on('before.frujax', function (event, request) {
-            var name = $(event.target).frujax('options').name;
+            var part = $(event.target).frujax('options').part;
 
-            if (name) {
-                request.headers['Frujax-Name'] = name;
+            if (part) {
+                request.headers['Frujax-Part'] = part;
             }
         });
 })(window, document, jQuery);

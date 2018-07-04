@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Ruwork\FrujaxBundle\EventListener\FrujaxRedirectListener;
-use Ruwork\FrujaxBundle\EventListener\FrujaxTemplateListener;
+use Ruwork\FrujaxBundle\EventListener\FrujaxPartListener;
 use Ruwork\FrujaxBundle\Form\TypeExtension\FrujaxFormTypeExtension;
 use Ruwork\FrujaxBundle\Twig\Extension\FrujaxExtension;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -18,7 +18,7 @@ return function (ContainerConfigurator $container): void {
     $services->set(FrujaxRedirectListener::class)
         ->tag('kernel.event_subscriber');
 
-    $services->set(FrujaxTemplateListener::class)
+    $services->set(FrujaxPartListener::class)
         ->tag('kernel.event_subscriber')
         ->tag('twig.runtime');
 

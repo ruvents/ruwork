@@ -9,7 +9,7 @@ final class FrujaxHeaders
     public const FRUJAX = 'Frujax';
     public const FRUJAX_HIDE_FORM_ERRORS = 'Frujax-Hide-Form-Errors';
     public const FRUJAX_INTERCEPT_REDIRECT = 'Frujax-Intercept-Redirect';
-    public const FRUJAX_NAME = 'Frujax-Name';
+    public const FRUJAX_PART = 'Frujax-Part';
     public const FRUJAX_REDIRECT_LOCATION = 'Frujax-Redirect-Location';
     public const FRUJAX_REDIRECT_STATUS_CODE = 'Frujax-Redirect-Status-Code';
     public const FRUJAX_TITLE = 'Frujax-Title';

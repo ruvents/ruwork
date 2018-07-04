@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Ruwork\FrujaxBundle\EventListener\FrujaxRedirectListener;
 use Ruwork\FrujaxBundle\EventListener\FrujaxPartListener;
+use Ruwork\FrujaxBundle\EventListener\FrujaxRedirectListener;
 use Ruwork\FrujaxBundle\Form\TypeExtension\FrujaxFormTypeExtension;
 use Ruwork\FrujaxBundle\Twig\Extension\FrujaxExtension;
 use Symfony\Component\Form\Extension\Core\Type\FormType;

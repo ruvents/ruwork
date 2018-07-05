@@ -15,7 +15,7 @@ class ConfigurationTest extends TestCase
     public function testDefault(): void
     {
         $this->assertProcessedConfigurationEquals([], [
-            'optional_prefix' => true,
+            'optional_prefix' => false,
             'twig' => [
                 'object_as_parameters' => true,
                 'routing_helpers' => true,

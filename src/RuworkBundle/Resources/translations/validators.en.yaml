@@ -1,4 +1,5 @@
 This value should not be null.: This value should not be blank.
+This value should be null.: This value should be blank.
 This collection should contain {{ limit }} element or more.|This collection should contain {{ limit }} elements or more.: >
     This field should contain {{ limit }} element or more.|
     This field should contain {{ limit }} elements or more.

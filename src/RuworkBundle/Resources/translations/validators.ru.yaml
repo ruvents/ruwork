@@ -1,4 +1,5 @@
 This value should not be null.: Значение не должно быть пустым.
+This value should be null.: Значение должно быть пустым.
 This collection should contain {{ limit }} element or more.|This collection should contain {{ limit }} elements or more.: >
     Это поле должно содержать {{ limit }} элемент или больше.|
     Это поле должно содержать {{ limit }} элемента или больше.|

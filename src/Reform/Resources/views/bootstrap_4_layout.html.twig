@@ -168,10 +168,10 @@
         'data-filename': "##{id}_filename"
     }) -%}
     <label class="input-group">
-        <span class="form-control {{- not valid ? ' is-invalid' }}" id="{{ id }}_filename">{{ no_file_text|default('No file chosen'|trans) }}</span>
+        <span class="form-control {{- not valid ? ' is-invalid' }}" id="{{ id }}_filename">{{ no_file_text|default('No file chosen'|trans({}, 'forms')) }}</span>
         {{- block('form_widget_simple') -}}
         <span class="input-group-append">
-            <span class="btn {{ valid ? choose_class|default('btn-outline-secondary') : 'btn-outline-danger' }}" role="button">{{ choose_text|default('Choose file'|trans) }}</span>
+            <span class="btn {{ valid ? choose_class|default('btn-outline-secondary') : 'btn-outline-danger' }}" role="button">{{ choose_text|default('Choose file'|trans({}, 'forms')) }}</span>
         </span>
     </label>
 {%- endblock file_widget %}
@@ -205,7 +205,7 @@
         <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
         {%- block form_label_text label -%}
         {%- if required and not choice|default(false) -%}
-            {%- block form_label_required %} <small class="text-muted">required</small>{% endblock form_label_required -%}
+            {%- block form_label_required %} <small class="text-muted">{{ 'Required'|trans({}, 'forms') }}</small>{% endblock form_label_required -%}
         {%- endif -%}
         {%- block form_label_errors -%}
             {{ form_errors(form) }}

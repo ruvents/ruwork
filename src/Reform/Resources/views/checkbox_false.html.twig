@@ -1,5 +1,5 @@
-{% block checkbox_false %}
+{% block checkbox_false -%}
     {%- if false_value is defined -%}
         <input type="hidden" id="{{ id }}_false" name="{{ full_name }}" value="{{ false_value }}">
     {%- endif -%}
-{% endblock %}
+{%- endblock %}

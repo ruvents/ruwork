@@ -1,0 +1,17 @@
+.form-legend {
+    font-size: inherit;
+}
+
+.form-control-file-hidden {
+    position: absolute;
+    visibility: hidden;
+    top: 0;
+}
+
+.form-control[type=color] {
+    height: $input-height;
+}
+
+.form-errors {
+    margin-bottom: $label-margin-bottom;
+}

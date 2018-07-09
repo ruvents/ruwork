@@ -1,0 +1,139 @@
+{% use 'form_div_layout.html.twig' with
+    form_widget_simple as div_form_widget_simple,
+    checkbox_widget as div_checkbox_widget,
+    radio_widget as div_radio_widget,
+    choice_widget_collapsed as div_choice_widget_collapsed %}
+{% use 'bootstrap_4_layout.html.twig' with file_row as noop_file_row %}
+
+{# Widgets #}
+
+{% block form_widget_simple -%}
+    {%- set type, class = type|default('text'), '' -%}
+    {%- if type == 'range' -%}
+        {% set class = 'custom-range' %}
+    {%- elseif type == 'file' -%}
+        {% set class = 'form-control-file' %}
+    {%- elseif type != 'hidden' -%}
+        {% set class = 'form-control' %}
+    {%- endif -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' ' ~ class|default(''))|trim}) -%}
+    {{- block('div_form_widget_simple') -}}
+{%- endblock form_widget_simple %}
+
+{% block checkbox_widget -%}
+    {%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) -%}
+    <div class="custom-control custom-checkbox{{ 'checkbox-inline' in parent_label_class ? ' custom-control-inline' }}">
+        {{- form_label(form, null, { widget: block('div_checkbox_widget') }) -}}
+    </div>
+{%- endblock checkbox_widget %}
+
+{% block radio_widget -%}
+    {%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) -%}
+    <div class="custom-control custom-radio{{ 'radio-inline' in parent_label_class ? ' custom-control-inline' }}">
+        {{- form_label(form, null, { widget: block('div_radio_widget') }) -}}
+    </div>
+{%- endblock radio_widget %}
+
+{% block choice_widget_collapsed -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-select')|trim}) -%}
+    {{ block('div_choice_widget_collapsed') }}
+{%- endblock choice_widget_collapsed %}
+
+{% block file_widget -%}
+    {%- set attr = attr|merge({
+        class: 'form-control-file-hidden',
+        'data-filename': "##{id}_filename"
+    }) -%}
+    <label class="input-group">
+        <span class="form-control {{- not valid ? ' is-invalid' }}" id="{{ id }}_filename">{{ no_file_text|default('No file chosen'|trans({}, 'forms')) }}</span>
+        {{- block('div_form_widget_simple') -}}
+        <span class="input-group-append">
+            <span class="btn {{ valid ? choose_class|default('btn-outline-secondary') : 'btn-outline-danger' }}" role="button">{{ choose_text|default('Choose file'|trans({}, 'forms')) }}</span>
+        </span>
+    </label>
+{%- endblock file_widget %}
+
+{# Labels #}
+
+{% block form_label -%}
+    {% if label is not same as(false) -%}
+        {%- if compound is defined and compound or type|default('') == 'file' -%}
+            {%- set element = 'legend' -%}
+            {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' form-legend')|trim}) -%}
+        {%- else -%}
+            {%- set label_attr = label_attr|merge({for: id}) -%}
+        {%- endif -%}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif -%}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                    '%name%': name,
+                    '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+        {%- if translation_domain is not same as(false) -%}
+            {% set label = label|trans({}, translation_domain) %}
+        {%- endif -%}
+        <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
+        {%- block form_label_text label -%}
+        {%- block form_label_errors -%}
+            {{ form_errors(form) }}
+        {%- endblock form_label_errors -%}
+        </{{ element|default('label') }}>
+    {%- else -%}
+        {%- if errors|length > 0 -%}
+            <div id="{{ id }}_errors" class="form-errors">
+                {{- form_errors(form) -}}
+            </div>
+        {%- endif -%}
+    {%- endif -%}
+{%- endblock form_label %}
+
+{% block checkbox_radio_label -%}
+    {#- Do not display the label if widget is not defined in order to prevent double label rendering -#}
+    {%- if widget is defined -%}
+        {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' custom-control-label')|trim}) -%}
+        {%- if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        {%- if required -%}
+            {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) -%}
+        {%- endif -%}
+        {%- if parent_label_class is defined -%}
+            {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' ' ~ parent_label_class)|replace({'checkbox-inline': '', 'radio-inline': '', 'checkbox-custom': '', 'radio-custom': ''})|trim}) -%}
+        {%- endif -%}
+        {%- if label is not same as(false) -%}
+            {%- if label is empty -%}
+                {%- if label_format is not empty -%}
+                    {%- set label = label_format|replace({
+                        '%name%': name,
+                        '%id%': id,
+                    }) -%}
+                {%- else -%}
+                    {%- set label = name|humanize -%}
+                {%- endif -%}
+            {%- endif -%}
+            {%- if translation_domain is not same as(false) -%}
+                {% set label = label|trans({}, translation_domain) %}
+            {%- endif -%}
+        {%- endif -%}
+        {{ widget|raw }}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {%- block checkbox_radio_label_text -%}
+            {%- if label is same as(false) and errors|length == 0 -%}
+                &#8203;
+            {%- else -%}
+                {{ label }}
+            {%- endif -%}
+        {%- endblock checkbox_radio_label_text -%}
+        {{- form_errors(form) -}}
+        </label>
+    {%- endif -%}
+{%- endblock checkbox_radio_label %}

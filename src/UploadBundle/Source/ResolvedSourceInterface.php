@@ -15,4 +15,6 @@ interface ResolvedSourceInterface
     public function isSaved(): bool;
 
     public function save(): void;
+
+    public function clear(): void;
 }

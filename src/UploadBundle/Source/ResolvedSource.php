@@ -40,7 +40,7 @@ final class ResolvedSource implements ResolvedSourceInterface
 
     public function __destruct()
     {
-        @unlink($this->tmpPath);
+        $this->clear();
     }
 
     /**
@@ -91,5 +91,13 @@ final class ResolvedSource implements ResolvedSourceInterface
         }
 
         $this->saved = true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear(): void
+    {
+        @unlink($this->tmpPath);
     }
 }

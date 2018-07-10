@@ -38,6 +38,11 @@ final class ResolvedSource implements ResolvedSourceInterface
         $this->saveFromSource = $saveFromSource;
     }
 
+    public function __destruct()
+    {
+        @unlink($this->tmpPath);
+    }
+
     /**
      * {@inheritdoc}
      */

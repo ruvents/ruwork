@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Route;
 
 class Helper
 {
-    const RUWORK_API = '_ruwork_api';
+    public const RUWORK_API = '_ruwork_api';
 
     private function __construct()
     {

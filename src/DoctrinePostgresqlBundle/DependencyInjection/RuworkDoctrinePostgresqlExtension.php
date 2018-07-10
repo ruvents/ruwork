@@ -14,8 +14,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 class RuworkDoctrinePostgresqlExtension extends ConfigurableExtension
 {
-    const PREFIX = 'ruwork_doctrine_postgresql.';
-    const LISTENER = self::PREFIX.'listener.';
+    public const PREFIX = 'ruwork_doctrine_postgresql.';
+    public const LISTENER = self::PREFIX.'listener.';
 
     /**
      * {@inheritdoc}

@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
  */
 final class Redirect extends ConfigurationAnnotation
 {
-    const NAME = 'redirects';
+    public const NAME = 'redirects';
 
     /**
      * @Required

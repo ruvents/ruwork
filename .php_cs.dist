@@ -14,6 +14,7 @@ return PhpCsFixer\Config::create()
         'array_syntax' => ['syntax' => 'short'],
         'no_null_property_initialization' => true,
         'no_php4_constructor' => true,
+        'no_unset_on_property' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,
         'ordered_class_elements' => true,
@@ -21,6 +22,7 @@ return PhpCsFixer\Config::create()
         'phpdoc_no_empty_return' => false,
         'phpdoc_order' => true,
         'phpdoc_types_order' => true,
+        'visibility_required' => ['elements' => ['property', 'method', 'const']],
         'void_return' => false,
     ])
     ->setRiskyAllowed(true)

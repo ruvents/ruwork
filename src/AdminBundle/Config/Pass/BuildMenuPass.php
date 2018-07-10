@@ -13,7 +13,7 @@ use Ruwork\AdminBundle\Config\Model\Menu\UrlItemConfig;
 
 class BuildMenuPass implements PassInterface
 {
-    const ENTITY_HREF_REGEXP = '/^(?<entity>\w+):(?<action>list|create)$/';
+    public const ENTITY_HREF_REGEXP = '/^(?<entity>\w+):(?<action>list|create)$/';
 
     /**
      * {@inheritdoc}

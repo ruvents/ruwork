@@ -12,7 +12,7 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class OperatorFunction extends FunctionNode
 {
-    const NAME = 'operator';
+    public const NAME = 'operator';
 
     /**
      * @var Node

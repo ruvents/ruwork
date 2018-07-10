@@ -11,7 +11,7 @@ use Doctrine\DBAL\Types\Type;
 
 class TsvectorType extends Type
 {
-    const NAME = 'tsvector';
+    public const NAME = 'tsvector';
 
     /**
      * {@inheritdoc}

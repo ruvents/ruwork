@@ -9,7 +9,7 @@ use Symfony\Component\Serializer\Encoder\EncoderInterface;
 
 final class ExcelCsvEncoder implements EncoderInterface
 {
-    const FORMAT = 'excel_csv';
+    public const FORMAT = 'excel_csv';
 
     private $csvEncoder;
     private $defaultDelimiter;

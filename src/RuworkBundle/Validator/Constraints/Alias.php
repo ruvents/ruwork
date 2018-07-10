@@ -12,10 +12,10 @@ use Symfony\Component\Validator\Constraint;
  */
 class Alias extends Constraint
 {
-    const MATCH_PATTERN = '#^[a-z0-9-]+$#';
-    const HTML_MATCH_PATTERN = '^[a-z0-9-]+$';
-    const ROUTE_REQUIREMENT = '[a-z0-9-]+';
-    const CLEAN_PATTERN = '#[^a-z0-9-]+#';
+    public const MATCH_PATTERN = '#^[a-z0-9-]+$#';
+    public const HTML_MATCH_PATTERN = '^[a-z0-9-]+$';
+    public const ROUTE_REQUIREMENT = '[a-z0-9-]+';
+    public const CLEAN_PATTERN = '#[^a-z0-9-]+#';
 
     /**
      * @var string

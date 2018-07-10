@@ -49,12 +49,11 @@ final class DoctrineUploadType extends AbstractType
                         return $repository->findOneBy([$pathProperty => $path]);
                     };
                 },
-                'on_terminate' => function (Options $options): callable {
+                'saver' => function (Options $options): callable {
                     $class = $options['class'];
 
                     return function ($upload) use ($class): void {
                         $manager = $this->getManager($class);
-
                         $manager->clear();
                         $manager->persist($upload);
                         $manager->flush();

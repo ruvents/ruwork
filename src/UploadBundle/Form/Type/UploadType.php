@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Ruwork\UploadBundle\Form\Type;
 
-use Ruwork\UploadBundle\EventListener\FormTerminateListener;
 use Ruwork\UploadBundle\Form\DataMapper\UploadMapper;
+use Ruwork\UploadBundle\Form\Saver\SaverCollectorInterface;
 use Ruwork\UploadBundle\Manager\UploadManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -23,12 +23,12 @@ final class UploadType extends AbstractType
     public const PATH = 'path';
 
     private $manager;
-    private $terminateListener;
+    private $savers;
 
-    public function __construct(UploadManagerInterface $manager, FormTerminateListener $terminateListener)
+    public function __construct(UploadManagerInterface $manager, SaverCollectorInterface $savers)
     {
         $this->manager = $manager;
-        $this->terminateListener = $terminateListener;
+        $this->savers = $savers;
     }
 
     /**
@@ -40,11 +40,12 @@ final class UploadType extends AbstractType
             ->add(self::FILE, $options['file_type'], ['mapped' => false] + $options['file_options'])
             ->setDataMapper(new UploadMapper(
                 $this->manager,
-                $this->terminateListener,
+                $this->savers,
                 self::FILE,
                 self::PATH,
                 $options['factory'],
                 $options['finder'],
+                $options['saver'],
                 $builder->getDataMapper()
             ))
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
@@ -65,7 +66,6 @@ final class UploadType extends AbstractType
             ->setRequired([
                 'class',
                 'finder',
-                'on_terminate',
             ])
             ->setDefaults([
                 'empty_data' => null,
@@ -83,13 +83,14 @@ final class UploadType extends AbstractType
                 'file_type' => FileType::class,
                 'file_options' => [],
                 'label' => false,
+                'saver' => null,
             ])
             ->setAllowedTypes('class', 'string')
             ->setAllowedTypes('factory', 'callable')
             ->setAllowedTypes('file_options', 'array')
             ->setAllowedTypes('file_type', 'string')
             ->setAllowedTypes('finder', 'callable')
-            ->setAllowedTypes('on_terminate', 'callable');
+            ->setAllowedTypes('saver', ['null', 'callable']);
     }
 
     /**

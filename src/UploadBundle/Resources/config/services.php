@@ -8,6 +8,7 @@ use Ruwork\UploadBundle\Doctrine\EventListener\UploadListener;
 use Ruwork\UploadBundle\EventListener\FormTerminateListener;
 use Ruwork\UploadBundle\Form\Type\DoctrineUploadType;
 use Ruwork\UploadBundle\Form\Type\UploadType;
+use Ruwork\UploadBundle\Form\TypeGuesser\DoctrineUploadTypeGuesser;
 use Ruwork\UploadBundle\Manager\UploadManager;
 use Ruwork\UploadBundle\Manager\UploadManagerInterface;
 use Ruwork\UploadBundle\Metadata\CachedMetadataFactory;
@@ -51,7 +52,7 @@ return function (ContainerConfigurator $container): void {
         ->set(FormTerminateListener::class)
         ->tag('kernel.event_subscriber');
 
-    // Form
+    // Form\Type
 
     $services
         ->set(DoctrineUploadType::class)
@@ -68,6 +69,16 @@ return function (ContainerConfigurator $container): void {
             '$terminateListener' => ref(FormTerminateListener::class),
         ])
         ->tag('form.type');
+
+    // Form\TypeGuesser
+
+    $services
+        ->set(DoctrineUploadTypeGuesser::class)
+        ->args([
+            '$doctrine' => ref('doctrine'),
+            '$metadataFactory' => ref(MetadataFactoryInterface::class),
+        ])
+        ->tag('form.type_guesser');
 
     // Manager
 

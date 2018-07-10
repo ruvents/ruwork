@@ -43,7 +43,6 @@ final class UploadType extends AbstractType
                 $this->terminateListener,
                 $builder->getDataMapper()
             ))
-            ->setEmptyData(null)
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
                 $this->addPath($event->getForm(), $event->getData());
             })
@@ -65,6 +64,7 @@ final class UploadType extends AbstractType
                 'on_terminate',
             ])
             ->setDefaults([
+                'empty_data' => null,
                 'error_bubbling' => false,
                 'error_mapping' => [
                     '.' => self::FILE,
@@ -81,9 +81,6 @@ final class UploadType extends AbstractType
                 'label' => false,
             ])
             ->setAllowedTypes('class', 'string')
-            ->setAllowedValues('class', function (string $class): bool {
-                return class_exists($class);
-            })
             ->setAllowedTypes('factory', 'callable')
             ->setAllowedTypes('file_options', 'array')
             ->setAllowedTypes('file_type', 'string')

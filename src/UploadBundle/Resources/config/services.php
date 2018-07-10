@@ -78,7 +78,7 @@ return function (ContainerConfigurator $container): void {
             '$doctrine' => ref('doctrine'),
             '$metadataFactory' => ref(MetadataFactoryInterface::class),
         ])
-        ->tag('form.type_guesser');
+        ->tag('form.type_guesser', ['priority' => 256]);
 
     // Manager
 

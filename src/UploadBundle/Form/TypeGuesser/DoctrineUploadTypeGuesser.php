@@ -50,7 +50,7 @@ final class DoctrineUploadTypeGuesser extends DoctrineOrmTypeGuesser
         return new TypeGuess(
             DoctrineUploadType::class,
             ['class' => $uploadClass],
-            Guess::VERY_HIGH_CONFIDENCE
+            Guess::HIGH_CONFIDENCE
         );
     }
 

@@ -4,26 +4,17 @@ declare(strict_types=1);
 
 namespace Ruwork\UploadBundle\Manager;
 
-use Ruwork\UploadBundle\Exception\NotMappedException;
-use Ruwork\UploadBundle\Locator\UploadLocatorInterface;
-use Ruwork\UploadBundle\Metadata\MetadataFactoryInterface;
+use Ruwork\UploadBundle\Exception\NotRegisteredException;
 use Ruwork\UploadBundle\Metadata\UploadAccessor;
-use Ruwork\UploadBundle\PathGenerator\PathGeneratorInterface;
+use Ruwork\UploadBundle\Path\PathLocatorInterface;
 use Ruwork\UploadBundle\Source\ResolvedSource;
 use Ruwork\UploadBundle\Source\SourceResolverInterface;
 
 final class UploadManager implements UploadManagerInterface
 {
-    private $metadataFactory;
     private $sourceResolver;
-    private $pathGenerator;
     private $accessor;
-    private $locator;
-
-    /**
-     * @var bool[]
-     */
-    private $uploadClasses = [];
+    private $pathLocator;
 
     /**
      * @var ResolvedSource[]
@@ -31,46 +22,14 @@ final class UploadManager implements UploadManagerInterface
     private $resolvedSources;
 
     public function __construct(
-        MetadataFactoryInterface $metadataFactory,
         SourceResolverInterface $sourceResolver,
-        PathGeneratorInterface $pathGenerator,
         UploadAccessor $accessor,
-        UploadLocatorInterface $locator
+        PathLocatorInterface $pathLocator
     ) {
-        $this->metadataFactory = $metadataFactory;
         $this->sourceResolver = $sourceResolver;
-        $this->pathGenerator = $pathGenerator;
         $this->accessor = $accessor;
-        $this->locator = $locator;
+        $this->pathLocator = $pathLocator;
         $this->resolvedSources = new \SplObjectStorage();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isUpload($object): bool
-    {
-        $class = is_string($object) ? $object : get_class($object);
-
-        if (isset($this->uploadClasses[$class])) {
-            return $this->uploadClasses[$class];
-        }
-
-        try {
-            $this->metadataFactory->getMetadata($class);
-
-            return $this->uploadClasses[$class] = true;
-        } catch (NotMappedException $exception) {
-            return $this->uploadClasses[$class] = false;
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isRegistered($object): bool
-    {
-        return $this->resolvedSources->contains($object);
     }
 
     /**
@@ -79,23 +38,30 @@ final class UploadManager implements UploadManagerInterface
     public function register($object, $source): void
     {
         $resolvedSource = $this->sourceResolver->resolve($source);
-        $attributes = $resolvedSource->getAttributes();
-        $path = $this->pathGenerator->generate($attributes);
-        $this->accessor->setPath($object, $path);
-        $this->accessor->setAttributes($object, $attributes);
+        $this->accessor->setPath($object, $resolvedSource->getPath());
+        $this->accessor->setAttributes($object, $resolvedSource->getAttributes());
         $this->resolvedSources->attach($object, $resolvedSource);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getSource($object)
+    public function getResolvedSource($object): ResolvedSource
     {
-        if (!$this->isRegistered($object)) {
-            throw new \RuntimeException('Object is not registered.');
+        if (!$this->resolvedSources->contains($object)) {
+            throw new NotRegisteredException('Object is not registered.');
         }
 
-        return $this->resolvedSources[$object]->getSource();
+        return $this->resolvedSources[$object];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save($object): void
+    {
+        $this->getResolvedSource($object)->save();
+        $this->detach($object);
     }
 
     /**
@@ -117,23 +83,19 @@ final class UploadManager implements UploadManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function save($object): void
+    public function getPath($object): string
     {
-        if (!$this->isRegistered($object)) {
-            throw new \RuntimeException('Object is not registered.');
-        }
-
-        $this->doSave($object);
+        return $this->accessor->getPath($object);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function saveAll(): void
+    public function locate($object): string
     {
-        foreach ($this->resolvedSources as $object) {
-            $this->doSave($object);
-        }
+        $path = $this->getPath($object);
+
+        return $this->pathLocator->locatePath($path);
     }
 
     /**
@@ -141,14 +103,6 @@ final class UploadManager implements UploadManagerInterface
      */
     public function delete($object): void
     {
-        @unlink($this->locator->locateUpload($object));
-        $this->detach($object);
-    }
-
-    private function doSave($object): void
-    {
-        $target = $this->locator->locateUpload($object);
-        $this->resolvedSources[$object]->write($target);
-        $this->detach($object);
+        @unlink($this->locate($object));
     }
 }

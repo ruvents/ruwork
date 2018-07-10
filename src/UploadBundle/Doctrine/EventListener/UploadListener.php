@@ -7,15 +7,17 @@ namespace Ruwork\UploadBundle\Doctrine\EventListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
+use Ruwork\UploadBundle\Exception\NotMappedException;
+use Ruwork\UploadBundle\Exception\NotRegisteredException;
 use Ruwork\UploadBundle\Manager\UploadManagerInterface;
 
 final class UploadListener implements EventSubscriber
 {
-    private $uploadManager;
+    private $manager;
 
-    public function __construct(UploadManagerInterface $uploadManager)
+    public function __construct(UploadManagerInterface $manager)
     {
-        $this->uploadManager = $uploadManager;
+        $this->manager = $manager;
     }
 
     /**
@@ -33,14 +35,16 @@ final class UploadListener implements EventSubscriber
         $unitOfWork = $args->getEntityManager()->getUnitOfWork();
 
         foreach ($unitOfWork->getScheduledEntityInsertions() as $entity) {
-            if ($this->uploadManager->isRegistered($entity)) {
-                $this->uploadManager->save($entity);
+            try {
+                $this->manager->save($entity);
+            } catch (NotRegisteredException $exception) {
             }
         }
 
         foreach ($unitOfWork->getScheduledEntityDeletions() as $entity) {
-            if ($this->uploadManager->isUpload($entity)) {
-                $this->uploadManager->delete($entity);
+            try {
+                $this->manager->delete($entity);
+            } catch (NotMappedException $exception) {
             }
         }
     }

@@ -8,7 +8,5 @@ interface SourceHandlerInterface
 {
     public function supports($source): bool;
 
-    public function getAttributes($source): array;
-
-    public function write($source, array $attributes, string $target): void;
+    public function write($source, string $target): void;
 }

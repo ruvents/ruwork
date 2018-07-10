@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Ruwork\UploadBundle\Doctrine\EventListener\UploadListener;
+use Ruwork\UploadBundle\EventListener\FormTerminateListener;
+use Ruwork\UploadBundle\Form\Type\DoctrineUploadType;
 use Ruwork\UploadBundle\Form\Type\UploadType;
-use Ruwork\UploadBundle\Form\TypeExtension\UploadFormTypeExtension;
-use Ruwork\UploadBundle\Locator\UploadLocator;
-use Ruwork\UploadBundle\Locator\UploadLocatorInterface;
 use Ruwork\UploadBundle\Manager\UploadManager;
 use Ruwork\UploadBundle\Manager\UploadManagerInterface;
 use Ruwork\UploadBundle\Metadata\CachedMetadataFactory;
@@ -16,13 +15,15 @@ use Ruwork\UploadBundle\Metadata\MetadataFactory;
 use Ruwork\UploadBundle\Metadata\MetadataFactoryInterface;
 use Ruwork\UploadBundle\Metadata\UnproxyMetadataFactory;
 use Ruwork\UploadBundle\Metadata\UploadAccessor;
-use Ruwork\UploadBundle\PathGenerator\PathGenerator;
-use Ruwork\UploadBundle\PathGenerator\PathGeneratorInterface;
+use Ruwork\UploadBundle\Path\PathGenerator;
+use Ruwork\UploadBundle\Path\PathGeneratorInterface;
+use Ruwork\UploadBundle\Path\PathLocatorInterface;
 use Ruwork\UploadBundle\Source\Handler\UploadedFileHandler;
 use Ruwork\UploadBundle\Source\SourceResolver;
 use Ruwork\UploadBundle\Source\SourceResolverInterface;
+use Ruwork\UploadBundle\TmpPath\TmpPathGenerator;
+use Ruwork\UploadBundle\TmpPath\TmpPathGeneratorInterface;
 use Ruwork\UploadBundle\Validator\AssertUploadValidator;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 return function (ContainerConfigurator $container): void {
     $container->services()
@@ -40,44 +41,42 @@ return function (ContainerConfigurator $container): void {
     $services
         ->set(UploadListener::class)
         ->args([
-            '$uploadManager' => ref(UploadManagerInterface::class),
+            '$manager' => ref(UploadManagerInterface::class),
         ])
         ->tag('doctrine.event_subscriber');
 
+    // EventListener
+
+    $services
+        ->set(FormTerminateListener::class)
+        ->tag('kernel.event_subscriber');
+
     // Form
+
+    $services
+        ->set(DoctrineUploadType::class)
+        ->args([
+            '$doctrine' => ref('doctrine'),
+            '$metadataFactory' => ref(MetadataFactoryInterface::class),
+        ])
+        ->tag('form.type');
 
     $services
         ->set(UploadType::class)
         ->args([
             '$manager' => ref(UploadManagerInterface::class),
-            '$accessor' => ref(UploadAccessor::class),
+            '$terminateListener' => ref(FormTerminateListener::class),
         ])
         ->tag('form.type');
-
-    $services
-        ->set(UploadFormTypeExtension::class)
-        ->tag('form.type_extension', ['extended_type' => FormType::class]);
-
-    // Locator
-
-    $services
-        ->set(UploadLocator::class)
-        ->args([
-            '$accessor' => ref(UploadAccessor::class),
-        ]);
-
-    $services->alias(UploadLocatorInterface::class, UploadLocator::class);
 
     // Manager
 
     $services
         ->set(UploadManager::class)
         ->args([
-            '$metadataFactory' => ref(MetadataFactoryInterface::class),
             '$sourceResolver' => ref(SourceResolverInterface::class),
-            '$pathGenerator' => ref(PathGeneratorInterface::class),
             '$accessor' => ref(UploadAccessor::class),
-            '$locator' => ref(UploadLocatorInterface::class),
+            '$pathLocator' => ref(PathLocatorInterface::class),
         ]);
 
     $services->alias(UploadManagerInterface::class, UploadManager::class);
@@ -114,7 +113,7 @@ return function (ContainerConfigurator $container): void {
             '$metadataFactory' => ref(MetadataFactoryInterface::class),
         ]);
 
-    // PathGenerator
+    // Path
 
     $services
         ->set(PathGenerator::class)
@@ -124,19 +123,32 @@ return function (ContainerConfigurator $container): void {
 
     $services->alias(PathGeneratorInterface::class, PathGenerator::class);
 
-    // Source
+    $services->alias(PathLocatorInterface::class, PathGenerator::class);
+
+    // Source\Handler
 
     $services
         ->set(UploadedFileHandler::class)
         ->tag('ruwork_upload.source_handler');
 
+    // Source
+
     $services
         ->set(SourceResolver::class)
         ->args([
             '$handlers' => tagged('ruwork_upload.source_handler'),
+            '$tmpPathGenerator' => ref(TmpPathGeneratorInterface::class),
+            '$pathGenerator' => ref(PathGeneratorInterface::class),
+            '$pathLocator' => ref(PathLocatorInterface::class),
         ]);
 
     $services->alias(SourceResolverInterface::class, SourceResolver::class);
+
+    // TmpPath
+
+    $services->set(TmpPathGenerator::class);
+
+    $services->alias(TmpPathGeneratorInterface::class, TmpPathGenerator::class);
 
     // Validator
 
@@ -144,7 +156,6 @@ return function (ContainerConfigurator $container): void {
         ->set(AssertUploadValidator::class)
         ->args([
             '$manager' => ref(UploadManagerInterface::class),
-            '$locator' => ref(UploadLocatorInterface::class),
         ])
         ->tag('validator.constraint_validator');
 };

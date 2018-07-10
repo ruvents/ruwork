@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Ruwork\UploadBundle\Source\Handler;
 
-use Ruwork\UploadBundle\PathGenerator\PathGeneratorInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-final class UploadedFileHandler implements SourceHandlerInterface
+final class UploadedFileHandler implements SourceHandlerInterface, AttributesProviderInterface
 {
+    public const CLIENT_MIME_TYPE = 'client_mime_type';
+
     /**
      * {@inheritdoc}
      */
@@ -22,13 +23,9 @@ final class UploadedFileHandler implements SourceHandlerInterface
      *
      * @param UploadedFile $source
      */
-    public function getAttributes($source): array
+    public function write($source, string $target): void
     {
-        return [
-            'client_name' => $source->getClientOriginalName(),
-            'client_mime_type' => $source->getClientMimeType(),
-            PathGeneratorInterface::EXTENSION => $source->guessExtension(),
-        ];
+        $source->move(dirname($target), basename($target));
     }
 
     /**
@@ -36,8 +33,12 @@ final class UploadedFileHandler implements SourceHandlerInterface
      *
      * @param UploadedFile $source
      */
-    public function write($source, array $attributes, string $target): void
+    public function getAttributes($source): array
     {
-        $source->move(dirname($target), basename($target));
+        return [
+            self::CLIENT_MIME_TYPE => $source->getClientMimeType(),
+            self::CLIENT_NAME => $source->getClientOriginalName(),
+            self::TMP_PATH => $source->getPathname(),
+        ];
     }
 }

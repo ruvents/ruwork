@@ -6,34 +6,85 @@ namespace Ruwork\UploadBundle\Source;
 
 use Ruwork\UploadBundle\Source\Handler\SourceHandlerInterface;
 
-final class ResolvedSource
+final class ResolvedSource implements ResolvedSourceInterface
 {
-    private $handler;
     private $source;
+    private $handler;
     private $attributes;
+    private $tmpPath;
+    private $path;
+    private $absolutePath;
+    private $saveFromSource;
+    private $saved = false;
 
-    public function __construct(SourceHandlerInterface $handler, $source)
-    {
-        $this->handler = $handler;
+    /**
+     * @param mixed $source
+     */
+    public function __construct(
+        $source,
+        SourceHandlerInterface $handler,
+        array $attributes,
+        string $tmpPath,
+        string $path,
+        string $absolutePath,
+        bool $saveFromSource
+    ) {
         $this->source = $source;
+        $this->handler = $handler;
+        $this->attributes = $attributes;
+        $this->tmpPath = $tmpPath;
+        $this->path = $path;
+        $this->absolutePath = $absolutePath;
+        $this->saveFromSource = $saveFromSource;
     }
 
-    public function getSource()
-    {
-        return $this->source;
-    }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getAttributes(): array
     {
-        if (null === $this->attributes) {
-            $this->attributes = $this->handler->getAttributes($this->source);
-        }
-
         return $this->attributes;
     }
 
-    public function write(string $target): void
+    /**
+     * {@inheritdoc}
+     */
+    public function getTmpPath(): string
     {
-        $this->handler->write($this->source, $this->attributes, $target);
+        return $this->tmpPath;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isSaved(): bool
+    {
+        return $this->saved;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save(): void
+    {
+        if ($this->saved) {
+            throw new \RuntimeException('Already saved.');
+        }
+
+        if ($this->saveFromSource) {
+            $this->handler->write($this->source, $this->absolutePath);
+        } else {
+            rename($this->tmpPath, $this->absolutePath);
+        }
+
+        $this->saved = true;
     }
 }

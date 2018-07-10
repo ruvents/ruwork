@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Ruwork\UploadBundle\Validator;
 
 use Ruwork\UploadBundle\Exception\EmptyPathException;
+use Ruwork\UploadBundle\Exception\NotRegisteredException;
 use Ruwork\UploadBundle\Form\Type\UploadType;
-use Ruwork\UploadBundle\Locator\UploadLocatorInterface;
 use Ruwork\UploadBundle\Manager\UploadManagerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -15,12 +15,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 final class AssertUploadValidator extends ConstraintValidator
 {
     private $manager;
-    private $locator;
 
-    public function __construct(UploadManagerInterface $manager, UploadLocatorInterface $locator)
+    public function __construct(UploadManagerInterface $manager)
     {
         $this->manager = $manager;
-        $this->locator = $locator;
     }
 
     /**
@@ -36,13 +34,17 @@ final class AssertUploadValidator extends ConstraintValidator
             return;
         }
 
+        if (!is_object($value)) {
+            throw new UnexpectedTypeException($value, 'object');
+        }
+
         $file = null;
 
-        if ($this->manager->isRegistered($value)) {
-            $file = $this->manager->getSource($value);
-        } else {
+        try {
+            $file = $this->manager->getResolvedSource($value)->getTmpPath();
+        } catch (NotRegisteredException $exception) {
             try {
-                $file = $this->locator->locateUpload($value);
+                $file = $this->manager->locate($value);
             } catch (EmptyPathException $exception) {
             }
         }

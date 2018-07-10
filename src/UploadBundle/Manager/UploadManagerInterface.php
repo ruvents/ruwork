@@ -4,18 +4,10 @@ declare(strict_types=1);
 
 namespace Ruwork\UploadBundle\Manager;
 
+use Ruwork\UploadBundle\Source\ResolvedSource;
+
 interface UploadManagerInterface
 {
-    /**
-     * @param object|string $object
-     */
-    public function isUpload($object): bool;
-
-    /**
-     * @param object $object
-     */
-    public function isRegistered($object): bool;
-
     /**
      * @param object $object
      */
@@ -24,7 +16,12 @@ interface UploadManagerInterface
     /**
      * @param object $object
      */
-    public function getSource($object);
+    public function getResolvedSource($object): ResolvedSource;
+
+    /**
+     * @param object $object
+     */
+    public function save($object): void;
 
     /**
      * @param object $object
@@ -36,9 +33,12 @@ interface UploadManagerInterface
     /**
      * @param object $object
      */
-    public function save($object): void;
+    public function getPath($object): string;
 
-    public function saveAll(): void;
+    /**
+     * @param object $object
+     */
+    public function locate($object): string;
 
     /**
      * @param object $object

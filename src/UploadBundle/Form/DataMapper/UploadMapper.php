@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ruwork\UploadBundle\Form\DataMapper;
 
+use Ruwork\UploadBundle\EventListener\FormTerminateListener;
 use Ruwork\UploadBundle\Form\Type\UploadType;
 use Ruwork\UploadBundle\Manager\UploadManagerInterface;
 use Symfony\Component\Form\DataMapperInterface;
@@ -13,19 +14,16 @@ use Symfony\Component\Form\FormInterface;
 final class UploadMapper implements DataMapperInterface
 {
     private $manager;
-    private $emptyData;
-    private $finder;
+    private $terminateListener;
     private $dataMapper;
 
     public function __construct(
         UploadManagerInterface $manager,
-        callable $emptyData,
-        callable $finder,
-        DataMapperInterface $dataMapper = null
+        FormTerminateListener $terminateListener,
+        ?DataMapperInterface $dataMapper = null
     ) {
         $this->manager = $manager;
-        $this->emptyData = $emptyData;
-        $this->finder = $finder;
+        $this->terminateListener = $terminateListener;
         $this->dataMapper = $dataMapper ?? new PropertyPathMapper();
     }
 
@@ -47,12 +45,14 @@ final class UploadMapper implements DataMapperInterface
         $fileForm = $formsArray[UploadType::FILE];
         $pathForm = $formsArray[UploadType::PATH];
         $form = $fileForm->getParent();
+        $config = $form->getConfig();
 
         if (!$fileForm->isEmpty()) {
-            $data = ($this->emptyData)($form, $data);
+            $data = $config->getOption('factory')($form, $data);
             $this->manager->register($data, $fileForm->getData());
+            $this->terminateListener->registerForm($form);
         } elseif (!$pathForm->isEmpty()) {
-            $data = ($this->finder)($pathForm->getData(), $form, $data);
+            $data = $config->getOption('finder')($pathForm->getData(), $form, $data);
         }
 
         $this->dataMapper->mapFormsToData($forms, $data);

@@ -6,5 +6,8 @@ namespace Ruwork\UploadBundle\Source;
 
 interface SourceResolverInterface
 {
-    public function resolve($source): ResolvedSource;
+    /**
+     * @param mixed $source
+     */
+    public function resolve($source): ResolvedSourceInterface;
 }

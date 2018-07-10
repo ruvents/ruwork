@@ -10,7 +10,7 @@ final class TmpPathGenerator implements TmpPathGeneratorInterface
 
     public function __construct(?string $prefix = null)
     {
-        $this->prefix = $prefix ?? crc32(self::class);
+        $this->prefix = $prefix ?? 'ruwork_upload_tmp_path';
     }
 
     /**

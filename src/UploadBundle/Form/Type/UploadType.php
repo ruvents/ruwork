@@ -41,6 +41,10 @@ final class UploadType extends AbstractType
             ->setDataMapper(new UploadMapper(
                 $this->manager,
                 $this->terminateListener,
+                self::FILE,
+                self::PATH,
+                $options['factory'],
+                $options['finder'],
                 $builder->getDataMapper()
             ))
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {

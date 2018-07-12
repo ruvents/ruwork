@@ -23,7 +23,7 @@ abstract class AbstractController extends SymfonyAbstractController
         $button = $form->get($name);
 
         if (!$button instanceof ClickableInterface) {
-            throw new \InvalidArgumentException(sprintf('Form element "%s" is not clickable.', $name));
+            throw new \InvalidArgumentException(\sprintf('Form element "%s" is not clickable.', $name));
         }
 
         return $button->isClicked();
@@ -34,7 +34,7 @@ abstract class AbstractController extends SymfonyAbstractController
         $manager = $this->getDoctrine()->getManagerForClass($class);
 
         if (!$manager instanceof EntityManagerInterface) {
-            throw new \InvalidArgumentException(sprintf('%s is not an entity.', $class));
+            throw new \InvalidArgumentException(\sprintf('%s is not an entity.', $class));
         }
 
         return $manager;
@@ -56,7 +56,7 @@ abstract class AbstractController extends SymfonyAbstractController
 
     protected function redirectToEdit(string $name, $entity): RedirectResponse
     {
-        $class = get_class($entity);
+        $class = \get_class($entity);
 
         $id = $this->getEntityManager($class)
             ->getClassMetadata($class)
@@ -64,14 +64,14 @@ abstract class AbstractController extends SymfonyAbstractController
 
         return $this->redirectToRoute('ruwork_admin_edit', [
             'ruwork_admin_entity' => $name,
-            'id' => reset($id),
+            'id' => \reset($id),
         ]);
     }
 
     protected function getIdField($class)
     {
-        if (is_object($class)) {
-            $class = get_class($class);
+        if (\is_object($class)) {
+            $class = \get_class($class);
         }
 
         return $this->getEntityManager($class)

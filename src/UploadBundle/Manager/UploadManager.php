@@ -103,6 +103,6 @@ final class UploadManager implements UploadManagerInterface
      */
     public function delete($object): void
     {
-        @unlink($this->locate($object));
+        @\unlink($this->locate($object));
     }
 }

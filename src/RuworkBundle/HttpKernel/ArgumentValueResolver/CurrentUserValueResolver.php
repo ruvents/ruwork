@@ -34,7 +34,7 @@ final class CurrentUserValueResolver implements ArgumentValueResolverInterface
 
         $type = $argument->getType();
 
-        if (UserInterface::class !== $type && !is_subclass_of($type, UserInterface::class)) {
+        if (UserInterface::class !== $type && !\is_subclass_of($type, UserInterface::class)) {
             return false;
         }
 

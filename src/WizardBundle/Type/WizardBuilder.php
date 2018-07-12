@@ -82,7 +82,7 @@ class WizardBuilder
             $data = $this->options['empty_data'];
         }
 
-        if (!is_object($data)) {
+        if (!\is_object($data)) {
             throw new \UnexpectedValueException();
         }
 

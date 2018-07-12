@@ -67,7 +67,7 @@ final class SourceResolver implements SourceResolverInterface
 
         $tmpPath = $attributes[AttributesProviderInterface::TMP_PATH] ?? '';
 
-        if (!is_file($tmpPath)) {
+        if (!\is_file($tmpPath)) {
             $tmpPath = $this->tmpPathGenerator->generateTmpPath();
             $handler->write($source, $tmpPath);
             $saveFromSource = false;

@@ -20,7 +20,7 @@ class BuildMenuPass implements PassInterface
      */
     public function process(Config $config, array $data): void
     {
-        $config->menu = array_map([$this, 'buildItem'], $data['menu']);
+        $config->menu = \array_map([$this, 'buildItem'], $data['menu']);
     }
 
     private function buildItem(array $data): AbstractItemConfig
@@ -35,17 +35,17 @@ class BuildMenuPass implements PassInterface
             $item->activeExpression = $data['active'];
         } elseif (isset($data['entity'])) {
             $item = new EntityItemConfig();
-            $route = explode(':', $data['entity']);
+            $route = \explode(':', $data['entity']);
             $item->entity = $route[0];
             $item->action = $route[1];
             $item->routeParams = $data['route_params'];
             $item->activeExpression = $data['active'];
         } elseif (isset($data['children'])) {
             $item = new ChildrenItemConfig();
-            $item->children = array_map([$this, 'buildItem'], $data['children']);
+            $item->children = \array_map([$this, 'buildItem'], $data['children']);
             $item->activeExpression = $data['active'];
         } else {
-            throw new \LogicException(sprintf('Menu %s item is wrongly configured.', json_encode($data)));
+            throw new \LogicException(\sprintf('Menu %s item is wrongly configured.', \json_encode($data)));
         }
 
         $item->requiresGranted = $data['requires_granted'];

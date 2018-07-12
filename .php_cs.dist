@@ -12,6 +12,7 @@ return PhpCsFixer\Config::create()
         '@Symfony:risky' => true,
         'align_multiline_comment' => true,
         'array_syntax' => ['syntax' => 'short'],
+        'native_function_invocation' => true,
         'no_null_property_initialization' => true,
         'no_php4_constructor' => true,
         'no_unset_on_property' => true,

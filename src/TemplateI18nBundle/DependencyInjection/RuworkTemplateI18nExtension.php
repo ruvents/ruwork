@@ -33,7 +33,7 @@ final class RuworkTemplateI18nExtension extends ConfigurableExtension
                 ->replaceArgument('$namingStrategy', new Reference($service));
         }
 
-        if (!class_exists(Template::class)) {
+        if (!\class_exists(Template::class)) {
             $container->removeDefinition('ruwork_template_i18n.annotation_listener');
         }
     }

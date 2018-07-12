@@ -78,7 +78,7 @@ final class ResourceOwner implements ResourceOwnerInterface
      */
     public function getOption($name)
     {
-        throw new \InvalidArgumentException(sprintf('Option "%s" does not exist.', $name));
+        throw new \InvalidArgumentException(\sprintf('Option "%s" does not exist.', $name));
     }
 
     /**

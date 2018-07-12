@@ -39,7 +39,7 @@ final class Filter implements FilterInterface
             /** @var FormInterface $child */
             $method = $name.self::METHOD_SUFFIX;
 
-            if (method_exists($this->type, $method)) {
+            if (\method_exists($this->type, $method)) {
                 $this->type->$method($child->getData(), $object, $this->options, $form);
             }
         }

@@ -45,7 +45,7 @@ class RuworkAdminExtension extends ConfigurableExtension
         }
 
         $container->setParameter('ruwork_admin.routing.entities_requirement',
-            $this->createRouteRequirement(array_keys($config['entities'])));
+            $this->createRouteRequirement(\array_keys($config['entities'])));
 
         $container->setParameter('ruwork_admin.routing.list.entities_requirement',
             $this->createRouteRequirement($listableEntities));
@@ -78,6 +78,6 @@ class RuworkAdminExtension extends ConfigurableExtension
 
     private function createRouteRequirement(array $entityNames): string
     {
-        return implode('|', $entityNames) ?: 'no-entities';
+        return \implode('|', $entityNames) ?: 'no-entities';
     }
 }

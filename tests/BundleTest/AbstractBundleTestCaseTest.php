@@ -48,7 +48,7 @@ class AbstractBundleTestCaseTest extends AbstractBundleTestCase
     public function testNoExtensionException(): void
     {
         $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage(sprintf('Bundle "%s" does not have an extension.', get_class($this->getBundle())));
+        $this->expectExceptionMessage(\sprintf('Bundle "%s" does not have an extension.', \get_class($this->getBundle())));
 
         $this->loadBundleExtension([]);
         $this->compile();

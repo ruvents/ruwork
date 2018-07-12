@@ -75,7 +75,7 @@ final class DoctrineUploadType extends AbstractType
         $manager = $this->doctrine->getManagerForClass($class);
 
         if (null === $manager) {
-            throw new \InvalidArgumentException(sprintf('No doctrine manager found for class "%s".', $class));
+            throw new \InvalidArgumentException(\sprintf('No doctrine manager found for class "%s".', $class));
         }
 
         return $manager;

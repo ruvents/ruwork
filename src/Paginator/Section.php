@@ -38,6 +38,6 @@ final class Section implements \IteratorAggregate, \Countable
      */
     public function count()
     {
-        return count($this->pages);
+        return \count($this->pages);
     }
 }

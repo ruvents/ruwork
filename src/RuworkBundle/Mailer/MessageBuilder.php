@@ -59,11 +59,11 @@ class MessageBuilder implements MessageBuilderInterface
      */
     public function setFrom($from): MessageBuilderInterface
     {
-        if (is_string($from)) {
+        if (\is_string($from)) {
             $from = $this->mailer->getUser($from);
         } elseif (!$from instanceof MailUserInterface) {
             throw new \InvalidArgumentException(
-                sprintf('$from must be a string id or an instance of %s.', MailUserInterface::class)
+                \sprintf('$from must be a string id or an instance of %s.', MailUserInterface::class)
             );
         }
 
@@ -88,7 +88,7 @@ class MessageBuilder implements MessageBuilderInterface
     public function addSubject(string $subject, string $locale = null): MessageBuilderInterface
     {
         if (null === $locale) {
-            array_unshift($this->subjects, $subject);
+            \array_unshift($this->subjects, $subject);
         } else {
             $this->subjects[$locale] = $subject;
         }
@@ -112,7 +112,7 @@ class MessageBuilder implements MessageBuilderInterface
     public function addTemplate(string $template, string $locale = null): MessageBuilderInterface
     {
         if (null === $locale) {
-            array_unshift($this->templates, $template);
+            \array_unshift($this->templates, $template);
         } else {
             $this->templates[$locale] = $template;
         }
@@ -183,19 +183,19 @@ class MessageBuilder implements MessageBuilderInterface
             throw new \RuntimeException('Template is not defined.');
         }
 
-        if (is_string($to)) {
+        if (\is_string($to)) {
             $to = $this->mailer->getUser($to);
         } elseif (!$to instanceof MailUserInterface) {
             throw new \InvalidArgumentException(
-                sprintf('$to must be a string id or an instance of %s.', MailUserInterface::class)
+                \sprintf('$to must be a string id or an instance of %s.', MailUserInterface::class)
             );
         }
 
         $locale = $to->getMailLocale();
 
-        $subject = $this->subjects[$locale] ?? reset($this->subjects) ?: null;
-        $template = $this->templates[$locale] ?? reset($this->templates);
-        $parameters = array_replace($this->parameters, [
+        $subject = $this->subjects[$locale] ?? \reset($this->subjects) ?: null;
+        $template = $this->templates[$locale] ?? \reset($this->templates);
+        $parameters = \array_replace($this->parameters, [
             '_message' => [
                 'from' => $this->from,
                 'to' => $to,

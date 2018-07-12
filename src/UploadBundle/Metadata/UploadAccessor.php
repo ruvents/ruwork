@@ -19,7 +19,7 @@ final class UploadAccessor
      */
     public function getPath($object): ?string
     {
-        $metadata = $this->metadataFactory->getMetadata(get_class($object));
+        $metadata = $this->metadataFactory->getMetadata(\get_class($object));
 
         return $this->getReflectionProperty($metadata->getClass(), $metadata->getPathProperty())->getValue($object);
     }
@@ -29,7 +29,7 @@ final class UploadAccessor
      */
     public function setPath($object, string $path): void
     {
-        $metadata = $this->metadataFactory->getMetadata(get_class($object));
+        $metadata = $this->metadataFactory->getMetadata(\get_class($object));
 
         $this->getReflectionProperty($metadata->getClass(), $metadata->getPathProperty())->setValue($object, $path);
     }
@@ -40,7 +40,7 @@ final class UploadAccessor
     public function getAttributes($object): array
     {
         $attributes = [];
-        $metadata = $this->metadataFactory->getMetadata(get_class($object));
+        $metadata = $this->metadataFactory->getMetadata(\get_class($object));
         $class = $metadata->getClass();
 
         foreach ($metadata->getAttributes() as $property => $attributeMapping) {
@@ -55,11 +55,11 @@ final class UploadAccessor
      */
     public function setAttributes($object, array $attributes): void
     {
-        $metadata = $this->metadataFactory->getMetadata(get_class($object));
+        $metadata = $this->metadataFactory->getMetadata(\get_class($object));
         $class = $metadata->getClass();
 
         foreach ($metadata->getAttributes() as $property => $attributeMapping) {
-            if (array_key_exists($attributeMapping->name, $attributes)) {
+            if (\array_key_exists($attributeMapping->name, $attributes)) {
                 $this->getReflectionProperty($class, $property)->setValue($object, $attributes[$attributeMapping->name]);
             }
         }

@@ -33,6 +33,6 @@ class UploadTypeGuesser implements TypeGuesserInterface
 
         $targetClass = $metadata->getAssociationTargetClass($propertyPath);
 
-        return is_subclass_of($targetClass, AbstractUpload::class) ? 'upload' : null;
+        return \is_subclass_of($targetClass, AbstractUpload::class) ? 'upload' : null;
     }
 }

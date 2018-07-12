@@ -22,7 +22,7 @@ class PaginatorTest extends TestCase
 
         $provider->expects($this->once())
             ->method('getItems')
-            ->willReturn($expectedItems = range(1, random_int(2, 100)));
+            ->willReturn($expectedItems = \range(1, \random_int(2, 100)));
 
         /** @var ProviderInterface $provider */
         $paginator = PaginatorBuilder::create()
@@ -35,8 +35,8 @@ class PaginatorTest extends TestCase
         $this->assertSame($totalItems, $paginator->getTotalItems());
         $this->assertSame($expectedItems, $paginator->getItems());
 
-        $lastExpectedSection = end($expectedPages);
-        $expectedTotal = end($lastExpectedSection);
+        $lastExpectedSection = \end($expectedPages);
+        $expectedTotal = \end($lastExpectedSection);
 
         $this->assertSameSize($expectedPages, $paginator);
         $this->assertSame($expectedTotal, $paginator->getTotal());
@@ -45,7 +45,7 @@ class PaginatorTest extends TestCase
             $expectedSection = $expectedPages[$sectionI];
             $this->assertSameSize($expectedSection, $section);
 
-            $this->assertSame(count($expectedPages) === $sectionI + 1, $section->isLast());
+            $this->assertSame(\count($expectedPages) === $sectionI + 1, $section->isLast());
 
             foreach ($section as $pageI => $page) {
                 $expectedPage = $expectedSection[$pageI];

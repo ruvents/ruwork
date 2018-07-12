@@ -8,6 +8,6 @@ class NotMappedException extends \RuntimeException
 {
     public function __construct(string $class, string $property, \Throwable $previous = null)
     {
-        parent::__construct(sprintf('Property %s of class %s is not mapped by Doctrine.', $property, $class), 0, $previous);
+        parent::__construct(\sprintf('Property %s of class %s is not mapped by Doctrine.', $property, $class), 0, $previous);
     }
 }

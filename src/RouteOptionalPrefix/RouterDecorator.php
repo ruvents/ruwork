@@ -95,7 +95,7 @@ class RouterDecorator implements RouterInterface, RequestMatcherInterface
             $value = $route->getDefault($variable);
         } else {
             // remove / at the end
-            $value = substr($value, 0, -1);
+            $value = \substr($value, 0, -1);
         }
 
         $parameters[$variable] = $value;

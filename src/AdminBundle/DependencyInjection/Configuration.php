@@ -51,7 +51,7 @@ class Configuration implements ConfigurationInterface
                         ->defaultValue([])
                         ->validate()
                             ->ifTrue(function ($value) {
-                                return !is_array($value);
+                                return !\is_array($value);
                             })
                             ->thenInvalid('The "attributes" value must be an array, "%s" given.')
                         ->end()
@@ -158,11 +158,11 @@ class Configuration implements ConfigurationInterface
                     ->beforeNormalization()
                         ->ifString()
                         ->then(function ($value) {
-                            if (!preg_match('/^(?<property_path>[\[\]\.\w-]+)?(?>\@(?<type>[\w-\\\]+))?(?>\{(?<title>.*)\})?$/', $value, $matches)) {
-                                throw new \InvalidArgumentException(sprintf('"%s" is not a valid field definition.', $value));
+                            if (!\preg_match('/^(?<property_path>[\[\]\.\w-]+)?(?>\@(?<type>[\w-\\\]+))?(?>\{(?<title>.*)\})?$/', $value, $matches)) {
+                                throw new \InvalidArgumentException(\sprintf('"%s" is not a valid field definition.', $value));
                             }
 
-                            $matches = array_filter($matches);
+                            $matches = \array_filter($matches);
 
                             $propertyPath = $matches['property_path'] ?? null;
                             $type = $matches['type'] ?? null;
@@ -236,11 +236,11 @@ class Configuration implements ConfigurationInterface
                         ->then(function ($value) {
                             static $groupI = 1;
 
-                            if (!preg_match('/^(?<property_path>[\[\]\.\w-]+)?(?>\@(?<type>[\w-\\\]+))?(?<attr_class>(?>\.[\w-]+)+)?(?>\{(?<label>.*)\})?$/', $value, $matches)) {
-                                throw new \InvalidArgumentException(sprintf('"%s" is not a valid field definition.', $value));
+                            if (!\preg_match('/^(?<property_path>[\[\]\.\w-]+)?(?>\@(?<type>[\w-\\\]+))?(?<attr_class>(?>\.[\w-]+)+)?(?>\{(?<label>.*)\})?$/', $value, $matches)) {
+                                throw new \InvalidArgumentException(\sprintf('"%s" is not a valid field definition.', $value));
                             }
 
-                            $matches = array_filter($matches);
+                            $matches = \array_filter($matches);
 
                             $propertyPath = $matches['property_path'] ?? null;
                             $type = $matches['type'] ?? null;
@@ -249,10 +249,10 @@ class Configuration implements ConfigurationInterface
                                 if ('group' === $type) {
                                     $name = '__group'.($groupI++);
                                 } else {
-                                    throw new \InvalidArgumentException(sprintf('"%s" is not a valid field definition. Not specifying property is allowed only for the "group" type.', $value));
+                                    throw new \InvalidArgumentException(\sprintf('"%s" is not a valid field definition. Not specifying property is allowed only for the "group" type.', $value));
                                 }
                             } else {
-                                $name = preg_replace('/[\[\]\.]+/', '_', $propertyPath);
+                                $name = \preg_replace('/[\[\]\.]+/', '_', $propertyPath);
                             }
 
                             return [
@@ -263,7 +263,7 @@ class Configuration implements ConfigurationInterface
                                     'property_path' => $propertyPath,
                                     'label' => $matches['label'] ?? null,
                                     'attr' => [
-                                        'class' => strtr($matches['attr_class'] ?? '', '.', ' '),
+                                        'class' => \strtr($matches['attr_class'] ?? '', '.', ' '),
                                     ],
                                 ],
                             ];
@@ -289,7 +289,7 @@ class Configuration implements ConfigurationInterface
                 ->defaultValue([])
                 ->validate()
                     ->ifTrue(function ($value) {
-                        return !is_array($value);
+                        return !\is_array($value);
                     })
                     ->thenInvalid('The "attributes" value must be an array, "%s" given.')
                 ->end();

@@ -87,7 +87,7 @@ final class RedirectControllerListener implements EventSubscriberInterface
 
     private function getConditionVars(Request $request): array
     {
-        return array_merge($request->attributes->all(), [
+        return \array_merge($request->attributes->all(), [
             'request' => $request,
             'object' => $request,
             'user' => $this->tokenStorage->getToken()->getUser(),
@@ -97,7 +97,7 @@ final class RedirectControllerListener implements EventSubscriberInterface
 
     private function getUrlVars(Request $request): array
     {
-        return array_merge($request->attributes->all(), [
+        return \array_merge($request->attributes->all(), [
             'request' => $request,
             'url_generator' => $this->urlGenerator,
         ]);

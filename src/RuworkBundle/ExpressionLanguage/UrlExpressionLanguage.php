@@ -17,7 +17,7 @@ class UrlExpressionLanguage extends ExpressionLanguage
         parent::registerFunctions();
 
         $this->register('path', function ($route, array $parameters = []) {
-            return sprintf('$url_generator->generate(%s, %s)', $route, $parameters);
+            return \sprintf('$url_generator->generate(%s, %s)', $route, $parameters);
         }, function (array $variables, $route, array $parameters = []) {
             /** @var UrlGeneratorInterface $urlGenerator */
             $urlGenerator = $variables['url_generator'];

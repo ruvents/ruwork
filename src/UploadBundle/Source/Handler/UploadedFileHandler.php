@@ -25,7 +25,7 @@ final class UploadedFileHandler implements SourceHandlerInterface, AttributesPro
      */
     public function write($source, string $target): void
     {
-        $source->move(dirname($target), basename($target));
+        $source->move(\dirname($target), \basename($target));
     }
 
     /**

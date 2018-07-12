@@ -15,7 +15,7 @@ final class FilemtimeStrategy implements VersionStrategyInterface
     {
         $path = (string) $path;
 
-        return file_exists($path) ? filemtime($path) : '';
+        return \file_exists($path) ? \filemtime($path) : '';
     }
 
     /**

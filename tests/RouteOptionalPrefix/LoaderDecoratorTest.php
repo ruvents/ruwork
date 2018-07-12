@@ -79,7 +79,7 @@ class LoaderDecoratorTest extends TestCase
             'test2' => new Route('/test2/{a}', ['a' => 1]),
         ]);
 
-        $actualRoutes = iterator_to_array($loader->load('resource'));
+        $actualRoutes = \iterator_to_array($loader->load('resource'));
 
         $this->assertSame($expectedRoutes, $actualRoutes);
     }

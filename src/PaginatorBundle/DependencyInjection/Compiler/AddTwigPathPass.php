@@ -19,7 +19,7 @@ class AddTwigPathPass implements CompilerPassInterface
             return;
         }
 
-        $path = dirname((new \ReflectionClass(Paginator::class))->getFileName()).'/Resources/templates';
+        $path = \dirname((new \ReflectionClass(Paginator::class))->getFileName()).'/Resources/templates';
 
         $container->getDefinition('twig.loader.native_filesystem')
             ->addMethodCall('addPath', [$path, 'RuworkPaginator']);

@@ -23,7 +23,7 @@ final class Configuration implements ConfigurationInterface
                         ->defaultValue('%kernel.project_dir%/public')
                         ->validate()
                             ->always(function ($value) {
-                                return rtrim($value, '/');
+                                return \rtrim($value, '/');
                             })
                         ->end()
                     ->end()
@@ -32,7 +32,7 @@ final class Configuration implements ConfigurationInterface
                         ->defaultValue('uploads')
                         ->validate()
                             ->always(function ($value) {
-                                return trim($value, '/');
+                                return \trim($value, '/');
                             })
                         ->end()
                     ->end()

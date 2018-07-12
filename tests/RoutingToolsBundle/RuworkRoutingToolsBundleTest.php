@@ -33,7 +33,7 @@ class RuworkRoutingToolsBundleTest extends AbstractBundleTestCase
 
         $this->assertInstanceOf(Router::class, $this->container->get('router'));
         $this->assertInstanceOf(PhpFileLoader::class, $this->container->get('routing.loader'));
-        $this->assertSame(BridgeRoutingExtension::class, get_class($this->container->get('twig.extension.routing')));
+        $this->assertSame(BridgeRoutingExtension::class, \get_class($this->container->get('twig.extension.routing')));
         $this->assertContainerBuilderHasService(RoutingHelpersExtension::class);
     }
 
@@ -50,7 +50,7 @@ class RuworkRoutingToolsBundleTest extends AbstractBundleTestCase
 
         $this->assertInstanceOf(RouterDecorator::class, $this->container->get('router'));
         $this->assertInstanceOf(LoaderDecorator::class, $this->container->get('routing.loader'));
-        $this->assertSame(RoutingExtension::class, get_class($this->container->get('twig.extension.routing')));
+        $this->assertSame(RoutingExtension::class, \get_class($this->container->get('twig.extension.routing')));
         $this->assertContainerBuilderNotHasService(RoutingHelpersExtension::class);
     }
 

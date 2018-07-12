@@ -60,7 +60,7 @@ final class ManualAuthListener implements ListenerInterface
         $token = $this->manager->authenticate($token);
         $context = $this->firewallConfig->getContext();
 
-        $request->getSession()->set('_security_'.$context, serialize($token));
+        $request->getSession()->set('_security_'.$context, \serialize($token));
 
         if (null !== $this->rememberMeServices) {
             $this->rememberMeServices->loginSuccess($request, $event->getResponse(), $token);

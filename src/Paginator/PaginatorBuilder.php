@@ -39,7 +39,7 @@ class PaginatorBuilder
     public function setPerPage(int $perPage)
     {
         if ($perPage < 1) {
-            throw new \InvalidArgumentException(sprintf('The $perPage value must be a positive integer.'));
+            throw new \InvalidArgumentException(\sprintf('The $perPage value must be a positive integer.'));
         }
 
         $this->perPage = $perPage;
@@ -50,7 +50,7 @@ class PaginatorBuilder
     public function setProximity(int $proximity)
     {
         if ($proximity < 1) {
-            throw new \InvalidArgumentException(sprintf('The $proximity value must be a positive integer.'));
+            throw new \InvalidArgumentException(\sprintf('The $proximity value must be a positive integer.'));
         }
 
         $this->proximity = $proximity;
@@ -70,7 +70,7 @@ class PaginatorBuilder
             throw new \UnexpectedValueException('Provider::getTotal() must return a non-negative integer.');
         }
 
-        $total = (int) ceil($totalItems / $this->perPage) ?: 1;
+        $total = (int) \ceil($totalItems / $this->perPage) ?: 1;
 
         if ($this->current < 1 || $this->current > $total) {
             throw new PageOutOfRangeException($total, $this->current);

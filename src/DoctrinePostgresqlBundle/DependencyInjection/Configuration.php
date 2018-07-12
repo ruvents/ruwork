@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
             ->root('ruwork_doctrine_behaviors')
                 ->beforeNormalization()
                     ->ifTrue(function ($value): bool {
-                        return is_array($value) && !array_key_exists('profiles', $value);
+                        return \is_array($value) && !\array_key_exists('profiles', $value);
                     })
                     ->then(function (array $value): array {
                         return [
@@ -46,7 +46,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->validate()
                             ->always(function (array $value): array {
-                                if (isset($value['*']) && 1 < count($value)) {
+                                if (isset($value['*']) && 1 < \count($value)) {
                                     throw new \InvalidArgumentException('Global behavior setting (*) cannot be used along with concrete profiles.');
                                 }
 

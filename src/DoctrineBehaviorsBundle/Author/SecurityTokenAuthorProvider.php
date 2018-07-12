@@ -42,7 +42,7 @@ final class SecurityTokenAuthorProvider implements AuthorProviderInterface
             return $user->getUsername();
         }
 
-        if (is_string($user) || (is_object($user) && method_exists($user, '__toString'))) {
+        if (\is_string($user) || (\is_object($user) && \method_exists($user, '__toString'))) {
             return (string) $user;
         }
 

@@ -37,7 +37,7 @@ class AliasValidator extends ConstraintValidator
             return;
         }
 
-        if (!is_string($value)) {
+        if (!\is_string($value)) {
             throw new UnexpectedTypeException($value, 'string');
         }
 
@@ -60,7 +60,7 @@ class AliasValidator extends ConstraintValidator
 
         $object = $context->getObject();
 
-        if (null !== $object && null !== $this->registry->getManagerForClass(get_class($object))) {
+        if (null !== $object && null !== $this->registry->getManagerForClass(\get_class($object))) {
             $context->getValidator()
                 ->inContext($context)
                 ->atPath($context->getPropertyPath())

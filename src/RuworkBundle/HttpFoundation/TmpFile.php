@@ -10,9 +10,9 @@ final class TmpFile extends File
 {
     public function __construct(string $contents = null)
     {
-        $pathname = rtrim(sys_get_temp_dir(), '/\\').\DIRECTORY_SEPARATOR.uniqid();
+        $pathname = \rtrim(\sys_get_temp_dir(), '/\\').\DIRECTORY_SEPARATOR.\uniqid();
 
-        file_put_contents($pathname, $contents);
+        \file_put_contents($pathname, $contents);
 
         parent::__construct($pathname);
     }
@@ -24,11 +24,11 @@ final class TmpFile extends File
 
     public static function createFromResource($handle): self
     {
-        return new self(stream_get_contents($handle, -1, 0));
+        return new self(\stream_get_contents($handle, -1, 0));
     }
 
     public function unlink(): void
     {
-        @unlink($this->getPathname());
+        @\unlink($this->getPathname());
     }
 }

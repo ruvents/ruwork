@@ -35,7 +35,7 @@ final class CheckboxTypeFalseValueExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if (array_key_exists('false_value', $options)) {
+        if (\array_key_exists('false_value', $options)) {
             $view->vars['false_value'] = $options['false_value'];
         }
     }

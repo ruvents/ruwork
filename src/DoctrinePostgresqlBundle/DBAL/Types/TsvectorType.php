@@ -26,7 +26,7 @@ class TsvectorType extends Type
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        if (null === $value || is_string($value)) {
+        if (null === $value || \is_string($value)) {
             return $value;
         }
 
@@ -58,6 +58,6 @@ class TsvectorType extends Type
      */
     public function convertToDatabaseValueSQL($sqlExpr, AbstractPlatform $platform)
     {
-        return sprintf('to_tsvector(%s)', $sqlExpr);
+        return \sprintf('to_tsvector(%s)', $sqlExpr);
     }
 }

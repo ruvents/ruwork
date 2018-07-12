@@ -34,7 +34,7 @@ final class AssertUploadValidator extends ConstraintValidator
             return;
         }
 
-        if (!is_object($value)) {
+        if (!\is_object($value)) {
             throw new UnexpectedTypeException($value, 'object');
         }
 

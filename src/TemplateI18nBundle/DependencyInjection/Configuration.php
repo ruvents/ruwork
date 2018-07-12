@@ -24,7 +24,7 @@ final class Configuration implements ConfigurationInterface
                         ->addDefaultsIfNotSet()
                         ->beforeNormalization()
                             ->ifTrue(function ($value) {
-                                return is_array($value) && isset($value['service']) && count($value) > 1;
+                                return \is_array($value) && isset($value['service']) && \count($value) > 1;
                             })
                             ->thenInvalid('If "service" is passed, other options are not accepted.')
                         ->end()

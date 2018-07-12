@@ -45,10 +45,10 @@ final class Wizard implements \ArrayAccess, \IteratorAggregate, \Countable
         $this->options = $options;
         $this->steps = $steps;
 
-        $indexes = array_map(function (Step $step) {
+        $indexes = \array_map(function (Step $step) {
             return $step->getIndex();
         }, $steps);
-        $this->stepsByIndex = array_combine($indexes, $steps);
+        $this->stepsByIndex = \array_combine($indexes, $steps);
     }
 
     public function getData()
@@ -272,7 +272,7 @@ final class Wizard implements \ArrayAccess, \IteratorAggregate, \Countable
      */
     public function count(): int
     {
-        return count($this->steps);
+        return \count($this->steps);
     }
 
     private function dispatch(string $event): void

@@ -20,7 +20,7 @@ final class AddTwigPathPass implements CompilerPassInterface
         }
 
         $file = (new \ReflectionClass(CheckboxTypeFalseValueExtension::class))->getFileName();
-        $path = dirname(dirname($file)).'/Resources/views';
+        $path = \dirname(\dirname($file)).'/Resources/views';
 
         $container
             ->findDefinition('twig.loader.native_filesystem')

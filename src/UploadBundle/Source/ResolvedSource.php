@@ -87,7 +87,7 @@ final class ResolvedSource implements ResolvedSourceInterface
         if ($this->saveFromSource) {
             $this->handler->write($this->source, $this->absolutePath);
         } else {
-            rename($this->tmpPath, $this->absolutePath);
+            \rename($this->tmpPath, $this->absolutePath);
         }
 
         $this->saved = true;
@@ -98,6 +98,6 @@ final class ResolvedSource implements ResolvedSourceInterface
      */
     public function clear(): void
     {
-        @unlink($this->tmpPath);
+        @\unlink($this->tmpPath);
     }
 }

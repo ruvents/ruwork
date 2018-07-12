@@ -17,7 +17,7 @@ class TemplateAnnotationListenerTest extends TestCase
     public function testEventPriorityHigher(): void
     {
         $sensioEventConfig = TemplateListener::getSubscribedEvents()[KernelEvents::CONTROLLER];
-        $sensioPriority = is_array($sensioEventConfig) ? ($sensioEventConfig[1] ?? 0) : 0;
+        $sensioPriority = \is_array($sensioEventConfig) ? ($sensioEventConfig[1] ?? 0) : 0;
 
         $this->assertLessThan(
             $sensioPriority,

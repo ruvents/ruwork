@@ -51,7 +51,7 @@ final class UpdateTimestampListener implements EventSubscriber
 
             if ($timestamp->overwrite || !$entityMetadata->getFieldValue($entity, $property)) {
                 $type = (string) $entityMetadata->getTypeOfField($property);
-                $value = false !== strpos($type, 'immutable')
+                $value = false !== \strpos($type, 'immutable')
                     ? new \DateTimeImmutable()
                     : new \DateTime();
                 $entityMetadata->setFieldValue($entity, $property, $value);

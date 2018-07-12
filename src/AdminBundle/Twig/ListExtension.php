@@ -68,7 +68,7 @@ class ListExtension extends AbstractExtension
 
         $context['entity'] = $entity;
         $context['value'] = $propertyPath ? $this->accessor->getValue($entity, $propertyPath) : null;
-        $context['value_php_type'] = gettype($context['value']);
+        $context['value_php_type'] = \gettype($context['value']);
 
         return $twig->load($this->typesTemplate)->renderBlock($context['type'], $context);
     }
@@ -100,7 +100,7 @@ class ListExtension extends AbstractExtension
         $context = [
             'entity_class' => $entityClass,
             'entity_config' => $entityConfig,
-            'entity_has_to_string' => method_exists($entityClass, '__toString'),
+            'entity_has_to_string' => \method_exists($entityClass, '__toString'),
             'entity_name' => $entityName,
             'entity_id_property' => $this->registry
                 ->getManagerForClass($entityClass)

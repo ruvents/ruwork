@@ -18,7 +18,7 @@ trait MultilingualTrait
 
     public function getCurrent(bool $fallback = true)
     {
-        $localesMap = array_flip($this->getLocales());
+        $localesMap = \array_flip($this->getLocales());
         $currentLocale = $this->currentLocale ?? \Locale::getDefault();
 
         if (isset($localesMap[$currentLocale])) {

@@ -41,18 +41,18 @@ class ApiStreamedIteratorResponse extends StreamedResponse
                 }
 
                 if (null !== $this->normalizer) {
-                    $row = call_user_func($this->normalizer, $this->data);
+                    $row = \call_user_func($this->normalizer, $this->data);
                 }
 
-                echo json_encode($row, JSON_UNESCAPED_UNICODE);
-                flush();
+                echo \json_encode($row, JSON_UNESCAPED_UNICODE);
+                \flush();
             }
 
             echo ']';
-            flush();
+            \flush();
         };
 
-        parent::__construct(null, $statusCode, array_merge([
+        parent::__construct(null, $statusCode, \array_merge([
             'Content-Type' => 'application/json; charset=utf-8',
         ], $headers));
     }

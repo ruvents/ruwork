@@ -46,7 +46,7 @@ class ToTsqueryFunction extends FunctionNode
      */
     public function getSql(SqlWalker $sqlWalker)
     {
-        return sprintf('to_tsquery(%s%s)',
+        return \sprintf('to_tsquery(%s%s)',
             $this->config ? $this->config->dispatch($sqlWalker).', ' : '',
             $this->query->dispatch($sqlWalker)
         );

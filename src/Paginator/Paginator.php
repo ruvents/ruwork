@@ -82,7 +82,7 @@ class Paginator implements \IteratorAggregate, \Countable
      */
     public function count(): int
     {
-        return count($this->sections);
+        return \count($this->sections);
     }
 
     private function createPage(int $number)

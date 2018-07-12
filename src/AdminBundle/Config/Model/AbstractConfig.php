@@ -12,13 +12,13 @@ abstract class AbstractConfig implements \Serializable
 
     public function __isset($name)
     {
-        return array_key_exists($name, $this->data) || !$this->locked;
+        return \array_key_exists($name, $this->data) || !$this->locked;
     }
 
     public function __get($name)
     {
         if (!$this->__isset($name)) {
-            throw new \InvalidArgumentException(sprintf('Property %s::$%s is not defined.', get_class($this), $name));
+            throw new \InvalidArgumentException(\sprintf('Property %s::$%s is not defined.', \get_class($this), $name));
         }
 
         return $this->data[$name] ?? null;
@@ -27,7 +27,7 @@ abstract class AbstractConfig implements \Serializable
     public function __set($name, $value): void
     {
         if ($this->locked) {
-            throw new \LogicException(sprintf('Config %s is closed for modification.', get_class($this)));
+            throw new \LogicException(\sprintf('Config %s is closed for modification.', \get_class($this)));
         }
 
         $this->data[$name] = $value;
@@ -40,7 +40,7 @@ abstract class AbstractConfig implements \Serializable
     {
         $this->locked = true;
 
-        return serialize($this->data);
+        return \serialize($this->data);
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class AbstractConfig implements \Serializable
      */
     public function unserialize($serialized): void
     {
-        $this->data = unserialize($serialized);
+        $this->data = \unserialize($serialized);
         $this->locked = true;
     }
 }

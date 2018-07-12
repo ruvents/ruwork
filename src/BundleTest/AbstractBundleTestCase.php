@@ -68,7 +68,7 @@ abstract class AbstractBundleTestCase extends AbstractContainerBuilderTestCase
         $extension = $this->bundle->getContainerExtension();
 
         if (null === $extension) {
-            throw new \LogicException(sprintf('Bundle "%s" does not have an extension.', get_class($this->bundle)));
+            throw new \LogicException(\sprintf('Bundle "%s" does not have an extension.', \get_class($this->bundle)));
         }
 
         $this->container->registerExtension($extension);

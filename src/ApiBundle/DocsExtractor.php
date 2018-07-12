@@ -65,18 +65,18 @@ class DocsExtractor
      */
     private function getControllerClassMethod($_controller)
     {
-        if (is_string($_controller) && false !== strpos($_controller, '::')) {
+        if (\is_string($_controller) && false !== \strpos($_controller, '::')) {
             return $_controller;
         }
 
-        if (is_array($_controller) && is_callable($_controller)) {
-            $_controller = array_values($_controller);
+        if (\is_array($_controller) && \is_callable($_controller)) {
+            $_controller = \array_values($_controller);
 
-            return get_class($_controller[0]).'::'.$_controller[1];
+            return \get_class($_controller[0]).'::'.$_controller[1];
         }
 
-        if (is_object($_controller) && method_exists($_controller, '__invoke')) {
-            return get_class($_controller).'::__invoke';
+        if (\is_object($_controller) && \method_exists($_controller, '__invoke')) {
+            return \get_class($_controller).'::__invoke';
         }
 
         return null;
@@ -98,7 +98,7 @@ class DocsExtractor
      */
     private function sortDocs(array &$docs): void
     {
-        usort($docs, function (Doc $a, Doc $b) {
+        \usort($docs, function (Doc $a, Doc $b) {
             return $a->priority === $b->priority
                 ? ($a->endpoint === $b->endpoint
                     ? 0

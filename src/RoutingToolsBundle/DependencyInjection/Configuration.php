@@ -26,7 +26,7 @@ class Configuration implements ConfigurationInterface
                         ->defaultFalse()
                         ->validate()
                             ->ifTrue(function (bool $value): bool {
-                                return $value && !class_exists(RouterDecorator::class);
+                                return $value && !\class_exists(RouterDecorator::class);
                             })
                             ->thenInvalid('ruwork/route-optional-prefix package is required to enable optional prefix.')
                         ->end()
@@ -35,10 +35,10 @@ class Configuration implements ConfigurationInterface
                         ->addDefaultsIfNotSet()
                         ->children()
                             ->booleanNode('object_as_parameters')
-                                ->defaultValue(class_exists(RoutingExtension::class))
+                                ->defaultValue(\class_exists(RoutingExtension::class))
                                 ->validate()
                                     ->ifTrue(function ($value) {
-                                        return $value && !class_exists(RoutingExtension::class);
+                                        return $value && !\class_exists(RoutingExtension::class);
                                     })
                                     ->thenInvalid('Twig bridge is not installed.')
                                 ->end()

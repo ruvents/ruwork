@@ -31,7 +31,7 @@ final class FrujaxExtension extends AbstractExtension
                 $attr = 'data-frujax';
 
                 if ([] !== $config) {
-                    $attr .= '="'.twig_escape_filter($env, json_encode($config), 'html_attr').'"';
+                    $attr .= '="'.twig_escape_filter($env, \json_encode($config), 'html_attr').'"';
                 }
 
                 return $attr;

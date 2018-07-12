@@ -27,8 +27,8 @@ final class RegisterFeaturesPass implements CompilerPassInterface
         foreach ($features as $id => $attributes) {
             $class = $container->getDefinition($id)->getClass();
 
-            if (!is_subclass_of($class, FeatureInterface::class)) {
-                throw new \InvalidArgumentException(sprintf('Feature "%s" must implement "%s".', $class, FeatureInterface::class));
+            if (!\is_subclass_of($class, FeatureInterface::class)) {
+                throw new \InvalidArgumentException(\sprintf('Feature "%s" must implement "%s".', $class, FeatureInterface::class));
             }
 
             $featureRefs[$class::getName()] = new Reference($id);

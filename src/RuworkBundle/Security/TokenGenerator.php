@@ -12,6 +12,6 @@ final class TokenGenerator
 
     public static function generate(int $length): string
     {
-        return bin2hex(random_bytes($length / 2));
+        return \bin2hex(\random_bytes($length / 2));
     }
 }

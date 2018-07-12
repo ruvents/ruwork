@@ -75,7 +75,7 @@ final class SearchIndexListener implements EventSubscriber
 
     private function processValue($value, array &$values): void
     {
-        if (is_iterable($value)) {
+        if (\is_iterable($value)) {
             foreach ($value as $item) {
                 $this->processValue($item, $values);
             }
@@ -83,13 +83,13 @@ final class SearchIndexListener implements EventSubscriber
             return;
         }
 
-        if (is_string($value) || is_int($value) || is_float($value)) {
+        if (\is_string($value) || \is_int($value) || \is_float($value)) {
             $values[] = $value;
 
             return;
         }
 
-        if (is_object($value) && method_exists($value, '__toString')) {
+        if (\is_object($value) && \method_exists($value, '__toString')) {
             $values[] = $value;
         }
     }

@@ -28,7 +28,7 @@ abstract class AbstractMetadataFactory implements MetadataFactoryInterface
      */
     final public function getMetadata(string $class): ClassMetadata
     {
-        $targetsMap = array_flip($this->getTargets());
+        $targetsMap = \array_flip($this->getTargets());
         $reflectionClass = new \ReflectionClass($class);
         $classMappings = [];
         $properties = [];

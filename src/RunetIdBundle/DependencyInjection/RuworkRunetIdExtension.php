@@ -39,7 +39,7 @@ final class RuworkRunetIdExtension extends ConfigurableExtension
                     '$secret' => $clientConfig['secret'],
                     '$apiUri' => $clientConfig['api_uri'],
                     '$oauthUri' => $clientConfig['oauth_uri'],
-                    '$plugins' => array_map(function (string $id) {
+                    '$plugins' => \array_map(function (string $id) {
                         return new Reference($id);
                     }, $clientConfig['plugins']),
                     '$httpClient' => null === $clientConfig['http_client']
@@ -49,7 +49,7 @@ final class RuworkRunetIdExtension extends ConfigurableExtension
 
             $clientReferences[$name] = new Reference($id);
 
-            if (class_exists(HWIOAuthBundle::class)) {
+            if (\class_exists(HWIOAuthBundle::class)) {
                 $container
                     ->register('ruwork_runet_id.oauth.'.$name, ResourceOwner::class)
                     ->setPublic(false)
@@ -63,7 +63,7 @@ final class RuworkRunetIdExtension extends ConfigurableExtension
         $defaultClientAlias = new Alias('ruwork_runet_id.client.'.$config['default_client'], false);
         $container->setAlias(RunetIdClient::class, $defaultClientAlias);
 
-        if (!class_exists(Validation::class)) {
+        if (!\class_exists(Validation::class)) {
             $container->removeDefinition('ruwork_runet_id.validator.unique_email');
         }
     }

@@ -24,7 +24,7 @@ class BridgeRoutingExtension extends RoutingExtension
 
     public function getUrl($name, $parameters = [], $relative = false): string
     {
-        if (is_object($parameters)) {
+        if (\is_object($parameters)) {
             $parameters = $this->getObjectParameters($name, $parameters);
         }
 
@@ -33,7 +33,7 @@ class BridgeRoutingExtension extends RoutingExtension
 
     public function getPath($name, $parameters = [], $relative = false): string
     {
-        if (is_object($parameters)) {
+        if (\is_object($parameters)) {
             $parameters = $this->getObjectParameters($name, $parameters);
         }
 

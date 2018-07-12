@@ -36,7 +36,7 @@ class FormFieldsPass implements PassInterface
         $aliases['group'] = GroupType::class;
         $aliases['markdown'] = MarkdownType::class;
 
-        if (class_exists(UploadType::class)) {
+        if (\class_exists(UploadType::class)) {
             $aliases['upload'] = UploadType::class;
         }
 
@@ -65,7 +65,7 @@ class FormFieldsPass implements PassInterface
         }
 
         if (!$this->registry->hasType($type)) {
-            throw new \InvalidArgumentException(sprintf('Form type "%s" is not registered.', $type));
+            throw new \InvalidArgumentException(\sprintf('Form type "%s" is not registered.', $type));
         }
 
         return $type;
@@ -78,7 +78,7 @@ class FormFieldsPass implements PassInterface
         ];
 
         $finder = (new Finder())
-            ->in(dirname((new \ReflectionClass(BaseType::class))->getFileName()))
+            ->in(\dirname((new \ReflectionClass(BaseType::class))->getFileName()))
             ->name('*Type.php');
 
         foreach ($finder as $file) {

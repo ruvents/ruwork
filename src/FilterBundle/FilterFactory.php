@@ -25,7 +25,7 @@ final class FilterFactory implements FilterFactoryInterface
     public function create(string $type, array $options = []): FilterInterface
     {
         if (!$this->types->has($type)) {
-            throw new \InvalidArgumentException(sprintf('Filter type "%s" does not exist.', $type));
+            throw new \InvalidArgumentException(\sprintf('Filter type "%s" does not exist.', $type));
         }
 
         /** @var FilterTypeInterface $type */

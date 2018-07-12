@@ -35,7 +35,7 @@ class MailUser implements MailUserInterface
 
     public function __toString(): string
     {
-        $name = reset($this->names);
+        $name = \reset($this->names);
 
         return (string) $name;
     }
@@ -53,7 +53,7 @@ class MailUser implements MailUserInterface
      */
     public function getMailName(string $locale): string
     {
-        $name = $this->names[$locale] ?? reset($this->names);
+        $name = $this->names[$locale] ?? \reset($this->names);
 
         return $name;
     }

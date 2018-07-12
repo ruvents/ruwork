@@ -27,7 +27,7 @@ final class CachedMetadataFactory implements MetadataFactoryInterface
      */
     public function getMetadata(string $class): Metadata
     {
-        $item = $this->cache->getItem(str_replace('\\', '.', $class));
+        $item = $this->cache->getItem(\str_replace('\\', '.', $class));
 
         if ($item->isHit()) {
             [$mTime, $metadata] = $item->get();
@@ -46,6 +46,6 @@ final class CachedMetadataFactory implements MetadataFactoryInterface
 
     private function getClassMTime(string $class): int
     {
-        return filemtime((new \ReflectionClass($class))->getFileName());
+        return \filemtime((new \ReflectionClass($class))->getFileName());
     }
 }

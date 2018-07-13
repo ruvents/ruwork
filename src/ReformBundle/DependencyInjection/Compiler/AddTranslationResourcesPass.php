@@ -26,7 +26,7 @@ final class AddTranslationResourcesPass implements CompilerPassInterface
         $files = \glob($dir.'/Resources/translations/*');
 
         foreach ($files as $file) {
-            list($domain, $locale, $format) = \explode('.', \basename($file), 3);
+            [$domain, $locale, $format] = \explode('.', \basename($file), 3);
             $translator->addMethodCall('addResource', [$format, $file, $locale, $domain]);
         }
     }

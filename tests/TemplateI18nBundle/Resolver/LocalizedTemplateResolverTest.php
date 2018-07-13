@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 use Twig\Template;
 
+/**
+ * @internal
+ */
 class LocalizedTemplateResolverTest extends TestCase
 {
     public function testResolve(): void

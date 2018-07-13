@@ -9,6 +9,9 @@ use Ruwork\BundleTest\AbstractBundleTestCase;
 use Ruwork\RunetIdBundle\HWIOAuth\ResourceOwner;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
+/**
+ * @internal
+ */
 class RunetIdBundleTest extends AbstractBundleTestCase
 {
     public function testServices(): void

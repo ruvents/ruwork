@@ -6,6 +6,9 @@ namespace Ruwork\TemplateI18nBundle\NamingStrategy;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 class NamingStrategyTest extends TestCase
 {
     /**

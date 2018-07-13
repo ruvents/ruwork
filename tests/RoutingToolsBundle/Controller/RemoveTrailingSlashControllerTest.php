@@ -9,6 +9,9 @@ use Ruwork\RoutingToolsBundle\RedirectFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @internal
+ */
 class RemoveTrailingSlashControllerTest extends TestCase
 {
     public function testInvoke()

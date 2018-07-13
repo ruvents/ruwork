@@ -6,6 +6,9 @@ namespace Ruwork\Reform\Extension;
 
 use Symfony\Component\Form\Test\FormIntegrationTestCase;
 
+/**
+ * @internal
+ */
 class FormTypeNovalidateExtensionTest extends FormIntegrationTestCase
 {
     public function testNovalidateAddedToRootForm()

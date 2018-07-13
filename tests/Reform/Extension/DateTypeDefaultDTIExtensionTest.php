@@ -8,6 +8,9 @@ use Ruwork\PolyfillFormDTI\DTIExtension;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Test\FormIntegrationTestCase;
 
+/**
+ * @internal
+ */
 class DateTypeDefaultDTIExtensionTest extends FormIntegrationTestCase
 {
     public function testInputOptionDefaultsToDTI()

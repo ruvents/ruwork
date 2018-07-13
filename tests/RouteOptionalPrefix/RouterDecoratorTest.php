@@ -15,6 +15,9 @@ use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * @internal
+ */
 class RouterDecoratorTest extends TestCase
 {
     public function testSetContext(): void

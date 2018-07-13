@@ -10,6 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 
+/**
+ * @internal
+ */
 class RuworkReformExtensionTest extends AbstractExtensionTestCase
 {
     public function testDefault()

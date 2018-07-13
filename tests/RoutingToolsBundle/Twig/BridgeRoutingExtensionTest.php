@@ -12,6 +12,9 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Router;
 
+/**
+ * @internal
+ */
 class BridgeRoutingExtensionTest extends TestCase
 {
     /**

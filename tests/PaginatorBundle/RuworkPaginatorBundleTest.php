@@ -10,6 +10,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Twig\Loader\FilesystemLoader;
 
+/**
+ * @internal
+ */
 class RuworkPaginatorBundleTest extends AbstractBundleTestCase
 {
     public function testUnobtrusiveCompiler(): void

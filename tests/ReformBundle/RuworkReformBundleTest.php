@@ -7,6 +7,9 @@ namespace Ruwork\ReformBundle;
 use PHPUnit\Framework\TestCase;
 use Ruwork\ReformBundle\DependencyInjection\RuworkReformExtension;
 
+/**
+ * @internal
+ */
 class RuworkReformBundleTest extends TestCase
 {
     public function testExtensionClass()

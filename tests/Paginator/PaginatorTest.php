@@ -7,6 +7,9 @@ namespace Ruwork\Paginator;
 use PHPUnit\Framework\TestCase;
 use Ruwork\Paginator\Provider\ProviderInterface;
 
+/**
+ * @internal
+ */
 class PaginatorTest extends TestCase
 {
     /**

@@ -7,6 +7,9 @@ namespace Ruwork\RunetIdBundle\Helper;
 use RunetId\Client\Result\Event\InfoResult;
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 
+/**
+ * @internal
+ */
 class EventDatesExtractorTest extends TestCase
 {
     /**

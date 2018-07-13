@@ -8,6 +8,9 @@ use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+/**
+ * @internal
+ */
 class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;

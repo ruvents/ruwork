@@ -6,6 +6,9 @@ namespace Ruwork\Paginator\Provider;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 class IterableProviderTest extends TestCase
 {
     /**

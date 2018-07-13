@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
+/**
+ * @internal
+ */
 class TemplateAnnotationListenerTest extends TestCase
 {
     public function testEventPriorityHigher(): void

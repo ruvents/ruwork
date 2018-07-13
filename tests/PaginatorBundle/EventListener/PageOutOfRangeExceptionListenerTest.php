@@ -13,6 +13,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
+/**
+ * @internal
+ */
 class PageOutOfRangeExceptionListenerTest extends TestCase
 {
     /**

@@ -11,6 +11,9 @@ use Ruwork\TemplateI18nBundle\Resolver\LocalizedTemplateResolver;
 use Ruwork\TemplateI18nBundle\Resolver\LocalizedTemplateResolverInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * @internal
+ */
 class RuworkTemplateI18nExtensionTest extends AbstractExtensionTestCase
 {
     public function testDefault(): void

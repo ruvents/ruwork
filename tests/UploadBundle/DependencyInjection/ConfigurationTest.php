@@ -7,6 +7,9 @@ namespace Ruwork\UploadBundle\DependencyInjection;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;

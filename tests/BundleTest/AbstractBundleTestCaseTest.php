@@ -11,6 +11,9 @@ use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
+/**
+ * @internal
+ */
 class AbstractBundleTestCaseTest extends AbstractBundleTestCase
 {
     public function testExposeService(): void

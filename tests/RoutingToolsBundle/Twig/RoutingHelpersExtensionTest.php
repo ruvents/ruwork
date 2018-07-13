@@ -8,6 +8,9 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ * @internal
+ */
 class RoutingHelpersExtensionTest extends TestCase
 {
     public function testWithEmptyRequest(): void

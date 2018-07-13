@@ -9,6 +9,9 @@ use Ruwork\RoutingToolsBundle\RedirectFactory;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * @internal
+ */
 class RedirectFactoryTest extends TestCase
 {
     public function testCreateDefault()

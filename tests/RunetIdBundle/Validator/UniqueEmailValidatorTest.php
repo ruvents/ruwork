@@ -13,6 +13,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 use Webthink\Container\SimpleContainer;
 
+/**
+ * @internal
+ */
 class UniqueEmailValidatorTest extends ConstraintValidatorTestCase
 {
     /**

@@ -19,6 +19,9 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\Routing\Loader\PhpFileLoader;
 use Symfony\Component\Routing\Router;
 
+/**
+ * @internal
+ */
 class RuworkRoutingToolsBundleTest extends AbstractBundleTestCase
 {
     public function testUnobtrusiveCompilerPasses(): void

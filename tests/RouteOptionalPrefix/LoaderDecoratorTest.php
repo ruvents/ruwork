@@ -10,6 +10,9 @@ use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
+/**
+ * @internal
+ */
 class LoaderDecoratorTest extends TestCase
 {
     public function testSupports()

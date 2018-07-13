@@ -39,10 +39,7 @@ class ConfigManager implements CacheWarmerInterface
     private $debug;
 
     /**
-     * @param array                    $data
-     * @param CacheInterface           $cache
      * @param iterable|PassInterface[] $passes
-     * @param bool                     $debug
      */
     public function __construct(array $data, CacheInterface $cache, iterable $passes = [], bool $debug = false)
     {

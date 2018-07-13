@@ -59,8 +59,6 @@ class DocsExtractor
     }
 
     /**
-     * @param mixed $_controller
-     *
      * @return null|string
      */
     private function getControllerClassMethod($_controller)
@@ -83,8 +81,6 @@ class DocsExtractor
     }
 
     /**
-     * @param string $classMethod
-     *
      * @return null|Doc|object
      */
     private function getDocAnnotation(string $classMethod)

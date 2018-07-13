@@ -8,9 +8,5 @@ use Ruwork\Synchronizer\ContextInterface;
 
 interface DeleterInterface
 {
-    /**
-     * @param mixed            $target
-     * @param ContextInterface $context
-     */
     public function delete($target, ContextInterface $context): void;
 }

@@ -8,8 +8,6 @@ interface ProviderInterface
 {
     /**
      * The total number of items.
-     *
-     * @return int
      */
     public function getTotal(): int;
 
@@ -18,8 +16,6 @@ interface ProviderInterface
      *
      * @param int $offset the zero-based index of the first item
      * @param int $limit  the current page limit (actually equals the $perPage value)
-     *
-     * @return iterable
      */
     public function getItems(int $offset, int $limit): iterable;
 }

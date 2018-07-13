@@ -6,8 +6,5 @@ namespace Ruwork\Synchronizer\Provider;
 
 interface ProviderInterface
 {
-    /**
-     * @return iterable
-     */
     public function getAll(): iterable;
 }

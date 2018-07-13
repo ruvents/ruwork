@@ -9,9 +9,6 @@ use Ruwork\Synchronizer\ContextInterface;
 interface CreatorInterface
 {
     /**
-     * @param mixed            $source
-     * @param ContextInterface $context
-     *
      * @return null|mixed
      */
     public function create($source, ContextInterface $context);

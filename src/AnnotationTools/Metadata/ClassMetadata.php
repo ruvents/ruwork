@@ -15,8 +15,6 @@ final class ClassMetadata
     private $methods;
 
     /**
-     * @param string             $className
-     * @param array              $mappings
      * @param PropertyMetadata[] $properties
      * @param MethodMetadata[]   $methods
      */
@@ -47,9 +45,6 @@ final class ClassMetadata
     }
 
     /**
-     * @param string $name
-     * @param bool   $single
-     *
      * @return \Generator|MappingInterface[]
      */
     public function getPropertyMappingsByName(string $name, bool $single = false): \Generator
@@ -79,9 +74,6 @@ final class ClassMetadata
     }
 
     /**
-     * @param string $name
-     * @param bool   $single
-     *
      * @return \Generator|MappingInterface[]
      */
     public function getMethodMappingsByName(string $name, bool $single = false): \Generator

@@ -17,9 +17,6 @@ final class ResolvedSource implements ResolvedSourceInterface
     private $saveFromSource;
     private $saved = false;
 
-    /**
-     * @param mixed $source
-     */
     public function __construct(
         $source,
         SourceHandlerInterface $handler,

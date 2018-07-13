@@ -21,8 +21,6 @@ interface ConfiguratorInterface extends ConfigurationInterface
     public function setSourceProvider(?ProviderInterface $provider);
 
     /**
-     * @param IdExtractorInterface $extractor
-     *
      * @return static
      */
     public function setSourceIdExtractor(IdExtractorInterface $extractor);
@@ -42,8 +40,6 @@ interface ConfiguratorInterface extends ConfigurationInterface
     public function setTargetProvider(?ProviderInterface $provider);
 
     /**
-     * @param IdExtractorInterface $extractor
-     *
      * @return static
      */
     public function setTargetIdExtractor(IdExtractorInterface $extractor);
@@ -56,22 +52,16 @@ interface ConfiguratorInterface extends ConfigurationInterface
     public function setTargetByIdProvider(?ByIdProviderInterface $provider);
 
     /**
-     * @param CreatorInterface $creator
-     *
      * @return static
      */
     public function setTargetCreator(CreatorInterface $creator);
 
     /**
-     * @param UpdaterInterface $updater
-     *
      * @return static
      */
     public function setTargetUpdater(UpdaterInterface $updater);
 
     /**
-     * @param DeleterInterface $deleter
-     *
      * @return static
      */
     public function setTargetDeleter(DeleterInterface $deleter);

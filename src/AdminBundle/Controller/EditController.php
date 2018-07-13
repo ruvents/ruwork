@@ -13,13 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EditController extends AbstractController
 {
-    /**
-     * @param string       $id
-     * @param EntityConfig $entityConfig
-     * @param Request      $request
-     *
-     * @return Response
-     */
     public function __invoke(string $id, EntityConfig $entityConfig, Request $request): Response
     {
         $editConfig = $entityConfig->edit;

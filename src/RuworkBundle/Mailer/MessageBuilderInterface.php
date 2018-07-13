@@ -38,8 +38,6 @@ interface MessageBuilderInterface
 
     /**
      * @param MailUserInterface|string $to
-     *
-     * @return \Swift_Mime_SimpleMessage
      */
     public function buildMessage($to): \Swift_Mime_SimpleMessage;
 

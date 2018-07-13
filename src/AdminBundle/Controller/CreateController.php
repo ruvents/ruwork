@@ -12,12 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CreateController extends AbstractController
 {
-    /**
-     * @param EntityConfig $entityConfig
-     * @param Request      $request
-     *
-     * @return Response
-     */
     public function __invoke(EntityConfig $entityConfig, Request $request): Response
     {
         $createConfig = $entityConfig->create;

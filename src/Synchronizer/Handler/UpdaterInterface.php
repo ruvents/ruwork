@@ -9,10 +9,6 @@ use Ruwork\Synchronizer\ContextInterface;
 interface UpdaterInterface
 {
     /**
-     * @param mixed            $source
-     * @param mixed            $target
-     * @param ContextInterface $context
-     *
      * @return null|mixed
      */
     public function update($source, $target, ContextInterface $context);

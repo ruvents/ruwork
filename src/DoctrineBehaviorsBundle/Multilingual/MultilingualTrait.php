@@ -49,10 +49,5 @@ trait MultilingualTrait
      */
     abstract protected function getLocales(): array;
 
-    /**
-     * @param string $locale
-     *
-     * @return mixed
-     */
     abstract protected function getLocaleValue(string $locale);
 }

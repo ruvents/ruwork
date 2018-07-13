@@ -24,8 +24,6 @@ trait MetadataTrait
     }
 
     /**
-     * @param string $name
-     *
      * @return MappingInterface[]
      */
     public function getMappingsByName(string $name): array

@@ -16,11 +16,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 trait ApiControllerTrait
 {
     /**
-     * @param mixed  $data
-     * @param array  $options
      * @param string $type
-     *
-     * @return FormBuilderInterface
      */
     protected function createFormBuilder($data = null, array $options = [], $type = FormType::class): FormBuilderInterface
     {
@@ -31,20 +27,13 @@ trait ApiControllerTrait
     }
 
     /**
-     * @param mixed $type
-     * @param null  $data
-     * @param array $options
-     *
-     * @return FormInterface
+     * @param null $data
      */
     protected function createForm($type, $data = null, array $options = []): FormInterface
     {
         return $this->createFormBuilder($data, $options, $type)->getForm();
     }
 
-    /**
-     * @param FormInterface $form
-     */
     protected function validateForm(FormInterface $form): void
     {
         if (!$form->isSubmitted()) {
@@ -68,12 +57,6 @@ trait ApiControllerTrait
         }
     }
 
-    /**
-     * @param mixed $data
-     * @param array $context
-     *
-     * @return mixed
-     */
     protected function normalize($data, array $context = [])
     {
         $context[Helper::RUWORK_API] = true;

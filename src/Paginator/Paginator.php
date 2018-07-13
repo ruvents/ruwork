@@ -26,8 +26,6 @@ class Paginator implements \IteratorAggregate, \Countable
 
     /**
      * The total number of pages.
-     *
-     * @return int
      */
     public function getTotal(): int
     {

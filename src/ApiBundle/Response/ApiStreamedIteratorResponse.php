@@ -21,8 +21,6 @@ class ApiStreamedIteratorResponse extends StreamedResponse
     /**
      * @param iterable      $data
      * @param null|callable $normalizer
-     * @param int           $statusCode
-     * @param array         $headers
      */
     public function __construct($data = [], callable $normalizer = null, int $statusCode = 200, array $headers = [])
     {

@@ -17,6 +17,9 @@ return PhpCsFixer\Config::create()
         'fully_qualified_strict_types' => true,
         'linebreak_after_opening_tag' => true,
         'list_syntax' => ['syntax' => 'short'],
+        'logical_operators' => true,
+        'multiline_comment_opening_closing' => true,
+        'multiline_whitespace_before_semicolons' => true,
         'native_function_invocation' => true,
         'no_alternative_syntax' => true,
         'no_binary_string' => true,
@@ -32,6 +35,7 @@ return PhpCsFixer\Config::create()
         'php_unit_internal_class' => true,
         'phpdoc_order' => true,
         'phpdoc_types_order' => true,
+        'strict_comparison' => true,
         'visibility_required' => ['elements' => ['property', 'method', 'const']],
         'void_return' => false,
     ])

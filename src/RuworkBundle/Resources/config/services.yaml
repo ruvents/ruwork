@@ -20,11 +20,3 @@ services:
         $csvEncoder: "@serializer.encoder.csv"
 
     Ruwork\RuworkBundle\Validator\Constraints\AliasValidator: ~
-
-    Ruwork\RuworkBundle\HttpKernel\ArgumentValueResolver\CurrentUserValueResolver:
-        autowire: false
-        autoconfigure: false
-        arguments:
-            $tokenStorage: "@security.token_storage"
-        tags:
-            - { name: controller.argument_value_resolver, priority: 41 }

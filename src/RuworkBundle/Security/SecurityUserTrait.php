@@ -6,7 +6,7 @@ namespace Ruwork\RuworkBundle\Security;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-trait UserTrait
+trait SecurityUserTrait
 {
     /**
      * @see UserInterface::getRoles()

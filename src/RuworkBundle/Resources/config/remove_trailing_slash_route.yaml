@@ -1,6 +1,0 @@
-ruvents_ruwork_remove_trailing_slash:
-    path: /{path}
-    defaults:
-        _controller: Ruwork\RuworkBundle\Controller\RemoveTrailingSlashController
-    requirements:
-        path: .*\/$

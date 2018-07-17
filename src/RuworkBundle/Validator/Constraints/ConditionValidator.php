@@ -11,14 +11,11 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ConditionValidator extends ConstraintValidator
 {
-    /**
-     * @var ExpressionLanguage
-     */
     private $expressionLanguage;
 
     public function __construct(ExpressionLanguage $expressionLanguage = null)
     {
-        $this->expressionLanguage = $expressionLanguage;
+        $this->expressionLanguage = $expressionLanguage ?? new ExpressionLanguage();
     }
 
     /**
@@ -30,27 +27,15 @@ class ConditionValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, Condition::class);
         }
 
-        $context = $this->context;
-
-        $condition = $this->getExpressionLanguage()
-            ->evaluate($constraint->expression, [
-                'value' => $value,
-                'this' => $context->getObject(),
-            ]);
+        $condition = $this->expressionLanguage->evaluate($constraint->expression, [
+            'value' => $value,
+            'this' => $this->context->getObject(),
+        ]);
 
         if ($condition) {
-            $context->getValidator()
-                ->inContext($context)
-                ->validate($value, $constraint->true);
+            $this->context->getValidator()
+                ->inContext($this->context)
+                ->validate($value, $constraint->constraints);
         }
-    }
-
-    private function getExpressionLanguage()
-    {
-        if (null === $this->expressionLanguage) {
-            $this->expressionLanguage = new ExpressionLanguage();
-        }
-
-        return $this->expressionLanguage;
     }
 }

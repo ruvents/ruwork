@@ -17,10 +17,7 @@ class Condition extends Composite
      */
     public $expression;
 
-    /**
-     * @var array
-     */
-    public $true = [];
+    public $constraints = [];
 
     /**
      * {@inheritdoc}
@@ -45,6 +42,6 @@ class Condition extends Composite
      */
     protected function getCompositeOption()
     {
-        return 'true';
+        return 'constraints';
     }
 }

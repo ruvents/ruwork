@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Ruwork\UploadBundle\Metadata\Annotations;
 
 /**
- * @Annotation
+ * @Annotation()
  * @Target("PROPERTY")
  */
 final class Attribute
 {
     /**
-     * @Required
+     * @Required()
      *
      * @var string
      */

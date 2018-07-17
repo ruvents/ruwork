@@ -7,7 +7,7 @@ namespace Ruwork\FeatureBundle\Annotation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
 
 /**
- * @Annotation
+ * @Annotation()
  * @Target({"CLASS", "METHOD"})
  */
 final class Feature extends ConfigurationAnnotation

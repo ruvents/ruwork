@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\FileValidator;
 
 /**
- * @Annotation
+ * @Annotation()
  * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
  */
 class PowerPoint extends File

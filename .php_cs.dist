@@ -11,16 +11,36 @@ return PhpCsFixer\Config::create()
         '@Symfony' => true,
         '@Symfony:risky' => true,
         'align_multiline_comment' => true,
-        'array_syntax' => ['syntax' => 'short'],
+        'array_syntax' => [
+            'syntax' => 'short',
+        ],
         'combine_consecutive_unsets' => true,
         'compact_nullable_typehint' => true,
+        'doctrine_annotation_array_assignment' => [
+            'operator' => ':',
+        ],
+        'doctrine_annotation_braces' => [
+            'syntax' => 'with_braces',
+        ],
+        'doctrine_annotation_indentation' => [
+            'indent_mixed_lines' => true,
+        ],
+        'doctrine_annotation_spaces' => [
+            'after_argument_assignments' => false,
+            'after_array_assignments_colon' => true,
+            'around_commas' => true,
+            'around_parentheses' => true,
+            'before_argument_assignments' => false,
+            'before_array_assignments_colon' => false,
+        ],
         'fully_qualified_strict_types' => true,
         'linebreak_after_opening_tag' => true,
-        'list_syntax' => ['syntax' => 'short'],
+        'list_syntax' => [
+            'syntax' => 'short',
+        ],
         'logical_operators' => true,
         'multiline_comment_opening_closing' => true,
         'multiline_whitespace_before_semicolons' => true,
-        'native_function_invocation' => true,
         'no_alternative_syntax' => true,
         'no_binary_string' => true,
         'no_null_property_initialization' => true,
@@ -36,7 +56,9 @@ return PhpCsFixer\Config::create()
         'phpdoc_order' => true,
         'phpdoc_types_order' => true,
         'strict_comparison' => true,
-        'visibility_required' => ['elements' => ['property', 'method', 'const']],
+        'visibility_required' => [
+            'elements' => ['property', 'method', 'const'],
+        ],
         'void_return' => false,
     ])
     ->setRiskyAllowed(true)

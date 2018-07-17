@@ -7,7 +7,7 @@ namespace Ruwork\UploadBundle\Validator;
 use Symfony\Component\Validator\Constraints\Composite;
 
 /**
- * @Annotation
+ * @Annotation()
  * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
  */
 final class AssertUpload extends Composite

@@ -7,7 +7,7 @@ namespace Ruwork\RunetIdBundle\Validator;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * @Annotation
+ * @Annotation()
  * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
  */
 final class UniqueEmail extends Constraint

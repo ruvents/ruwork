@@ -8,21 +8,21 @@ use Doctrine\Common\Annotations\Annotation\Required;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
 
 /**
- * @Annotation
+ * @Annotation()
  */
 final class Redirect extends ConfigurationAnnotation
 {
     public const NAME = 'redirects';
 
     /**
-     * @Required
+     * @Required()
      *
      * @var string
      */
     private $condition;
 
     /**
-     * @Required
+     * @Required()
      *
      * @var string
      */

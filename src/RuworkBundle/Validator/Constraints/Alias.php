@@ -7,7 +7,7 @@ namespace Ruwork\RuworkBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * @Annotation
+ * @Annotation()
  * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
  */
 class Alias extends Constraint

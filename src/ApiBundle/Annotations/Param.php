@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace Ruwork\ApiBundle\Annotations;
 
 /**
- * @Annotation
+ * @Annotation()
  * @Target({"ANNOTATION"})
  */
 class Param
 {
     /**
-     * @Required
+     * @Required()
      *
      * @var string
      */
     public $name;
 
     /**
-     * @Required
+     * @Required()
      *
      * @var string
      */

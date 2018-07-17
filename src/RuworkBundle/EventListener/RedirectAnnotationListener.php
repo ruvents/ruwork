@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Ruwork\RuworkBundle\EventListener;
 
-use Ruwork\RuworkBundle\ControllerExtra\Annotations\Redirect;
-use Ruwork\RuworkBundle\ExpressionLanguage\UrlExpressionLanguage;
+use Ruwork\RuworkBundle\ControllerAnnotations\Redirect;
+use Ruwork\RuworkBundle\ExpressionLanguage\RedirectTargetExpressionLanguage;
 use Sensio\Bundle\FrameworkExtraBundle\Security\ExpressionLanguage as SecurityExpressionLanguage;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,23 +16,23 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-final class RedirectControllerListener implements EventSubscriberInterface
+final class RedirectAnnotationListener implements EventSubscriberInterface
 {
     private $conditionLanguage;
-    private $urlLanguage;
+    private $targetLanguage;
     private $authChecker;
     private $tokenStorage;
     private $urlGenerator;
 
     public function __construct(
         SecurityExpressionLanguage $conditionLanguage,
-        UrlExpressionLanguage $urlLanguage,
-        AuthorizationCheckerInterface $authChecker = null,
+        RedirectTargetExpressionLanguage $targetLanguage,
+        AuthorizationCheckerInterface $authChecker,
         TokenStorageInterface $tokenStorage,
         UrlGeneratorInterface $urlGenerator
     ) {
         $this->conditionLanguage = $conditionLanguage;
-        $this->urlLanguage = $urlLanguage;
+        $this->targetLanguage = $targetLanguage;
         $this->authChecker = $authChecker;
         $this->tokenStorage = $tokenStorage;
         $this->urlGenerator = $urlGenerator;
@@ -65,17 +65,19 @@ final class RedirectControllerListener implements EventSubscriberInterface
                 continue;
             }
 
-            $condition = $this->conditionLanguage
-                ->evaluate($redirect->getCondition(), $this->getConditionVars($request));
+            $condition = $this->conditionLanguage->evaluate(
+                $redirect->getCondition(),
+                $this->getConditionVars($request)
+            );
 
             if (!$condition) {
                 continue;
             }
 
-            $url = $this->urlLanguage->evaluate($redirect->getUrl(), $this->getUrlVars($request));
+            $url = $this->getUrl($redirect, $request);
             $response = new RedirectResponse($url, $redirect->getStatus());
 
-            $event->setController(function () use ($response) {
+            $event->setController(static function () use ($response) {
                 return $response;
             });
 
@@ -83,6 +85,19 @@ final class RedirectControllerListener implements EventSubscriberInterface
 
             return;
         }
+    }
+
+    private function getUrl(Redirect $redirect, Request $request): string
+    {
+        if (null !== $target = $redirect->getTarget()) {
+            return $this->urlGenerator->generate($target[0], $target[1] ?? []);
+        }
+
+        if (null !== $expression = $redirect->getTargetExpression()) {
+            return $this->targetLanguage->evaluate($expression, $this->getTargetVars($request));
+        }
+
+        throw new \RuntimeException('Redirect target is not defined.');
     }
 
     private function getConditionVars(Request $request): array
@@ -95,7 +110,7 @@ final class RedirectControllerListener implements EventSubscriberInterface
         ]);
     }
 
-    private function getUrlVars(Request $request): array
+    private function getTargetVars(Request $request): array
     {
         return \array_merge($request->attributes->all(), [
             'request' => $request,

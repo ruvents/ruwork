@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\RuworkBundle\ControllerExtra\Annotations;
+namespace Ruwork\RuworkBundle\ControllerAnnotations;
 
 use Doctrine\Common\Annotations\Annotation\Required;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
@@ -22,11 +22,14 @@ final class Redirect extends ConfigurationAnnotation
     private $condition;
 
     /**
-     * @Required()
-     *
-     * @var string
+     * @var null|array [route, [name => value]]
      */
-    private $url;
+    private $target;
+
+    /**
+     * @var null|string
+     */
+    private $targetExpression;
 
     /**
      * @var int
@@ -43,14 +46,40 @@ final class Redirect extends ConfigurationAnnotation
         $this->condition = $condition;
     }
 
-    public function getUrl(): string
+    public function setValue(string $value): void
     {
-        return $this->url;
+        $this->setCondition($value);
     }
 
-    public function setUrl(string $url): void
+    public function getTarget(): ?array
     {
-        $this->url = $url;
+        return $this->target;
+    }
+
+    /**
+     * @param null|array|string $target
+     */
+    public function setTarget($target): void
+    {
+        if (null !== $target) {
+            $target = (array) $target;
+
+            if (empty($target[0])) {
+                throw new \InvalidArgumentException('Target route must not be empty.');
+            }
+        }
+
+        $this->target = $target;
+    }
+
+    public function getTargetExpression(): ?string
+    {
+        return $this->targetExpression;
+    }
+
+    public function setTargetExpression(?string $targetExpression): void
+    {
+        $this->targetExpression = $targetExpression;
     }
 
     public function getStatus(): int
@@ -61,11 +90,6 @@ final class Redirect extends ConfigurationAnnotation
     public function setStatus(int $status): void
     {
         $this->status = $status;
-    }
-
-    public function setValue(string $value): void
-    {
-        $this->setUrl($value);
     }
 
     /**

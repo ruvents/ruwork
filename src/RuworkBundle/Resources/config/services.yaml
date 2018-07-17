@@ -8,10 +8,10 @@ services:
 
     Ruwork\RuworkBundle\Doctrine\NamingStrategy\RuworkNamingStrategy: ~
 
-    Ruwork\RuworkBundle\EventListener\RedirectControllerListener:
+    Ruwork\RuworkBundle\EventListener\RedirectAnnotationListener:
         $conditionLanguage: "@sensio_framework_extra.security.expression_language"
 
-    Ruwork\RuworkBundle\ExpressionLanguage\UrlExpressionLanguage: ~
+    Ruwork\RuworkBundle\ExpressionLanguage\RedirectTargetExpressionLanguage: ~
 
     Ruwork\RuworkBundle\Mailer\Mailer:
         $swift: "@mailer"

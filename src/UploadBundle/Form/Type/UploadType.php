@@ -70,9 +70,6 @@ final class UploadType extends AbstractType
             ->setDefaults([
                 'empty_data' => null,
                 'error_bubbling' => false,
-                'error_mapping' => [
-                    '.' => self::FILE,
-                ],
                 'factory' => function (Options $options): callable {
                     $class = $options['class'];
 
@@ -82,7 +79,6 @@ final class UploadType extends AbstractType
                 },
                 'file_type' => FileType::class,
                 'file_options' => [],
-                'label' => false,
                 'saver' => null,
             ])
             ->setAllowedTypes('class', 'string')

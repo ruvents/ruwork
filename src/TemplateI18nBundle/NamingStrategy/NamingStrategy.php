@@ -21,10 +21,10 @@ final class NamingStrategy implements NamingStrategyInterface
     /**
      * {@inheritdoc}
      */
-    public function getLocalizedName(string $template, string $locale): string
+    public function getLocalizedName(string $name, string $locale): string
     {
         $replacement = $locale === $this->noSuffixLocale ? '' : '.'.$locale;
 
-        return \preg_replace($this->pattern, $replacement.'$3', $template);
+        return \preg_replace($this->pattern, $replacement.'$3', $name);
     }
 }

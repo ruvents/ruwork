@@ -36,12 +36,10 @@ class TemplateAnnotationListenerTest extends TestCase
             ->willReturn('new.html.twig');
 
         $config = new TemplateConfig(['template' => 'old.html.twig']);
-
         $request = new Request([], [], ['_template' => $config]);
 
         $event = $this->createMock(FilterControllerEvent::class);
-        $event->expects($this->once())
-            ->method('getRequest')
+        $event->method('getRequest')
             ->willReturn($request);
 
         (new TemplateAnnotationListener($resolver))->onKernelController($event);
@@ -54,8 +52,7 @@ class TemplateAnnotationListenerTest extends TestCase
         $resolver = $this->createMock(LocalizedTemplateResolverInterface::class);
 
         $event = $this->createMock(FilterControllerEvent::class);
-        $event->expects($this->once())
-            ->method('getRequest')
+        $event->method('getRequest')
             ->willReturn(new Request());
 
         (new TemplateAnnotationListener($resolver))->onKernelController($event);

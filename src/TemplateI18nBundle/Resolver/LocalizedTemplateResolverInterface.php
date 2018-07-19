@@ -6,5 +6,5 @@ namespace Ruwork\TemplateI18nBundle\Resolver;
 
 interface LocalizedTemplateResolverInterface
 {
-    public function resolve(string $template): string;
+    public function resolve(string $template, iterable $locales = []): string;
 }

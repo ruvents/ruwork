@@ -39,8 +39,8 @@ final class TemplateAnnotationListener implements EventSubscriberInterface
             return;
         }
 
-        $template = $this->resolver->resolve($config->getTemplate());
-
+        $locale = $event->getRequest()->getLocale();
+        $template = $this->resolver->resolve($config->getTemplate(), [$locale]);
         $config->setTemplate($template);
     }
 }

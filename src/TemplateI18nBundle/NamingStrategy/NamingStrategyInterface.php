@@ -6,5 +6,5 @@ namespace Ruwork\TemplateI18nBundle\NamingStrategy;
 
 interface NamingStrategyInterface
 {
-    public function getLocalizedName(string $template, string $locale): string;
+    public function getLocalizedName(string $name, string $locale): string;
 }

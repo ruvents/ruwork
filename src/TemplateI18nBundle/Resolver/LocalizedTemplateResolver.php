@@ -5,43 +5,66 @@ declare(strict_types=1);
 namespace Ruwork\TemplateI18nBundle\Resolver;
 
 use Ruwork\TemplateI18nBundle\NamingStrategy\NamingStrategyInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 
 final class LocalizedTemplateResolver implements LocalizedTemplateResolverInterface
 {
-    private $namingStrategy;
     private $twig;
-    private $requestStack;
+    private $namingStrategy;
     private $defaultLocale;
 
     public function __construct(
-        NamingStrategyInterface $namingStrategy,
         Environment $twig,
-        RequestStack $requestStack,
-        string $defaultLocale
+        NamingStrategyInterface $namingStrategy,
+        ?string $defaultLocale = null
     ) {
-        $this->namingStrategy = $namingStrategy;
         $this->twig = $twig;
-        $this->requestStack = $requestStack;
+        $this->namingStrategy = $namingStrategy;
         $this->defaultLocale = $defaultLocale;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function resolve(string $template): string
+    public function resolve(string $template, iterable $locales = []): string
     {
-        $templates = [];
+        $failed = [];
 
-        if (null !== $request = $this->requestStack->getCurrentRequest()) {
-            $templates[] = $this->namingStrategy->getLocalizedName($template, $request->getLocale());
+        foreach ($this->getTemplates($template, $locales) as $template) {
+            if (isset($failed[$template])) {
+                continue;
+            }
+
+            try {
+                return $this->twig->resolveTemplate($template)->getTemplateName();
+            } catch (\Twig_Error_Loader $exception) {
+                $failed[$template] = true;
+            }
         }
 
-        $templates[] = $this->namingStrategy->getLocalizedName($template, $this->defaultLocale);
-        $templates[] = $template;
+        if (1 === \count($failed)) {
+            throw $exception;
+        }
 
-        /* @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->twig->resolveTemplate($templates)->getTemplateName();
+        throw new \Twig_Error_Loader(\sprintf(
+            'Failed to find any of the following templates: "%s".',
+            \implode('", "', \array_keys($failed))
+        ));
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getTemplates(string $template, iterable $locales): \Generator
+    {
+        foreach ($locales as $locale) {
+            yield $this->namingStrategy->getLocalizedName($template, $locale);
+        }
+
+        if (null !== $this->defaultLocale) {
+            yield $this->namingStrategy->getLocalizedName($template, $this->defaultLocale);
+        }
+
+        yield $template;
     }
 }

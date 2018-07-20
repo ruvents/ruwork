@@ -53,7 +53,7 @@ final class Context implements ContextInterface
         /** @var TypeInterface $typeObject */
         $typeObject = $this->types->get($type);
         $configurator = new Configurator();
-        $typeObject->configure($configurator);
+        $typeObject->configure($configurator, $this);
 
         return $this->synchronizers[$type] = new Synchronizer(
             $type,

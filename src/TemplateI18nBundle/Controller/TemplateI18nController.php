@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Ruwork\TemplateI18nBundle\Controller;
 
-use Ruwork\TemplateI18nBundle\Localizer\TemplateLocalizer;
+use Ruwork\TemplateI18nBundle\Resolver\LocalizedTemplateResolverInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 final class TemplateI18nController
 {
-    private $localizer;
+    private $twig;
+    private $resolver;
 
-    public function __construct(TemplateLocalizer $localizer)
+    public function __construct(Environment $twig, LocalizedTemplateResolverInterface $resolver)
     {
-        $this->localizer = $localizer;
+        $this->twig = $twig;
+        $this->resolver = $resolver;
     }
 
     public function __invoke(
@@ -23,8 +26,8 @@ final class TemplateI18nController
         int $sharedAge = null,
         bool $private = null
     ): Response {
-        $template = $this->localizer->load($template, [$_locale]);
-        $response = new Response($template->render());
+        $template = $this->resolver->resolve($template, [$_locale]);
+        $response = new Response($this->twig->render($template));
 
         if ($maxAge) {
             $response->setMaxAge($maxAge);

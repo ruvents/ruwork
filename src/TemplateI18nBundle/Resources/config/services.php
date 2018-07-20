@@ -6,7 +6,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Ruwork\TemplateI18nBundle\Controller\TemplateI18nController;
 use Ruwork\TemplateI18nBundle\EventListener\TemplateAnnotationListener;
-use Ruwork\TemplateI18nBundle\Localizer\TemplateLocalizer;
 use Ruwork\TemplateI18nBundle\NamingStrategy\NamingStrategy;
 use Ruwork\TemplateI18nBundle\NamingStrategy\NamingStrategyInterface;
 use Ruwork\TemplateI18nBundle\Resolver\LocalizedTemplateResolver;
@@ -22,7 +21,8 @@ return function (ContainerConfigurator $container): void {
         ->set(TemplateI18nController::class)
         ->public()
         ->args([
-            '$localizer' => ref(TemplateLocalizer::class),
+            '$twig' => ref('twig'),
+            '$resolver' => ref(LocalizedTemplateResolverInterface::class),
         ]);
 
     // EventListener
@@ -33,15 +33,6 @@ return function (ContainerConfigurator $container): void {
             '$resolver' => ref(LocalizedTemplateResolverInterface::class),
         ])
         ->tag('kernel.event_subscriber');
-
-    // Localizer
-
-    $services
-        ->set(TemplateLocalizer::class)
-        ->args([
-            '$twig' => ref('twig'),
-            '$resolver' => ref(LocalizedTemplateResolverInterface::class),
-        ]);
 
     // NamingStrategy
 

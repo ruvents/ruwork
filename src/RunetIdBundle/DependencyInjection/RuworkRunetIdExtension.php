@@ -42,7 +42,7 @@ final class RuworkRunetIdExtension extends ConfigurableExtension
         $clientReferences = [];
 
         foreach ($config['clients'] as $name => $clientConfig) {
-            $clientReferences[] = $this->createClient($container, $name, $clientConfig);
+            $clientReferences[$name] = $this->createClient($container, $name, $clientConfig);
         }
 
         $container

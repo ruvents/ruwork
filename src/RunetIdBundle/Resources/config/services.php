@@ -55,7 +55,7 @@ return function (ContainerConfigurator $container): void {
     $services
         ->set(UniqueEmailValidator::class)
         ->args([
-            '$container' => ref('ruwork_runet_id.client_container'),
+            '$clients' => ref(RunetIdClients::class),
         ])
         ->tag('validator.constraint_validator');
 };

@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace Ruwork\RunetIdBundle\Validator;
 
-use Psr\Container\ContainerInterface;
-use RunetId\Client\RunetIdClient;
+use Ruwork\RunetIdBundle\Client\RunetIdClients;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class UniqueEmailValidator extends ConstraintValidator
 {
-    private $container;
+    private $clients;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(RunetIdClients $clients)
     {
-        $this->container = $container;
+        $this->clients = $clients;
     }
 
     /**
@@ -51,8 +50,7 @@ final class UniqueEmailValidator extends ConstraintValidator
 
     private function emailExists(UniqueEmail $constraint, string $email): bool
     {
-        /** @var RunetIdClient $client */
-        $client = $this->container->get($constraint->client);
+        $client = $this->clients->get($constraint->client);
 
         $users = $client
             ->userSearch()

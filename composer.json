@@ -30,6 +30,7 @@
         "ruwork/reform-bundle": "*",
         "ruwork/route-optional-prefix": "*",
         "ruwork/routing-tools-bundle": "*",
+        "ruwork/runet-id-basket-bundle": "*",
         "ruwork/runet-id-bundle": "*",
         "ruwork/ruwork-bundle": "*",
         "ruwork/synchronizer": "*",

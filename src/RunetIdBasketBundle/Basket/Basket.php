@@ -156,9 +156,9 @@ final class Basket
     }
 
     /**
-     * @return array a tuple [?ItemResult, ?OrderResult]
+     * @return array tuples [ItemResult, ?OrderResult]
      */
-    public function findPriorityItemAndOrder(callable $filter, bool $withPayItems = true): array
+    public function findPriorityItemsAndOrders(callable $filter, bool $withPayItems = true): array
     {
         $prioritized = [];
 
@@ -173,15 +173,21 @@ final class Basket
             $prioritized[] = [$item, $order, $priority];
         }
 
-        if ([] === $prioritized) {
-            return [null, null];
-        }
-
         \usort($prioritized, function (array $a, array $b): int {
-            return $a[2] <=> $b[2];
+            return $b[2] <=> $a[2];
         });
 
-        return \end($prioritized);
+        return $prioritized;
+    }
+
+    /**
+     * @return array a tuple [?ItemResult, ?OrderResult]
+     */
+    public function findPriorityItemAndOrder(callable $filter, bool $withPayItems = true): array
+    {
+        $prioritized = $this->findPriorityItemsAndOrders($filter, $withPayItems);
+
+        return \reset($prioritized) ?: [null, null];
     }
 
     /**

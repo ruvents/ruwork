@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\RunetIdBasketBundle\Basket;
+namespace Ruwork\RunetIdBundle\Basket;
 
 interface BasketFactoryInterface
 {

@@ -10,20 +10,32 @@ use Http\Message\StreamFactory;
 use Http\Message\UriFactory;
 use RunetId\Client\RunetIdClient;
 use RunetId\Client\RunetIdClientFactory;
+use Ruwork\RunetIdBundle\Basket\BasketFactory;
+use Ruwork\RunetIdBundle\Basket\BasketFactoryInterface;
+use Ruwork\RunetIdBundle\Client\RunetIdClients;
 use Ruwork\RunetIdBundle\Validator\UniqueEmailValidator;
-use Symfony\Component\DependencyInjection\ServiceLocator;
 
 return function (ContainerConfigurator $container): void {
     $services = $container->services()
         ->defaults()
         ->private();
 
-    $services
-        ->set('ruwork_runet_id.client_container', ServiceLocator::class)
-        ->tag('container.service_locator');
+    // Basket
 
     $services
-        ->set('ruwork_runet_id.client_factory', RunetIdClientFactory::class)
+        ->set(BasketFactory::class)
+        ->args([
+            '$client' => ref(RunetIdClient::class),
+            '$loaders' => tagged('ruwork_runet_id_basket.loader'),
+            '$handlers' => tagged('ruwork_runet_id_basket.handler'),
+        ]);
+
+    $services->alias(BasketFactoryInterface::class, BasketFactory::class);
+
+    // Client
+
+    $services
+        ->set(RunetIdClientFactory::class)
         ->args([
             '$httpClient' => ref(HttpClient::class)->nullOnInvalid(),
             '$uriFactory' => ref(UriFactory::class)->nullOnInvalid(),
@@ -34,13 +46,16 @@ return function (ContainerConfigurator $container): void {
     $services
         ->set('ruwork_runet_id.client', RunetIdClient::class)
         ->abstract()
-        ->factory([
-            ref('ruwork_runet_id.client_factory'),
-            'create',
-        ]);
+        ->factory([ref(RunetIdClientFactory::class), 'create']);
+
+    $services->set(RunetIdClients::class);
+
+    // Validator
 
     $services
-        ->set('ruwork_runet_id.validator.unique_email', UniqueEmailValidator::class)
-        ->arg('$container', ref('ruwork_runet_id.client_container'))
+        ->set(UniqueEmailValidator::class)
+        ->args([
+            '$container' => ref('ruwork_runet_id.client_container'),
+        ])
         ->tag('validator.constraint_validator');
 };

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\RunetIdBasketBundle\Basket;
+namespace Ruwork\RunetIdBundle\Basket;
 
 use RunetId\Client\Result\Pay\CouponResult;
 use RunetId\Client\Result\Pay\ItemResult;
@@ -10,8 +10,6 @@ use RunetId\Client\Result\Pay\ItemsResult;
 use RunetId\Client\Result\Pay\ListResult;
 use RunetId\Client\Result\Pay\OrderResult;
 use RunetId\Client\RunetIdClient;
-use Ruwork\RunetIdBasketBundle\Handler\HandlerInterface;
-use Ruwork\RunetIdBasketBundle\Loader\LoaderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class Basket

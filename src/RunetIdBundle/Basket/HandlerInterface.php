@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\RunetIdBasketBundle\Handler;
-
-use Ruwork\RunetIdBasketBundle\Basket\Basket;
+namespace Ruwork\RunetIdBundle\Basket;
 
 interface HandlerInterface
 {

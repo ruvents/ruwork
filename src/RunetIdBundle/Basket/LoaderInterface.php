@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\RunetIdBasketBundle\Loader;
+namespace Ruwork\RunetIdBundle\Basket;
 
-use Ruwork\RunetIdBasketBundle\Basket\Basket;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 interface LoaderInterface

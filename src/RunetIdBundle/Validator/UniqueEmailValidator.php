@@ -28,7 +28,10 @@ final class UniqueEmailValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, UniqueEmail::class);
         }
 
-        if (null !== $value && !\is_scalar($value) && !(\is_object($value) && \method_exists($value, '__toString'))) {
+        if (null !== $value &&
+            !\is_scalar($value) &&
+            !(\is_object($value) && \method_exists($value, '__toString'))
+        ) {
             throw new UnexpectedTypeException($value, 'string');
         }
 

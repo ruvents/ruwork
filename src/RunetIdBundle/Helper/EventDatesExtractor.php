@@ -9,7 +9,7 @@ use RunetId\Client\Result\Event\InfoResult;
 final class EventDatesExtractor
 {
     /**
-     * @return \DateTimeImmutable[]|\Generator
+     * @return \DateTimeImmutable[]
      */
     public static function getDates(InfoResult $event, \DateTimeZone $timeZone = null): \Generator
     {

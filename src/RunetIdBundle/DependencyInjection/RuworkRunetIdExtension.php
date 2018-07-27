@@ -46,8 +46,11 @@ final class RuworkRunetIdExtension extends ConfigurableExtension
         }
 
         $container
-            ->getDefinition(RunetIdClients::class)
-            ->setArgument(0, ServiceLocatorTagPass::register($container, $clientReferences));
+            ->findDefinition(RunetIdClients::class)
+            ->setArguments([
+                '$container' => ServiceLocatorTagPass::register($container, $clientReferences),
+                '$defaultName' => $config['default_client'],
+            ]);
 
         $clientAlias = new Alias('ruwork_runet_id.client.'.$config['default_client'], false);
         $container->setAlias(RunetIdClient::class, $clientAlias);

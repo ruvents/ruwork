@@ -100,7 +100,7 @@ class UniqueEmailValidatorTest extends ConstraintValidatorTestCase
         $factory = new RunetIdClientFactory($this->httpClient);
         $client = $factory->create('key', 'secret');
         $locator = new SimpleContainer(['default' => $client]);
-        $clients = new RunetIdClients($locator);
+        $clients = new RunetIdClients($locator, 'default');
 
         return new UniqueEmailValidator($clients);
     }

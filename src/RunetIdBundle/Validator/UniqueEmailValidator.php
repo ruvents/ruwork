@@ -50,7 +50,11 @@ final class UniqueEmailValidator extends ConstraintValidator
 
     private function emailExists(UniqueEmail $constraint, string $email): bool
     {
-        $client = $this->clients->get($constraint->client);
+        if (null === $constraint->client) {
+            $client = $this->clients->getDefault();
+        } else {
+            $client = $this->clients->get($constraint->client);
+        }
 
         $users = $client
             ->userSearch()

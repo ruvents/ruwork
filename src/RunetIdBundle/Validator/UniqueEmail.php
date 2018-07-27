@@ -14,7 +14,7 @@ final class UniqueEmail extends Constraint
 {
     public const NOT_UNIQUE_ERROR = 'b008bd4f-d733-4cbb-9fb9-180ef0c4eb74';
 
-    public $client = 'default';
+    public $client;
 
     /**
      * @var null|int|string

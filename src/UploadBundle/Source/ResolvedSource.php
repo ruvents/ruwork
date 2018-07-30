@@ -84,6 +84,12 @@ final class ResolvedSource implements ResolvedSourceInterface
         if ($this->saveFromSource) {
             $this->handler->write($this->source, $this->absolutePath);
         } else {
+            $dir = \dirname($this->absolutePath);
+
+            if (!\is_dir($dir)) {
+                \mkdir($dir, 0777, true);
+            }
+
             \rename($this->tmpPath, $this->absolutePath);
         }
 

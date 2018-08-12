@@ -20,6 +20,7 @@ use Ruwork\UploadBundle\Metadata\UnproxyMetadataFactory;
 use Ruwork\UploadBundle\Metadata\UploadAccessor;
 use Ruwork\UploadBundle\Path\PathGenerator;
 use Ruwork\UploadBundle\Path\PathGeneratorInterface;
+use Ruwork\UploadBundle\Path\PathLocator;
 use Ruwork\UploadBundle\Path\PathLocatorInterface;
 use Ruwork\UploadBundle\Source\Handler\UploadedFileHandler;
 use Ruwork\UploadBundle\Source\SourceResolver;
@@ -144,7 +145,9 @@ return function (ContainerConfigurator $container): void {
 
     $services->alias(PathGeneratorInterface::class, PathGenerator::class);
 
-    $services->alias(PathLocatorInterface::class, PathGenerator::class);
+    $services->set(PathLocator::class);
+
+    $services->alias(PathLocatorInterface::class, PathLocator::class);
 
     // Source\Handler
 

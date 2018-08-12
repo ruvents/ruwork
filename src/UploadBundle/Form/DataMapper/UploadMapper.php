@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ruwork\UploadBundle\Form\DataMapper;
 
-use Ruwork\UploadBundle\Form\Saver\SaverCollectorInterface;
 use Ruwork\UploadBundle\Manager\UploadManagerInterface;
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Extension\Core\DataMapper\PropertyPathMapper;
@@ -13,64 +12,61 @@ use Symfony\Component\Form\FormInterface;
 final class UploadMapper implements DataMapperInterface
 {
     private $manager;
-    private $savers;
-    private $fileName;
+    private $sourceName;
     private $pathName;
     private $factory;
     private $finder;
-    private $saver;
+    private $onCreated;
     private $dataMapper;
 
     public function __construct(
         UploadManagerInterface $manager,
-        SaverCollectorInterface $savers,
         string $fileName,
         string $pathName,
         callable $factory,
         callable $finder,
-        ?callable $saver = null,
+        ?callable $onCreated = null,
         ?DataMapperInterface $dataMapper = null
     ) {
         $this->manager = $manager;
-        $this->savers = $savers;
-        $this->fileName = $fileName;
+        $this->sourceName = $fileName;
         $this->pathName = $pathName;
         $this->factory = $factory;
         $this->finder = $finder;
-        $this->saver = $saver;
+        $this->onCreated = $onCreated;
         $this->dataMapper = $dataMapper ?? new PropertyPathMapper();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function mapDataToForms($data, $forms)
+    public function mapDataToForms($upload, $forms)
     {
-        $this->dataMapper->mapDataToForms($data, $forms);
+        $this->dataMapper->mapDataToForms($upload, $forms);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function mapFormsToData($forms, &$data)
+    public function mapFormsToData($forms, &$upload)
     {
         /** @var FormInterface[] $formsArray */
         $formsArray = \iterator_to_array($forms);
-        $fileForm = $formsArray[$this->fileName];
+        $sourceForm = $formsArray[$this->sourceName];
         $pathForm = $formsArray[$this->pathName];
 
-        if (!$fileForm->isEmpty()) {
-            $form = $fileForm->getParent();
-            $data = ($this->factory)($form, $data);
-            $this->manager->register($data, $fileForm->getData());
+        if (!$sourceForm->isEmpty()) {
+            $form = $sourceForm->getParent();
+            $upload = ($this->factory)($form, $upload);
+            $this->manager->register($upload, $sourceForm->getData());
 
-            if (null !== $this->saver) {
-                $this->savers->add($form, $this->saver);
+            if (null !== $this->onCreated) {
+                ($this->onCreated)($upload);
             }
         } elseif (!$pathForm->isEmpty()) {
-            $data = ($this->finder)($pathForm->getData());
+            $upload = ($this->finder)($pathForm->getData());
         }
 
-        $this->dataMapper->mapFormsToData($forms, $data);
+        $this->dataMapper->mapFormsToData($forms, $upload);
     }
 }

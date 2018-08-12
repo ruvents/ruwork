@@ -18,6 +18,7 @@
     "require-dev": {
         "doctrine/orm": "^2.5",
         "matthiasnoback/symfony-config-test": "^3.1",
+        "symfony/filesystem": "^3.4 || ^4.0",
         "symfony/form": "^3.4 || ^4.0",
         "symfony/http-foundation": "^3.4 || ^4.0",
         "symfony/validator": "^3.4 || ^4.0"

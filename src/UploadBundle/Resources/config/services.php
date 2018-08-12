@@ -17,7 +17,8 @@ use Ruwork\UploadBundle\Path\PathGenerator;
 use Ruwork\UploadBundle\Path\PathGeneratorInterface;
 use Ruwork\UploadBundle\Path\PathLocator;
 use Ruwork\UploadBundle\Path\PathLocatorInterface;
-use Ruwork\UploadBundle\Source\Handler\UploadedFileHandler;
+use Ruwork\UploadBundle\Source\Handler\StringSourceHandler;
+use Ruwork\UploadBundle\Source\Handler\UploadedFileSourceHandler;
 use Ruwork\UploadBundle\Source\SourceResolver;
 use Ruwork\UploadBundle\Source\SourceResolverInterface;
 use Ruwork\UploadBundle\TmpPath\TmpPathGenerator;
@@ -114,7 +115,14 @@ return function (ContainerConfigurator $container): void {
     // Source\Handler
 
     $services
-        ->set(UploadedFileHandler::class)
+        ->set(StringSourceHandler::class)
+        ->args([
+            '$filesystem' => ref('filesystem'),
+        ])
+        ->tag('ruwork_upload.source_handler');
+
+    $services
+        ->set(UploadedFileSourceHandler::class)
         ->tag('ruwork_upload.source_handler');
 
     // Source

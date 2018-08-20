@@ -42,7 +42,23 @@ final class RuworkRunetIdExtension extends ConfigurableExtension
         $clientReferences = [];
 
         foreach ($config['clients'] as $name => $clientConfig) {
-            $clientReferences[$name] = $this->createClient($container, $name, $clientConfig);
+            $clientReferences[$name] = $this->registerClient($container, $name, $clientConfig);
+        }
+
+        $clientAlias = new Alias('ruwork_runet_id.client.'.$config['default_client'], false);
+        $container->setAlias(RunetIdClient::class, $clientAlias);
+        $container->setAlias('ruwork_runet_id.client._default', $clientAlias);
+
+        if (\class_exists(HWIOAuthBundle::class)) {
+            foreach ($clientReferences as $name => $reference) {
+                $container
+                    ->register('ruwork_runet_id.oauth.'.$name, ResourceOwner::class)
+                    ->setPublic(false)
+                    ->setArgument('$client', $reference);
+            }
+
+            $oauthAlias = new Alias('ruwork_runet_id.oauth.'.$config['default_client'], false);
+            $container->setAlias('ruwork_runet_id.oauth._default', $oauthAlias);
         }
 
         $container
@@ -52,15 +68,12 @@ final class RuworkRunetIdExtension extends ConfigurableExtension
                 '$defaultName' => $config['default_client'],
             ]);
 
-        $clientAlias = new Alias('ruwork_runet_id.client.'.$config['default_client'], false);
-        $container->setAlias(RunetIdClient::class, $clientAlias);
-
         if (!\class_exists(Validation::class)) {
             $container->removeDefinition('ruwork_runet_id.validator.unique_email');
         }
     }
 
-    private function createClient(ContainerBuilder $container, string $name, array $config): Reference
+    private function registerClient(ContainerBuilder $container, string $name, array $config): Reference
     {
         $id = 'ruwork_runet_id.client.'.$name;
 
@@ -75,19 +88,8 @@ final class RuworkRunetIdExtension extends ConfigurableExtension
                 '$plugins' => \array_map(function (string $id) {
                     return new Reference($id);
                 }, $config['plugins']),
-                '$httpClient' => null === $config['http_client']
-                    ? null
-                    : new Reference('http_client'),
+                '$httpClient' => null === $config['http_client'] ? null : new Reference('http_client'),
             ]);
-
-        $clientReferences[$name] = new Reference($id);
-
-        if (\class_exists(HWIOAuthBundle::class)) {
-            $container
-                ->register('ruwork_runet_id.oauth.'.$name, ResourceOwner::class)
-                ->setPublic(false)
-                ->setArgument('$client', new Reference($id));
-        }
 
         return new Reference($id);
     }

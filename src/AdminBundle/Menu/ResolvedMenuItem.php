@@ -50,9 +50,6 @@ final class ResolvedMenuItem
         return $this->attributes;
     }
 
-    /**
-     * @return null|string
-     */
     public function getHref(): ?string
     {
         return $this->href;

@@ -14,8 +14,6 @@ use Ruwork\Synchronizer\Provider\ProviderInterface;
 interface ConfiguratorInterface extends ConfigurationInterface
 {
     /**
-     * @param null|ProviderInterface $provider
-     *
      * @return static
      */
     public function setSourceProvider(?ProviderInterface $provider);
@@ -26,15 +24,11 @@ interface ConfiguratorInterface extends ConfigurationInterface
     public function setSourceIdExtractor(IdExtractorInterface $extractor);
 
     /**
-     * @param null|ByIdProviderInterface $provider
-     *
      * @return static
      */
     public function setSourceByIdProvider(?ByIdProviderInterface $provider);
 
     /**
-     * @param null|ProviderInterface $provider
-     *
      * @return static
      */
     public function setTargetProvider(?ProviderInterface $provider);
@@ -45,8 +39,6 @@ interface ConfiguratorInterface extends ConfigurationInterface
     public function setTargetIdExtractor(IdExtractorInterface $extractor);
 
     /**
-     * @param null|ByIdProviderInterface $provider
-     *
      * @return static
      */
     public function setTargetByIdProvider(?ByIdProviderInterface $provider);

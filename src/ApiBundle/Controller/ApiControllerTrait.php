@@ -26,9 +26,6 @@ trait ApiControllerTrait
         return $this->getFormFactory()->createNamedBuilder('', $type, $data, $options);
     }
 
-    /**
-     * @param null $data
-     */
     protected function createForm($type, $data = null, array $options = []): FormInterface
     {
         return $this->createFormBuilder($data, $options, $type)->getForm();

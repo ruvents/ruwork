@@ -19,8 +19,7 @@ class ApiStreamedIteratorResponse extends StreamedResponse
     private $normalizer;
 
     /**
-     * @param iterable      $data
-     * @param null|callable $normalizer
+     * @param iterable $data
      */
     public function __construct($data = [], callable $normalizer = null, int $statusCode = 200, array $headers = [])
     {
@@ -76,8 +75,6 @@ class ApiStreamedIteratorResponse extends StreamedResponse
     }
 
     /**
-     * @param null|callable $normalizer
-     *
      * @return $this
      */
     public function setNormalizer(callable $normalizer = null)

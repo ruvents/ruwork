@@ -4,29 +4,30 @@ declare(strict_types=1);
 
 namespace Ruwork\ApiBundle\Controller;
 
+use Psr\Container\ContainerInterface;
 use Ruwork\ApiBundle\Helper;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
+/**
+ * @property ContainerInterface $container
+ */
 trait ApiControllerTrait
 {
-    /**
-     * @param string $type
-     */
-    protected function createFormBuilder($data = null, array $options = [], $type = FormType::class): FormBuilderInterface
+    protected function createFormBuilder($data = null, array $options = [], string $type = FormType::class): FormBuilderInterface
     {
         $options['csrf_protection'] = false;
         $options['allow_extra_fields'] = true;
 
-        return $this->getFormFactory()->createNamedBuilder('', $type, $data, $options);
+        return $this->container
+            ->get('form.factory')
+            ->createNamedBuilder('', $type, $data, $options);
     }
 
-    protected function createForm($type, $data = null, array $options = []): FormInterface
+    protected function createForm(string $type, $data = null, array $options = []): FormInterface
     {
         return $this->createFormBuilder($data, $options, $type)->getForm();
     }
@@ -58,10 +59,8 @@ trait ApiControllerTrait
     {
         $context[Helper::RUWORK_API] = true;
 
-        return $this->getNormalizer()->normalize($data, JsonEncoder::FORMAT, $context);
+        return $this->container
+            ->get('serializer')
+            ->normalize($data, JsonEncoder::FORMAT, $context);
     }
-
-    abstract protected function getNormalizer(): NormalizerInterface;
-
-    abstract protected function getFormFactory(): FormFactoryInterface;
 }

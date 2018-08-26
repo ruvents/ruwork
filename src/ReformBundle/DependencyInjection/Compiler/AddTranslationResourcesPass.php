@@ -22,7 +22,7 @@ final class AddTranslationResourcesPass implements CompilerPassInterface
         $translator = $container->findDefinition('translator');
 
         $reflection = new \ReflectionClass(CheckboxTypeFalseValueExtension::class);
-        $dir = \dirname(\dirname($reflection->getFileName()));
+        $dir = \dirname($reflection->getFileName(), 2);
         $files = \glob($dir.'/Resources/translations/*');
 
         foreach ($files as $file) {

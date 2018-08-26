@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+exit
+
 set -e
 
 cp composer.json composer.json.backup

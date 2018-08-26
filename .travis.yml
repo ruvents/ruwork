@@ -36,7 +36,6 @@ matrix:
 
 before_install:
     - echo -e "machine github.com\n  login $GITHUB_API_TOKEN" >> ~/.netrc
-    - if [[ $SPLIT = true && $TRAVIS_PULL_REQUEST = false ]]; then  ./vendor/bin/monorepo-builder split; fi
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi
     - if ! [ -z "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi
@@ -51,6 +50,7 @@ install:
 script:
     #- if [[ $SPLITTEST = true ]]; then ./bin/splittest; else ./bin/phpunit $PHPUNIT_FLAGS; fi
     - if [[ $PHP_CS = true ]]; then vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no; fi
+    - if [[ $SPLIT = true && $TRAVIS_PULL_REQUEST = false ]]; then  vendor/bin/monorepo-builder split; fi
 
 after_success:
     - if [[ $COVERAGE = true ]]; then bash <(curl -s https://codecov.io/bash); fi

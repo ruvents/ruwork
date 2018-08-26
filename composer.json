@@ -1,17 +1,85 @@
 {
     "description": "Ruwork monorepo package.",
-    "keywords": ["ruwork"],
+    "keywords": [
+        "ruwork"
+    ],
     "homepage": "https://ruvents.github.io/ruwork/",
     "license": "MIT",
     "authors": [
-        {"name": "Valentin Udaltsov", "email": "udaltsov@ruvents.com"}
+        {
+            "name": "Valentin Udaltsov",
+            "email": "udaltsov@ruvents.com"
+        }
     ],
     "require": {
-        "php": "^7.1.3"
+        "php": "^7.1.3",
+        "doctrine/annotations": "^1.6",
+        "doctrine/dbal": "^2.6",
+        "doctrine/orm": "^2.5",
+        "matthiasnoback/symfony-dependency-injection-test": "^2.3",
+        "psr/cache": "^1.0",
+        "psr/container": "^1.0",
+        "psr/simple-cache-implementation": "^1.0",
+        "runet-id/api-client": "^3.0@beta",
+        "ruwork/annotation-tools": "^0.1",
+        "ruwork/paginator": "^0.1",
+        "ruwork/paginator-bundle": "^0.1",
+        "ruwork/polyfill-form-dti": "^0.2",
+        "ruwork/polyfill-form-dti-bundle": "^0.2",
+        "ruwork/reform": "^0.2.0",
+        "ruwork/synchronizer": "^0.2",
+        "symfony/cache": "^3.4 || ^4.0",
+        "symfony/config": "^3.4 || ^4.0",
+        "symfony/dependency-injection": "^3.4 || ^4.0",
+        "symfony/event-dispatcher": "^3.4 || ^4.0",
+        "symfony/expression-language": "^3.4 || ^4.0",
+        "symfony/finder": "^3.4 || ^4.0",
+        "symfony/form": "^3.4 || ^4.0",
+        "symfony/framework-bundle": "^3.4 || ^4.0",
+        "symfony/http-foundation": "^3.4 || ^4.0",
+        "symfony/http-kernel": "^3.4 || ^4.0",
+        "symfony/options-resolver": "^3.4 || ^4.0",
+        "symfony/routing": "^3.4 || ^4.0",
+        "symfony/security": "^3.4 || ^4.0",
+        "symfony/security-bundle": "^3.4 || ^4.0",
+        "symfony/serializer": "^3.4 || ^4.0",
+        "symfony/validator": "^3.4 || ^4.0",
+        "symfony/yaml": "^3.4 || ^4.0",
+        "twig/twig": "^2.4"
     },
     "require-dev": {
-        "wikimedia/composer-merge-plugin": "^1.4",
-        "symfony/phpunit-bridge": "^3.4 || ^4.0"
+        "php": "^7.1.3",
+        "doctrine/annotations": "^1.5",
+        "doctrine/orm": "^2.5",
+        "guzzlehttp/psr7": "^1.0",
+        "hwi/oauth-bundle": "^0.6.1",
+        "matthiasnoback/symfony-config-test": "^3.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^2.3",
+        "php-http/discovery": "^1.3",
+        "php-http/guzzle6-adapter": "^1.1",
+        "php-http/mock-client": "^1.1",
+        "ruwork/bundle-test": "^0.1",
+        "ruwork/route-optional-prefix": "^0.1",
+        "ruwork/upload-bundle": "^0.1",
+        "sensio/framework-extra-bundle": "^5.0",
+        "swiftmailer/swiftmailer": "^6.0",
+        "symfony/asset": "^3.4 || ^4.0",
+        "symfony/config": "^3.4 || ^4.0",
+        "symfony/console": "^3.4 || ^4.0",
+        "symfony/doctrine-bridge": "^3.4 || ^4.0",
+        "symfony/expression-language": "^3.4 || ^4.0",
+        "symfony/filesystem": "^3.4 || ^4.0",
+        "symfony/form": "^3.4 || ^4.0",
+        "symfony/framework-bundle": "^3.4 || ^4.0",
+        "symfony/http-foundation": "^3.4 || ^4.0",
+        "symfony/property-access": "^3.4 || ^4.0",
+        "symfony/security": "^3.4 || ^4.0",
+        "symfony/serializer": "^3.4 || ^4.0",
+        "symfony/twig-bridge": "^3.4 || ^4.0",
+        "symfony/validator": "^3.4 || ^4.0",
+        "symplify/monorepo-builder": "^4.6",
+        "twig/twig": "^2.4",
+        "webthink/psr-test-container": "^1.0"
     },
     "replace": {
         "ruwork/admin-bundle": "*",
@@ -41,7 +109,29 @@
     },
     "autoload": {
         "psr-4": {
-            "Ruwork\\": "src/"
+            "Ruwork\\AdminBundle\\": "src/AdminBundle/",
+            "Ruwork\\AnnotationTools\\": "src/AnnotationTools/",
+            "Ruwork\\ApiBundle\\": "src/ApiBundle/",
+            "Ruwork\\BundleTest\\": "src/BundleTest/",
+            "Ruwork\\DoctrineBehaviorsBundle\\": "src/DoctrineBehaviorsBundle/",
+            "Ruwork\\DoctrinePostgresqlBundle\\": "src/DoctrinePostgresqlBundle/",
+            "Ruwork\\FeatureBundle\\": "src/FeatureBundle/",
+            "Ruwork\\FilterBundle\\": "src/FilterBundle/",
+            "Ruwork\\FrujaxBundle\\": "src/FrujaxBundle/",
+            "Ruwork\\ManualAuthBundle\\": "src/ManualAuthBundle/",
+            "Ruwork\\PaginatorBundle\\": "src/PaginatorBundle/",
+            "Ruwork\\Paginator\\": "src/Paginator/",
+            "Ruwork\\ReformBundle\\": "src/ReformBundle/",
+            "Ruwork\\Reform\\": "src/Reform/",
+            "Ruwork\\RouteOptionalPrefix\\": "src/RouteOptionalPrefix/",
+            "Ruwork\\RoutingToolsBundle\\": "src/RoutingToolsBundle/",
+            "Ruwork\\RunetIdBundle\\": "src/RunetIdBundle/",
+            "Ruwork\\RuworkBundle\\": "src/RuworkBundle/",
+            "Ruwork\\SynchronizerBundle\\": "src/SynchronizerBundle/",
+            "Ruwork\\Synchronizer\\": "src/Synchronizer/",
+            "Ruwork\\TemplateI18nBundle\\": "src/TemplateI18nBundle/",
+            "Ruwork\\UploadBundle\\": "src/UploadBundle/",
+            "Ruwork\\WizardBundle\\": "src/WizardBundle/"
         }
     },
     "autoload-dev": {
@@ -55,9 +145,6 @@
     "extra": {
         "branch-alias": {
             "dev-master": "0.1-dev"
-        },
-        "merge-plugin": {
-            "require": "src/*/composer.json"
         }
     }
 }

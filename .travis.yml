@@ -17,26 +17,26 @@ matrix:
         #- php: 7.2
         #  env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
 
-        - php: 7.1
-          env: PHP_CS=true SPLITTEST=true
+        -   php: 7.1
+            env: PHP_CS=true SPLITTEST=true
 
-        - php: 7.2
-          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover=coverage.xml"
+        -   php: 7.2
+            env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover=coverage.xml"
 
-        - php: 7.2
-          env: PUBLISH=true DEPENDENCIES="symfony/lts:^3"
-          git:
-              depth: false
+        -   php: 7.2
+            env: PUBLISH=true DEPENDENCIES="symfony/lts:^3"
+            git:
+                depth: false
 
         #- php: 7.2
         #  env: STABILITY="dev"
 
     allow_failures:
-        - env: STABILITY="dev"
+        -   env: STABILITY="dev"
 
 before_install:
     - echo -e "machine github.com\n  login $GITHUB_API_TOKEN" >> ~/.netrc
-    - if [[ $PUBLISH = true && $TRAVIS_PULL_REQUEST = false ]]; then ./bin/publish; fi
+    #- if [[ $PUBLISH = true && $TRAVIS_PULL_REQUEST = false ]]; then ./bin/publish; fi
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi
     - if ! [ -z "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi
@@ -49,7 +49,7 @@ install:
     - ./bin/phpunit install
 
 script:
-    - if [[ $SPLITTEST = true ]]; then ./bin/splittest; else ./bin/phpunit $PHPUNIT_FLAGS; fi
+    #- if [[ $SPLITTEST = true ]]; then ./bin/splittest; else ./bin/phpunit $PHPUNIT_FLAGS; fi
     - if [[ $PHP_CS = true ]]; then vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no; fi
 
 after_success:

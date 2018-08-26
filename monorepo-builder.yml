@@ -1,0 +1,32 @@
+parameters:
+    package_directories:
+        - src
+
+    data_to_append:
+        require-dev:
+            symplify/monorepo-builder: ^4.6
+
+    directories_to_repositories:
+        src/AdminBundle: git@github.com:ruvents/ruwork-admin-bundle.git
+        src/AnnotationTools: git@github.com:ruvents/ruwork-annotation-tools.git
+        src/ApiBundle: git@github.com:ruvents/ruwork-api-bundle.git
+        src/BundleTest: git@github.com:ruvents/ruwork-bundle-test.git
+        src/DoctrineBehaviorsBundle: git@github.com:ruvents/ruwork-doctrine-behaviors-bundle.git
+        src/DoctrinePostgresqlBundle: git@github.com:ruvents/ruwork-doctrine-postgresql-bundle.git
+        src/FeatureBundle: git@github.com:ruvents/ruwork-feature-bundle.git
+        src/FilterBundle: git@github.com:ruvents/ruwork-filter-bundle.git
+        src/FrujaxBundle: git@github.com:ruvents/ruwork-frujax-bundle.git
+        src/ManualAuthBundle: git@github.com:ruvents/ruwork-manual-auth-bundle.git
+        src/Paginator: git@github.com:ruvents/ruwork-paginator.git
+        src/PaginatorBundle: git@github.com:ruvents/ruwork-paginator-bundle.git
+        src/Reform: git@github.com:ruvents/ruwork-reform.git
+        src/ReformBundle: git@github.com:ruvents/ruwork-reform-bundle.git
+        src/RouteOptionalPrefix: git@github.com:ruvents/ruwork-route-optional-prefix.git
+        src/RoutingToolsBundle: git@github.com:ruvents/ruwork-routing-tools-bundle.git
+        src/RunetIdBundle: git@github.com:ruvents/ruwork-runet-id-bundle.git
+        src/RuworkBundle: git@github.com:ruvents/ruwork-bundle.git
+        src/Synchronizer: git@github.com:ruvents/ruwork-synchronizer.git
+        src/SynchronizerBundle: git@github.com:ruvents/ruwork-synchronizer-bundle.git
+        src/TemplateI18nBundle: git@github.com:ruvents/ruwork-template-i18n-bundle.git
+        src/UploadBundle: git@github.com:ruvents/ruwork-upload-bundle.git
+        src/WizardBundle: git@github.com:ruvents/ruwork-wizard-bundle.git

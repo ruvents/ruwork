@@ -16,7 +16,7 @@
     "require": {
         "php": "^7.1.3",
         "psr/cache": "^1.0",
-        "doctrine/annotations": "^1.5"
+        "doctrine/annotations": "^1.6"
     },
     "autoload": {
         "psr-4": {

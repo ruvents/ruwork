@@ -22,9 +22,9 @@
         "symfony/yaml": "^3.4 || ^4.0"
     },
     "require-dev": {
-        "doctrine/annotations": "^1.5",
+        "doctrine/annotations": "^1.6",
         "doctrine/orm": "^2.5",
-        "sensio/framework-extra-bundle": "^5.0",
+        "sensio/framework-extra-bundle": "^5.1",
         "swiftmailer/swiftmailer": "^6.0",
         "symfony/asset": "^3.4 || ^4.0",
         "symfony/doctrine-bridge": "^3.4 || ^4.0",

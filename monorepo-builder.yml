@@ -4,6 +4,7 @@ parameters:
 
     data_to_append:
         require-dev:
+            symfony/phpunit-bridge: ^3.4 || ^4.0
             symplify/monorepo-builder: ^4.6
 
     directories_to_repositories:

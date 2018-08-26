@@ -72,6 +72,7 @@
         "symfony/form": "^3.4 || ^4.0",
         "symfony/framework-bundle": "^3.4 || ^4.0",
         "symfony/http-foundation": "^3.4 || ^4.0",
+        "symfony/phpunit-bridge": "^3.4 || ^4.0",
         "symfony/property-access": "^3.4 || ^4.0",
         "symfony/security": "^3.4 || ^4.0",
         "symfony/serializer": "^3.4 || ^4.0",

@@ -28,6 +28,6 @@ return function (ContainerConfigurator $container): void {
     $services
         ->set(HttplugHandler::class)
         ->args([
-            'client' => ref('httplug.async_client.default')->ignoreOnInvalid(),
+            '$client' => ref('httplug.async_client.default')->ignoreOnInvalid(),
         ]);
 };

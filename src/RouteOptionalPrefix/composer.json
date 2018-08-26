@@ -2,11 +2,16 @@
     "name": "ruwork/route-optional-prefix",
     "description": "Ruwork Route Optional Prefix",
     "type": "library",
-    "keywords": ["ruwork"],
+    "keywords": [
+        "ruwork"
+    ],
     "homepage": "https://ruvents.github.io/ruwork/",
     "license": "MIT",
     "authors": [
-        {"name": "Valentin Udaltsov", "email": "udaltsov@ruvents.com"}
+        {
+            "name": "Valentin Udaltsov",
+            "email": "udaltsov@ruvents.com"
+        }
     ],
     "require": {
         "php": "^7.1.3",
@@ -26,7 +31,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1-dev"
+            "dev-master": "0.10-dev"
         }
     }
 }

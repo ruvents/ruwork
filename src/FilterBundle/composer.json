@@ -2,12 +2,20 @@
     "name": "ruwork/filter-bundle",
     "description": "Ruwork Filter Bundle",
     "type": "symfony-bundle",
-    "keywords": ["ruwork"],
+    "keywords": [
+        "ruwork"
+    ],
     "homepage": "https://ruvents.github.io/ruwork/",
     "license": "MIT",
     "authors": [
-        {"name": "Artem Diakov", "email": "adiakov.work@gmail.com"},
-        {"name": "Valentin Udaltsov", "email": "udaltsov@ruvents.com"}
+        {
+            "name": "Artem Diakov",
+            "email": "adiakov.work@gmail.com"
+        },
+        {
+            "name": "Valentin Udaltsov",
+            "email": "udaltsov@ruvents.com"
+        }
     ],
     "require": {
         "php": "^7.1.3",
@@ -26,7 +34,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1-dev"
+            "dev-master": "0.10-dev"
         }
     }
 }

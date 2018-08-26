@@ -15,6 +15,9 @@
     </php>
 
     <testsuites>
+        <testsuite name="AwsBundle">
+            <directory>./tests/AwsBundle</directory>
+        </testsuite>
         <testsuite name="BundleTest">
             <directory>./tests/BundleTest</directory>
         </testsuite>

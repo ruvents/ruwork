@@ -12,6 +12,7 @@ parameters:
         src/AdminBundle: git@github.com:ruvents/ruwork-admin-bundle.git
         src/AnnotationTools: git@github.com:ruvents/ruwork-annotation-tools.git
         src/ApiBundle: git@github.com:ruvents/ruwork-api-bundle.git
+        src/AwsBundle: git@github.com:ruvents/ruwork-aws-bundle.git
         src/BundleTest: git@github.com:ruvents/ruwork-bundle-test.git
         src/DoctrineBehaviorsBundle: git@github.com:ruvents/ruwork-doctrine-behaviors-bundle.git
         src/DoctrinePostgresqlBundle: git@github.com:ruvents/ruwork-doctrine-postgresql-bundle.git

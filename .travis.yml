@@ -24,7 +24,7 @@ matrix:
             env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-clover=coverage.xml"
 
         -   php: 7.2
-            env: PUBLISH=true DEPENDENCIES="symfony/lts:^3"
+            env: SPLIT=true DEPENDENCIES="symfony/lts:^3"
             git:
                 depth: false
 
@@ -36,7 +36,7 @@ matrix:
 
 before_install:
     - echo -e "machine github.com\n  login $GITHUB_API_TOKEN" >> ~/.netrc
-    #- if [[ $PUBLISH = true && $TRAVIS_PULL_REQUEST = false ]]; then ./bin/publish; fi
+    - if [[ $SPLIT = true && $TRAVIS_PULL_REQUEST = false ]]; then  ./vendor/bin/monorepo-builder split; fi
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi
     - if ! [ -z "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi

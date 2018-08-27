@@ -6,5 +6,5 @@ namespace Ruwork\RunetIdBundle\Basket;
 
 interface BasketFactoryInterface
 {
-    public function create(int $payerRunetId): Basket;
+    public function create(int $payerRunetId, ?string $clientName = null): Basket;
 }

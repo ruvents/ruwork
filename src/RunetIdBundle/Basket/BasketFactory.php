@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Ruwork\RunetIdBundle\Basket;
 
-use RunetId\Client\RunetIdClient;
+use Ruwork\RunetIdBundle\Client\RunetIdClients;
 
 final class BasketFactory implements BasketFactoryInterface
 {
-    private $client;
+    private $clients;
     private $loaders;
     private $handlers;
 
     public function __construct(
-        RunetIdClient $client,
+        RunetIdClients $clients,
         iterable $loaders,
         iterable $handlers
     ) {
-        $this->client = $client;
+        $this->clients = $clients;
         $this->loaders = $loaders;
         $this->handlers = $handlers;
     }
@@ -25,8 +25,14 @@ final class BasketFactory implements BasketFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function create(int $payerRunetId): Basket
+    public function create(int $payerRunetId, ?string $clientName = null): Basket
     {
-        return new Basket($this->client, $payerRunetId, $this->loaders, $this->handlers);
+        if (null === $clientName) {
+            $client = $this->clients->getDefault();
+        } else {
+            $client = $this->clients->get($clientName);
+        }
+
+        return new Basket($client, $payerRunetId, $this->loaders, $this->handlers);
     }
 }

@@ -25,7 +25,7 @@ return function (ContainerConfigurator $container): void {
     $services
         ->set(BasketFactory::class)
         ->args([
-            '$client' => ref(RunetIdClient::class),
+            '$clients' => ref(RunetIdClients::class),
             '$loaders' => tagged('ruwork_runet_id_basket.loader'),
             '$handlers' => tagged('ruwork_runet_id_basket.handler'),
         ]);

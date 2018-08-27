@@ -8,22 +8,15 @@ use Doctrine\Common\Annotations\Reader;
 use Ruwork\ApiBundle\Annotations\Doc;
 use Symfony\Component\Routing\RouterInterface;
 
-class DocsExtractor
+final class DocsExtractor
 {
-    /**
-     * @var RouterInterface
-     */
     private $router;
-
-    /**
-     * @var Reader
-     */
     private $annotationsReader;
 
-    public function __construct(RouterInterface $router, Reader $annotationsReader)
+    public function __construct(RouterInterface $router, Reader $reader)
     {
         $this->router = $router;
-        $this->annotationsReader = $annotationsReader;
+        $this->annotationsReader = $reader;
     }
 
     /**
@@ -38,11 +31,22 @@ class DocsExtractor
                 continue;
             }
 
-            if (null === $classMethod = $this->getControllerClassMethod($route->getDefault('_controller'))) {
+            $_controller = $route->getDefault('_controller');
+
+            if (!\is_string($_controller)) {
                 continue;
             }
 
-            if (null === $doc = $this->getDocAnnotation($classMethod)) {
+            if (null === $classMethod = $this->getControllerClassMethod($_controller)) {
+                continue;
+            }
+
+            $doc = $this->annotationsReader->getMethodAnnotation(
+                new \ReflectionMethod($classMethod),
+                Doc::class
+            );
+
+            if (!$doc instanceof Doc) {
                 continue;
             }
 
@@ -53,54 +57,23 @@ class DocsExtractor
             $docs[] = $doc;
         }
 
-        $this->sortDocs($docs);
+        \usort($docs, static function (Doc $a, Doc $b): int {
+            return $a->priority <=> $b->priority ?: $a->endpoint <=> $b->endpoint;
+        });
 
         return $docs;
     }
 
-    /**
-     * @return null|string
-     */
-    private function getControllerClassMethod($_controller)
+    private function getControllerClassMethod(string $_controller): ?string
     {
-        if (\is_string($_controller) && false !== \strpos($_controller, '::')) {
+        if (false !== \strpos($_controller, '::')) {
             return $_controller;
         }
 
-        if (\is_array($_controller) && \is_callable($_controller)) {
-            $_controller = \array_values($_controller);
-
-            return \get_class($_controller[0]).'::'.$_controller[1];
-        }
-
-        if (\is_object($_controller) && \method_exists($_controller, '__invoke')) {
-            return \get_class($_controller).'::__invoke';
+        if (\class_exists($_controller) && \method_exists($_controller, '__invoke')) {
+            return $_controller.'::__invoke';
         }
 
         return null;
-    }
-
-    /**
-     * @return null|Doc|object
-     */
-    private function getDocAnnotation(string $classMethod)
-    {
-        return $this->annotationsReader
-            ->getMethodAnnotation(new \ReflectionMethod($classMethod), Doc::class);
-    }
-
-    /**
-     * @param Doc[] $docs
-     */
-    private function sortDocs(array &$docs): void
-    {
-        \usort($docs, function (Doc $a, Doc $b) {
-            return $a->priority === $b->priority
-                ? ($a->endpoint === $b->endpoint
-                    ? 0
-                    : $a->endpoint > $b->endpoint ? 1 : -1
-                )
-                : ($a->priority > $b->priority ? 1 : -1);
-        });
     }
 }

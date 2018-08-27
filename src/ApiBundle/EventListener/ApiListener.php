@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class ApiListener implements EventSubscriberInterface
+final class ApiListener implements EventSubscriberInterface
 {
     /**
      * {@inheritdoc}
@@ -41,8 +41,17 @@ class ApiListener implements EventSubscriberInterface
         $request = $event->getRequest();
         $exception = $event->getException();
 
-        if ($event->isMasterRequest() && Helper::isApiRequest($request) && $exception instanceof HttpExceptionInterface) {
-            $event->setResponse(new ApiResponse(null, $exception->getStatusCode()));
+        if ($event->isMasterRequest() && Helper::isApiRequest($request)) {
+            $status = 500;
+
+            if ($exception instanceof HttpExceptionInterface) {
+                $status = $exception->getStatusCode();
+            }
+
+            $event->setResponse(new ApiResponse([
+                'status' => 'error',
+                'message' => $exception->getMessage(),
+            ], $status));
         }
     }
 

@@ -22,7 +22,7 @@ final class ApiListener implements EventSubscriberInterface
     {
         return [
             KernelEvents::REQUEST => ['setLocale', 16],
-            KernelEvents::EXCEPTION => 'onException',
+            KernelEvents::EXCEPTION => ['onException', -10],
             KernelEvents::VIEW => ['onView', 1],
         ];
     }

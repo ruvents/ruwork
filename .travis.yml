@@ -1,5 +1,6 @@
 language: php
 sudo: false
+if: tag IS blank
 
 cache:
     directories:

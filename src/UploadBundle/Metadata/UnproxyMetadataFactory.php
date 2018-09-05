@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ruwork\UploadBundle\Metadata;
 
-use Doctrine\Common\Persistence\Proxy;
+use Doctrine\Common\Util\ClassUtils;
 
 final class UnproxyMetadataFactory implements MetadataFactoryInterface
 {
@@ -20,10 +20,6 @@ final class UnproxyMetadataFactory implements MetadataFactoryInterface
      */
     public function getMetadata(string $class): Metadata
     {
-        if (false !== $pos = \strrpos($class, '\\'.Proxy::MARKER.'\\')) {
-            $class = \substr($class, $pos + Proxy::MARKER_LENGTH + 2);
-        }
-
-        return $this->factory->getMetadata($class);
+        return $this->factory->getMetadata(ClassUtils::getRealClass($class));
     }
 }

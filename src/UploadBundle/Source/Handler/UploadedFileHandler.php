@@ -6,7 +6,7 @@ namespace Ruwork\UploadBundle\Source\Handler;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-final class UploadedFileSourceHandler implements SourceHandlerInterface, AttributesProviderInterface
+final class UploadedFileHandler implements SourceHandlerInterface, AttributesProviderInterface
 {
     public const CLIENT_MIME_TYPE = 'client_mime_type';
 

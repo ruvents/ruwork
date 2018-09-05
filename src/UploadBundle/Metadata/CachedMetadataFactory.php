@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Ruwork\UploadBundle\Metadata;
 
 use Psr\Cache\CacheItemPoolInterface;
-use Ruwork\UploadBundle\Exception\NotMappedException;
 
 final class CachedMetadataFactory implements MetadataFactoryInterface
 {
@@ -34,25 +33,15 @@ final class CachedMetadataFactory implements MetadataFactoryInterface
             [$mTime, $metadata] = $item->get();
 
             if (!$this->debug || $mTime >= $classMTime = $this->getClassMTime($class)) {
-                if (null === $metadata) {
-                    throw new NotMappedException(\sprintf(
-                        'Class "%s" is not a mapped upload.',
-                        $class
-                    ));
-                }
-
                 return $metadata;
             }
         }
 
-        $metadata = null;
+        $metadata = $this->factory->getMetadata($class);
+        $item->set([$classMTime ?? $this->getClassMTime($class), $metadata]);
+        $this->cache->save($item);
 
-        try {
-            return $metadata = $this->factory->getMetadata($class);
-        } finally {
-            $item->set([$classMTime ?? $this->getClassMTime($class), $metadata]);
-            $this->cache->save($item);
-        }
+        return $metadata;
     }
 
     private function getClassMTime(string $class): int

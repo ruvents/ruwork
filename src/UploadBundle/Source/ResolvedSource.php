@@ -93,6 +93,8 @@ final class ResolvedSource implements ResolvedSourceInterface
             \rename($this->tmpPath, $this->absolutePath);
         }
 
+        chmod($this->absolutePath, 0644);
+
         $this->saved = true;
     }
 

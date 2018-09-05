@@ -28,6 +28,6 @@ final class StringSourceHandler implements SourceHandlerInterface
      */
     public function write($source, string $target): void
     {
-        $this->filesystem->copy($source, $target);
+        $this->filesystem->copy($source, $target, true);
     }
 }

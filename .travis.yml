@@ -50,7 +50,7 @@ install:
 
 script:
     - if [[ $SPLITTEST = true ]]; then bin/splittest; else bin/phpunit $PHPUNIT_FLAGS; fi
-    - if [[ $PHP_CS = true ]]; then vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no; fi
+    - if [[ $PHP_CS = true ]]; then vendor/bin/php-cs-fixer fix --dry-run --using-cache=no -vvv; fi
 
 after_script:
     - if [[ $SPLIT = true && $TRAVIS_PULL_REQUEST = false ]]; then  vendor/bin/monorepo-builder split; fi

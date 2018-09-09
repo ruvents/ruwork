@@ -1,3 +1,4 @@
+/bin/.splitsh/
 /vendor/
 /.php_cs
 /composer.lock

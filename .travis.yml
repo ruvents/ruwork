@@ -53,7 +53,7 @@ script:
     - if [[ $PHP_CS = true ]]; then vendor/bin/php-cs-fixer fix --dry-run --using-cache=no -vvv; fi
 
 after_script:
-    - if [[ $SPLIT = true && $TRAVIS_PULL_REQUEST = false ]]; then  vendor/bin/monorepo-builder split; fi
+    - if [[ $SPLIT = true && $TRAVIS_PULL_REQUEST = false ]]; then bin/split; fi
 
 after_success:
     - if [[ $COVERAGE = true ]]; then bash <(curl -s https://codecov.io/bash); fi

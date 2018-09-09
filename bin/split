@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+
+branch=`git rev-parse --abbrev-ref HEAD`
+
+if [[ ${branch} != 'master' && ! ${branch} =~ ^[0-9]+\.[0-9]+$ ]] ; then
+    echo "Branch ${branch} is not allowed for splitting.";
+fi
+
+tag=`git describe --abbrev=0 --tags`
+
+echo "Splitting branch ${branch} and tag ${tag}...";
+
+git push https://github.com/ruvents/ruwork-admin-bundle.git `bin/splitsh-lite --prefix=src/AdminBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-admin-bundle.git `bin/splitsh-lite --prefix=src/AdminBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-annotation-tools.git `bin/splitsh-lite --prefix=src/AnnotationTools --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-annotation-tools.git `bin/splitsh-lite --prefix=src/AnnotationTools --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-api-bundle.git `bin/splitsh-lite --prefix=src/ApiBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-api-bundle.git `bin/splitsh-lite --prefix=src/ApiBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-aws-bundle.git `bin/splitsh-lite --prefix=src/AwsBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-aws-bundle.git `bin/splitsh-lite --prefix=src/AwsBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-bundle-test.git `bin/splitsh-lite --prefix=src/BundleTest --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-bundle-test.git `bin/splitsh-lite --prefix=src/BundleTest --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-bundle.git `bin/splitsh-lite --prefix=src/RuworkBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-bundle.git `bin/splitsh-lite --prefix=src/RuworkBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-doctrine-behaviors-bundle.git `bin/splitsh-lite --prefix=src/DoctrineBehaviorsBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-doctrine-behaviors-bundle.git `bin/splitsh-lite --prefix=src/DoctrineBehaviorsBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-doctrine-postgresql-bundle.git `bin/splitsh-lite --prefix=src/DoctrinePostgresqlBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-doctrine-postgresql-bundle.git `bin/splitsh-lite --prefix=src/DoctrinePostgresqlBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-feature-bundle.git `bin/splitsh-lite --prefix=src/FeatureBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-feature-bundle.git `bin/splitsh-lite --prefix=src/FeatureBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-filter-bundle.git `bin/splitsh-lite --prefix=src/FilterBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-filter-bundle.git `bin/splitsh-lite --prefix=src/FilterBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-frujax-bundle.git `bin/splitsh-lite --prefix=src/FrujaxBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-frujax-bundle.git `bin/splitsh-lite --prefix=src/FrujaxBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-manual-auth-bundle.git `bin/splitsh-lite --prefix=src/ManualAuthBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-manual-auth-bundle.git `bin/splitsh-lite --prefix=src/ManualAuthBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-paginator-bundle.git `bin/splitsh-lite --prefix=src/PaginatorBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-paginator-bundle.git `bin/splitsh-lite --prefix=src/PaginatorBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-paginator.git `bin/splitsh-lite --prefix=src/Paginator --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-paginator.git `bin/splitsh-lite --prefix=src/Paginator --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-reform-bundle.git `bin/splitsh-lite --prefix=src/ReformBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-reform-bundle.git `bin/splitsh-lite --prefix=src/ReformBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-reform.git `bin/splitsh-lite --prefix=src/Reform --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-reform.git `bin/splitsh-lite --prefix=src/Reform --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-route-optional-prefix.git `bin/splitsh-lite --prefix=src/RouteOptionalPrefix --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-route-optional-prefix.git `bin/splitsh-lite --prefix=src/RouteOptionalPrefix --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-routing-tools-bundle.git `bin/splitsh-lite --prefix=src/RoutingToolsBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-routing-tools-bundle.git `bin/splitsh-lite --prefix=src/RoutingToolsBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-runet-id-bundle.git `bin/splitsh-lite --prefix=src/RunetIdBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-runet-id-bundle.git `bin/splitsh-lite --prefix=src/RunetIdBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-synchronizer-bundle.git `bin/splitsh-lite --prefix=src/SynchronizerBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-synchronizer-bundle.git `bin/splitsh-lite --prefix=src/SynchronizerBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-synchronizer.git `bin/splitsh-lite --prefix=src/Synchronizer --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-synchronizer.git `bin/splitsh-lite --prefix=src/Synchronizer --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-template-i18n-bundle.git `bin/splitsh-lite --prefix=src/TemplateI18nBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-template-i18n-bundle.git `bin/splitsh-lite --prefix=src/TemplateI18nBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-upload-bundle.git `bin/splitsh-lite --prefix=src/UploadBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-upload-bundle.git `bin/splitsh-lite --prefix=src/UploadBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-wizard-bundle.git `bin/splitsh-lite --prefix=src/WizardBundle --origin=refs/heads/${branch}`:refs/heads/${branch}
+git push https://github.com/ruvents/ruwork-wizard-bundle.git `bin/splitsh-lite --prefix=src/WizardBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+echo "Splitting complete.";

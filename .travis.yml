@@ -5,6 +5,7 @@ if: tag IS blank
 cache:
     directories:
         - $HOME/.composer/cache/files
+        - $HOME/.php_cs
         - $HOME/symfony-bridge/.phpunit
 
 env:
@@ -50,7 +51,7 @@ install:
 
 script:
     - if [[ $SPLITTEST = true ]]; then bin/splittest; else bin/phpunit $PHPUNIT_FLAGS; fi
-    - if [[ $PHP_CS = true ]]; then vendor/bin/php-cs-fixer fix --dry-run --using-cache=no -vvv; fi
+    - if [[ $PHP_CS = true ]]; then vendor/bin/php-cs-fixer fix --dry-run --cache-file=$HOME/.php_cs/.cache -vvv; fi
 
 after_script:
     - if [[ $SPLIT = true && $TRAVIS_PULL_REQUEST = false ]]; then bin/split; fi
@@ -59,4 +60,6 @@ after_success:
     - if [[ $COVERAGE = true ]]; then bash <(curl -s https://codecov.io/bash); fi
 
 notifications:
-    webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
+    webhooks:
+        urls: https://fathomless-fjord-24024.herokuapp.com/notify
+        on_cancel: never

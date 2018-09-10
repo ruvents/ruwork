@@ -6,6 +6,9 @@ namespace Ruwork\RuworkBundle\Mailer;
 
 use Twig\Environment;
 
+/**
+ * @deprecated Deprecated since 0.11.1 and will be removed in 0.12.0.
+ */
 class Mailer
 {
     /**

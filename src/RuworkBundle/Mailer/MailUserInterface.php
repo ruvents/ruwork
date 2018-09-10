@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Ruwork\RuworkBundle\Mailer;
 
+/**
+ * @deprecated Deprecated since 0.11.1 and will be removed in 0.12.0.
+ */
 interface MailUserInterface
 {
     /**

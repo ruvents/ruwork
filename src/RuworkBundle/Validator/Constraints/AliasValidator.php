@@ -14,14 +14,11 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class AliasValidator extends ConstraintValidator
 {
-    /**
-     * @var ManagerRegistry
-     */
-    private $registry;
+    private $managerRegistry;
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $managerRegistry)
     {
-        $this->registry = $registry;
+        $this->managerRegistry = $managerRegistry;
     }
 
     /**
@@ -60,7 +57,7 @@ class AliasValidator extends ConstraintValidator
 
         $object = $context->getObject();
 
-        if (null !== $object && null !== $this->registry->getManagerForClass(\get_class($object))) {
+        if (null !== $object && null !== $this->managerRegistry->getManagerForClass(\get_class($object))) {
             $context->getValidator()
                 ->inContext($context)
                 ->atPath($context->getPropertyPath())

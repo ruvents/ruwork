@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Ruwork\RuworkBundle\EventListener;
 
 use Ruwork\RuworkBundle\ControllerAnnotations\Redirect;
-use Ruwork\RuworkBundle\ExpressionLanguage\RedirectTargetExpressionLanguage;
-use Sensio\Bundle\FrameworkExtraBundle\Security\ExpressionLanguage as SecurityExpressionLanguage;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -25,8 +24,8 @@ final class RedirectAnnotationListener implements EventSubscriberInterface
     private $urlGenerator;
 
     public function __construct(
-        SecurityExpressionLanguage $conditionLanguage,
-        RedirectTargetExpressionLanguage $targetLanguage,
+        ExpressionLanguage $conditionLanguage,
+        ExpressionLanguage $targetLanguage,
         AuthorizationCheckerInterface $authChecker,
         TokenStorageInterface $tokenStorage,
         UrlGeneratorInterface $urlGenerator

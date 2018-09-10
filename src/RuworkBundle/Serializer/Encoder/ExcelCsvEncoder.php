@@ -10,11 +10,12 @@ use Symfony\Component\Serializer\Encoder\EncoderInterface;
 final class ExcelCsvEncoder implements EncoderInterface
 {
     public const FORMAT = 'excel_csv';
+    private const BOM = "\xEF\xBB\xBF";
 
     private $csvEncoder;
     private $defaultDelimiter;
 
-    public function __construct(CsvEncoder $csvEncoder = null, string $defaultDelimiter = ';')
+    public function __construct(?EncoderInterface $csvEncoder = null, string $defaultDelimiter = ';')
     {
         $this->csvEncoder = $csvEncoder ?? new CsvEncoder();
         $this->defaultDelimiter = $defaultDelimiter;
@@ -29,7 +30,7 @@ final class ExcelCsvEncoder implements EncoderInterface
             $context[CsvEncoder::DELIMITER_KEY] = $this->defaultDelimiter;
         }
 
-        return "\xEF\xBB\xBF".$this->csvEncoder->encode($data, $format, $context);
+        return self::BOM.$this->csvEncoder->encode($data, CsvEncoder::FORMAT, $context);
     }
 
     /**

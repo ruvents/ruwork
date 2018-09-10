@@ -9,7 +9,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 trait SecurityUserTrait
 {
     /**
-     * @see UserInterface::getRoles()
+     * @deprecated Deprecated since 0.11.1 and will be removed in 0.12.0.
+     * @see        UserInterface::getRoles()
      */
     public function getRoles()
     {

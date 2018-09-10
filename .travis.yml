@@ -6,11 +6,13 @@ cache:
     directories:
         - $HOME/.composer/cache/files
         - $HOME/.php_cs
+        - $HOME/.splitsh
         - $HOME/symfony-bridge/.phpunit
 
 env:
     global:
         - PHPUNIT_FLAGS="-v"
+        - SPLITSH_PATH="$HOME/.splitsh"
         - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
 
 matrix:

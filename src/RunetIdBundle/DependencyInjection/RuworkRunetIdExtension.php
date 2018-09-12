@@ -6,8 +6,8 @@ namespace Ruwork\RunetIdBundle\DependencyInjection;
 
 use HWI\Bundle\OAuthBundle\HWIOAuthBundle;
 use RunetId\Client\RunetIdClient;
-use Ruwork\RunetIdBundle\Basket\HandlerInterface;
-use Ruwork\RunetIdBundle\Basket\LoaderInterface;
+use Ruwork\RunetIdBundle\Basket\Handler\HandlerInterface;
+use Ruwork\RunetIdBundle\Basket\Loader\LoaderInterface;
 use Ruwork\RunetIdBundle\Client\RunetIdClients;
 use Ruwork\RunetIdBundle\HWIOAuth\ResourceOwner;
 use Symfony\Component\Config\FileLocator;
@@ -33,11 +33,11 @@ final class RuworkRunetIdExtension extends ConfigurableExtension
 
         $container->registerForAutoconfiguration(LoaderInterface::class)
             ->setPrivate(true)
-            ->addTag('ruwork_runet_id_basket.loader');
+            ->addTag('ruwork_runet_id.basket_loader');
 
         $container->registerForAutoconfiguration(HandlerInterface::class)
             ->setPrivate(true)
-            ->addTag('ruwork_runet_id_basket.handler');
+            ->addTag('ruwork_runet_id.basket_handler');
 
         $clientReferences = [];
 

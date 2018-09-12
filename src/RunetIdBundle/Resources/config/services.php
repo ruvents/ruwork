@@ -10,8 +10,11 @@ use Http\Message\StreamFactory;
 use Http\Message\UriFactory;
 use RunetId\Client\RunetIdClient;
 use RunetId\Client\RunetIdClientFactory;
-use Ruwork\RunetIdBundle\Basket\BasketFactory;
-use Ruwork\RunetIdBundle\Basket\BasketFactoryInterface;
+use Ruwork\RunetIdBundle\Basket\Factory\BasketFactory;
+use Ruwork\RunetIdBundle\Basket\Factory\BasketFactoryInterface;
+use Ruwork\RunetIdBundle\Basket\Form\FormErrorsMapper;
+use Ruwork\RunetIdBundle\Basket\Form\FormErrorsMapperInterface;
+use Ruwork\RunetIdBundle\Basket\Handler\ElementHandler;
 use Ruwork\RunetIdBundle\Client\RunetIdClients;
 use Ruwork\RunetIdBundle\Validator\UniqueEmailValidator;
 
@@ -20,17 +23,32 @@ return function (ContainerConfigurator $container): void {
         ->defaults()
         ->private();
 
-    // Basket
+    // Basket\Factory
 
     $services
         ->set(BasketFactory::class)
         ->args([
             '$clients' => ref(RunetIdClients::class),
-            '$loaders' => tagged('ruwork_runet_id_basket.loader'),
-            '$handlers' => tagged('ruwork_runet_id_basket.handler'),
         ]);
 
     $services->alias(BasketFactoryInterface::class, BasketFactory::class);
+
+    // Basket\Form
+
+    $services
+        ->set(FormErrorsMapper::class)
+        ->args([
+            '$session' => ref('session'),
+            '$accessor' => ref('property_accessor'),
+        ]);
+
+    $services->alias(FormErrorsMapperInterface::class, FormErrorsMapper::class);
+
+    // Basket\Handler
+
+    $services
+        ->set(ElementHandler::class)
+        ->tag('ruwork_runet_id.basket_handler');
 
     // Client
 

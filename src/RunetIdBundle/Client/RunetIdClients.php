@@ -23,9 +23,9 @@ final class RunetIdClients
         return $this->container->has($name);
     }
 
-    public function get(string $name): RunetIdClient
+    public function get(?string $name = null): RunetIdClient
     {
-        return $this->container->get($name);
+        return $this->container->get($name ?? $this->defaultName);
     }
 
     public function getDefault(): RunetIdClient

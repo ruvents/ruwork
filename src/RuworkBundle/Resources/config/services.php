@@ -8,7 +8,6 @@ use Ruwork\RuworkBundle\Asset\VersionStrategy\FilemtimeStrategy;
 use Ruwork\RuworkBundle\Doctrine\NamingStrategy\RuworkNamingStrategy;
 use Ruwork\RuworkBundle\EventListener\RedirectAnnotationListener;
 use Ruwork\RuworkBundle\ExpressionLanguage\RedirectTargetExpressionLanguage;
-use Ruwork\RuworkBundle\Mailer\Mailer;
 use Ruwork\RuworkBundle\Serializer\Encoder\ExcelCsvEncoder;
 use Ruwork\RuworkBundle\Validator\Constraints\AliasValidator;
 use Ruwork\RuworkBundle\Validator\Constraints\ConditionValidator;
@@ -44,16 +43,6 @@ return function (ContainerConfigurator $container): void {
     // ExpressionLanguage
 
     $services->set(RedirectTargetExpressionLanguage::class);
-
-    // Mailer
-
-    $services
-        ->set(Mailer::class)
-        ->args([
-            '$twig' => ref('twig'),
-            '$swift' => ref('mailer'),
-        ])
-        ->deprecate('The "%service_id%" service is deprecated since RuworkBundle 0.11.1 and will be removed in 0.12.0.');
 
     // Serializer
 

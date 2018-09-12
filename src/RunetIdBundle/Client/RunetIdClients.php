@@ -28,8 +28,11 @@ final class RunetIdClients
         return $this->container->get($name ?? $this->defaultName);
     }
 
+    /**
+     * @deprecated Deprecated since 0.12.0 and will be removed in 0.13.0.
+     */
     public function getDefault(): RunetIdClient
     {
-        return $this->container->get($this->defaultName);
+        return $this->get();
     }
 }

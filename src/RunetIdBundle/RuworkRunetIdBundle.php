@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Ruwork\RunetIdBundle;
 
-use Ruwork\RunetIdBundle\Compiler\DependencyInjection\AddBasketHandlersPass;
-use Ruwork\RunetIdBundle\Compiler\DependencyInjection\AddBasketLoadersPass;
+use Ruwork\RunetIdBundle\DependencyInjection\Compiler\AddBasketHandlersPass;
+use Ruwork\RunetIdBundle\DependencyInjection\Compiler\AddBasketLoadersPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

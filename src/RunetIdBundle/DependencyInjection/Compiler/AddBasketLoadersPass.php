@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ruwork\RunetIdBundle\Compiler\DependencyInjection;
+namespace Ruwork\RunetIdBundle\DependencyInjection\Compiler;
 
 use Ruwork\RunetIdBundle\Basket\Factory\BasketFactory;
 use Ruwork\RunetIdBundle\Basket\Loader\LoaderInterface;

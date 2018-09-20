@@ -68,7 +68,14 @@ class ElementHandler implements HandlerInterface
 
                 $this->onDeleted($element, $data);
             }
+        } catch (RunetIdException $exception) {
+            $data->productException = $exception;
+            $this->onProductException($element, $data, $exception);
 
+            return;
+        }
+
+        try {
             if (null !== $newProductId) {
                 $payAdd = $client
                     ->payAdd()
@@ -84,6 +91,14 @@ class ElementHandler implements HandlerInterface
         } catch (RunetIdException $exception) {
             $data->productException = $exception;
             $this->onProductException($element, $data, $exception);
+
+            if (null !== $oldProductId) {
+                $client
+                    ->payAdd()
+                    ->setOwnerRunetId($element->getRunetId())
+                    ->setProductId($oldProductId)
+                    ->getRawResult();
+            }
         }
     }
 

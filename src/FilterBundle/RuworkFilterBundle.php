@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ruwork\FilterBundle;
 
-use Ruwork\FilterBundle\DependencyInjection\Compiler\RegisterFilterTypesPass;
+use Ruwork\Filter\DependencyInjection\AddFilterTypesPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -13,8 +13,8 @@ final class RuworkFilterBundle extends Bundle
     /**
      * {@inheritdoc}
      */
-    public function build(ContainerBuilder $container): void
+    public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new RegisterFilterTypesPass());
+        $container->addCompilerPass(new AddFilterTypesPass());
     }
 }

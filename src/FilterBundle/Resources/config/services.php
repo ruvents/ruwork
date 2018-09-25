@@ -4,19 +4,24 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Ruwork\FilterBundle\FilterFactory;
-use Ruwork\FilterBundle\FilterFactoryInterface;
+use Ruwork\Filter\Factory\FilterFactory;
+use Ruwork\Filter\Factory\FilterFactoryInterface;
 
 return function (ContainerConfigurator $container): void {
-    $services = $container->services();
-
-    $services->defaults()
+    $services = $container
+        ->services()
+        ->defaults()
         ->private();
 
-    $services->set('ruwork_filter.factory', FilterFactory::class)
+    // Factory
+
+    $services
+        ->set(FilterFactory::class)
         ->args([
-            '$formFactory' => ref('form.factory'),
+            '$accessor' => ref('property_accessor'),
         ]);
 
-    $services->alias(FilterFactoryInterface::class, 'ruwork_filter.factory');
+    $services
+        ->alias(FilterFactoryInterface::class, FilterFactory::class)
+        ->public();
 };

@@ -1,6 +1,6 @@
 {
-    "name": "ruwork/filter-bundle",
-    "description": "Ruwork Filter Bundle",
+    "name": "ruwork/filter",
+    "description": "Ruwork Filter",
     "type": "symfony-bundle",
     "keywords": [
         "ruwork"
@@ -15,13 +15,16 @@
     ],
     "require": {
         "php": "^7.1.3",
-        "ruwork/filter": "^0.13",
-        "symfony/dependency-injection": "^3.4 || ^4.0",
-        "symfony/http-kernel": "^3.4 || ^4.0"
+        "symfony/options-resolver": "^3.4 || ^4.0",
+        "symfony/property-access": "^3.4 || ^4.0",
+        "psr/container": "^1.0"
+    },
+    "require-dev": {
+        "symfony/dependency-injection": "^3.4 || ^4.0"
     },
     "autoload": {
         "psr-4": {
-            "Ruwork\\FilterBundle\\": ""
+            "Ruwork\\Filter\\": ""
         }
     },
     "config": {

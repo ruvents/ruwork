@@ -6,6 +6,9 @@ namespace Ruwork\RunetIdBundle\Basket\Data;
 
 use RunetId\Client\Exception\RunetIdException;
 
+/**
+ * @deprecated since 0.12.5 and will be removed in 0.13
+ */
 abstract class AbstractElementData
 {
     /**

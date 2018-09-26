@@ -14,6 +14,9 @@ use Ruwork\RunetIdBundle\Basket\Data\AbstractElementData as Data;
 use Ruwork\RunetIdBundle\Basket\Element\AbstractElement as Element;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @deprecated since 0.12.5 and will be removed in 0.13
+ */
 class ElementHandler implements HandlerInterface
 {
     /**

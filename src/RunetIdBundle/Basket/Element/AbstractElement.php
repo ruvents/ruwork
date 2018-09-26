@@ -7,6 +7,9 @@ namespace Ruwork\RunetIdBundle\Basket\Element;
 use RunetId\Client\Result\Pay\ItemResult;
 use RunetId\Client\Result\Pay\OrderResult;
 
+/**
+ * @deprecated since 0.12.5 and will be removed in 0.13
+ */
 abstract class AbstractElement
 {
     private $item;

@@ -14,7 +14,9 @@ use Ruwork\RunetIdBundle\Basket\Factory\BasketFactory;
 use Ruwork\RunetIdBundle\Basket\Factory\BasketFactoryInterface;
 use Ruwork\RunetIdBundle\Basket\Form\FormErrorsMapper;
 use Ruwork\RunetIdBundle\Basket\Form\FormErrorsMapperInterface;
+use Ruwork\RunetIdBundle\Basket\Handler\CouponHandler;
 use Ruwork\RunetIdBundle\Basket\Handler\ElementHandler;
+use Ruwork\RunetIdBundle\Basket\Handler\ProductHandler;
 use Ruwork\RunetIdBundle\Client\RunetIdClients;
 use Ruwork\RunetIdBundle\Validator\UniqueEmailValidator;
 
@@ -47,7 +49,15 @@ return function (ContainerConfigurator $container): void {
     // Basket\Handler
 
     $services
+        ->set(CouponHandler::class)
+        ->tag('ruwork_runet_id.basket_handler');
+
+    $services
         ->set(ElementHandler::class)
+        ->tag('ruwork_runet_id.basket_handler');
+
+    $services
+        ->set(ProductHandler::class)
         ->tag('ruwork_runet_id.basket_handler');
 
     // Client

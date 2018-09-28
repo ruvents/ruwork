@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Ruwork\AwsBundle\HttpHandler;
 
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\RejectedPromise;
+use Http\Client\Exception\HttpException;
+use Http\Client\Exception\NetworkException;
 use Http\Client\HttpAsyncClient;
 use Http\Discovery\HttpAsyncClientDiscovery;
 use Psr\Http\Message\RequestInterface;
-use function guzzlehttp\Promise\promise_for;
+use function GuzzleHttp\Promise\promise_for;
 
 final class HttplugHandler
 {
@@ -21,6 +24,22 @@ final class HttplugHandler
 
     public function __invoke(RequestInterface $request): PromiseInterface
     {
-        return promise_for($this->client->sendAsyncRequest($request));
+        $promise = $this->client->sendAsyncRequest($request);
+        $promise->wait(false);
+
+        return promise_for($promise)
+            ->otherwise(static function (\Throwable $exception): RejectedPromise {
+                $reason = [
+                    'exception' => $exception,
+                    'connection_error' => $exception instanceof NetworkException,
+                    'response' => null,
+                ];
+
+                if ($exception instanceof HttpException) {
+                    $reason['response'] = $exception->getResponse();
+                }
+
+                return new RejectedPromise($reason);
+            });
     }
 }

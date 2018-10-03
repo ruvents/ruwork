@@ -77,6 +77,12 @@ git push https://github.com/ruvents/ruwork-reform-bundle.git `${SPLITSH_PATH}/sp
 git push https://github.com/ruvents/ruwork-reform.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/Reform --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
 git push https://github.com/ruvents/ruwork-reform.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/Reform --origin=refs/tags/${tag}`:refs/tags/${tag}
 
+git push https://github.com/ruvents/ruwork-reminder-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/ReminderBundle --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
+git push https://github.com/ruvents/ruwork-reminder-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/ReminderBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-reminder.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/Reminder --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
+git push https://github.com/ruvents/ruwork-reminder.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/Reminder --origin=refs/tags/${tag}`:refs/tags/${tag}
+
 git push https://github.com/ruvents/ruwork-route-optional-prefix.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/RouteOptionalPrefix --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
 git push https://github.com/ruvents/ruwork-route-optional-prefix.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/RouteOptionalPrefix --origin=refs/tags/${tag}`:refs/tags/${tag}
 

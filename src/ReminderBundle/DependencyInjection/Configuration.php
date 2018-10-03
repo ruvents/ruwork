@@ -32,7 +32,7 @@ final class Configuration implements ConfigurationInterface
                         ->end()
                         ->validate()
                             ->ifTrue(function (array $value): bool {
-                                return count($value) > 1;
+                                return \count($value) > 1;
                             })
                             ->thenInvalid('You cannot set multiple reminder markers.')
                         ->end()

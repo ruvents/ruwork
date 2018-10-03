@@ -45,7 +45,7 @@ final class RemindCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (!$this->lock()) {
-            $output->writeln("<error>The command is already running in another process.</error>");
+            $output->writeln('<error>The command is already running in another process.</error>');
 
             return 0;
         }

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Ruwork\Reminder\Manager;
 
 use Psr\Container\ContainerInterface;
-use Ruwork\Reminder\Event\ReminderEvents;
 use Ruwork\Reminder\Event\ReminderEvent;
+use Ruwork\Reminder\Event\ReminderEvents;
 use Ruwork\Reminder\Item\ClearableItemInterface;
 use Ruwork\Reminder\Item\ItemInterface;
 use Ruwork\Reminder\Marker\MarkerInterface;

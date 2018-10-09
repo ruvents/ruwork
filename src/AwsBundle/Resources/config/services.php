@@ -6,6 +6,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Aws\Sdk;
 use Aws\Ses\SesClient;
+use Ruwork\AwsBundle\Client\AwsSdks;
 use Ruwork\AwsBundle\HttpHandler\HttplugHandler;
 
 return function (ContainerConfigurator $container): void {
@@ -22,6 +23,10 @@ return function (ContainerConfigurator $container): void {
     $services
         ->set(SesClient::class)
         ->factory([ref(Sdk::class), 'createSes']);
+
+    // Sdks
+
+    $services->set(AwsSdks::class);
 
     // HttpHandler
 

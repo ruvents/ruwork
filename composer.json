@@ -129,6 +129,7 @@
             "Ruwork\\Synchronizer\\": "src/Synchronizer/",
             "Ruwork\\TemplateI18nBundle\\": "src/TemplateI18nBundle/",
             "Ruwork\\UploadBundle\\": "src/UploadBundle/",
+            "Ruwork\\ValidatorConstraints\\": "src/ValidatorConstraints/",
             "Ruwork\\WizardBundle\\": "src/WizardBundle/"
         }
     },

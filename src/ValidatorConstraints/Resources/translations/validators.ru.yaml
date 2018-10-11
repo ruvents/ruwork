@@ -1,0 +1,1 @@
+Host {{ value }} was not found. Checked {{ types }} resource records.: Хост {{ value }} не найден. Проверены ресурсные записи {{ types }}.

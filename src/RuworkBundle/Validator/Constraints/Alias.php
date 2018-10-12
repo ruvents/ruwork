@@ -6,6 +6,8 @@ namespace Ruwork\RuworkBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
+@\trigger_error(\sprintf('Class %s is deprecated since 0.12 and will be removed in 0.13. Use ruwork/validator-constraints package instead.', Alias::class), E_USER_DEPRECATED);
+
 /**
  * @Annotation()
  * @Target({"PROPERTY", "METHOD", "ANNOTATION"})

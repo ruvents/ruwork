@@ -12,6 +12,8 @@ use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
+@\trigger_error(\sprintf('Class %s is deprecated since 0.12 and will be removed in 0.13. Use ruwork/validator-constraints package instead.', AliasValidator::class), E_USER_DEPRECATED);
+
 class AliasValidator extends ConstraintValidator
 {
     private $managerRegistry;

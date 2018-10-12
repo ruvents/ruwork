@@ -13,7 +13,11 @@ final class PayCollection
 {
     private $client;
     private $payList;
-    private $payItems;
+
+    /**
+     * @var ItemsResult[]
+     */
+    private $payItems = [];
 
     public function __construct(Client $client)
     {
@@ -21,10 +25,20 @@ final class PayCollection
     }
 
     /**
+     * @param int $ownerRunetId
+     *
      * @return array[]|\Generator yields tuples [ItemResult, ?OrderResult]
      */
-    public function iterateItemsAndOrders(bool $withPayItems = true): \Generator
+    public function iterateItemsAndOrders($ownerRunetId = null): \Generator
     {
+        if (\is_bool($ownerRunetId)) {
+            @\trigger_error(\sprintf('Passing bool as the first argument to %s is deprecated since 0.12 and will be not possible in 0.13. Pass null or integer instead.', __METHOD__), E_USER_DEPRECATED);
+
+            if ($ownerRunetId) {
+                $ownerRunetId = null;
+            }
+        }
+
         $items = [];
 
         foreach ($this->getPayList()->Items as $item) {
@@ -45,8 +59,8 @@ final class PayCollection
             }
         }
 
-        if ($withPayItems) {
-            foreach ($this->getPayItems()->Items as $item) {
+        if (false !== $ownerRunetId) {
+            foreach ($this->getPayItems($ownerRunetId)->Items as $item) {
                 if (isset($items[$item->Id])) {
                     continue;
                 }
@@ -57,14 +71,24 @@ final class PayCollection
     }
 
     /**
+     * @param int $ownerRunetId
+     *
      * @return array tuples [ItemResult, ?OrderResult]
      */
-    public function findPriorityItemsAndOrders(callable $filter, bool $withPayItems = true): array
+    public function findPriorityItemsAndOrders(callable $filter, $ownerRunetId = null): array
     {
+        if (\is_bool($ownerRunetId)) {
+            @\trigger_error(\sprintf('Passing bool as the second argument to %s is deprecated since 0.12 and will be not possible in 0.13. Pass null or integer instead.', __METHOD__), E_USER_DEPRECATED);
+
+            if ($ownerRunetId) {
+                $ownerRunetId = null;
+            }
+        }
+
         $prioritized = [];
 
         /** @var ItemResult $item */
-        foreach ($this->iterateItemsAndOrders($withPayItems) as [$item, $order]) {
+        foreach ($this->iterateItemsAndOrders($ownerRunetId) as [$item, $order]) {
             $priority = $filter($item, $order);
 
             if (null === $priority) {
@@ -82,11 +106,21 @@ final class PayCollection
     }
 
     /**
+     * @param int $ownerRunetId
+     *
      * @return array a tuple [?ItemResult, ?OrderResult]
      */
-    public function findPriorityItemAndOrder(callable $filter, bool $withPayItems = true): array
+    public function findPriorityItemAndOrder(callable $filter, $ownerRunetId = null): array
     {
-        $prioritized = $this->findPriorityItemsAndOrders($filter, $withPayItems);
+        if (\is_bool($ownerRunetId)) {
+            @\trigger_error(\sprintf('Passing bool as the second argument to %s is deprecated since 0.12 and will be not possible in 0.13. Pass null or integer instead.', __METHOD__), E_USER_DEPRECATED);
+
+            if ($ownerRunetId) {
+                $ownerRunetId = null;
+            }
+        }
+
+        $prioritized = $this->findPriorityItemsAndOrders($filter, $ownerRunetId);
 
         return \reset($prioritized) ?: [null, null];
     }
@@ -108,12 +142,19 @@ final class PayCollection
         return $this->payList;
     }
 
-    private function getPayItems(): ItemsResult
+    private function getPayItems(?int $ownerRunetId = null): ItemsResult
     {
-        if (null === $this->payItems) {
-            $this->payItems = $this->client->payItems()->getResult();
+        if (null === $ownerRunetId) {
+            $ownerRunetId = $this->client->getPayerRunetId();
         }
 
-        return $this->payItems;
+        if (!isset($this->payItems[$ownerRunetId])) {
+            $this->payItems[$ownerRunetId] = $this->client
+                ->payItems()
+                ->setOwnerRunetId($ownerRunetId)
+                ->getResult();
+        }
+
+        return $this->payItems[$ownerRunetId];
     }
 }

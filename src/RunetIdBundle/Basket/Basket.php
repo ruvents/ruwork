@@ -135,7 +135,11 @@ final class Basket
         if (\is_bool($ownerRunetId)) {
             @\trigger_error(\sprintf('Passing bool as the first argument to %s is deprecated. Pass null or integer instead.', __METHOD__), E_USER_DEPRECATED);
 
-            $ownerRunetId = $ownerRunetId ? $this->payerRunetId : null;
+            if ($ownerRunetId) {
+                $ownerRunetId = $this->payerRunetId;
+            }
+        } elseif (null === $ownerRunetId) {
+            $ownerRunetId = $this->payerRunetId;
         }
 
         $items = [];
@@ -158,7 +162,7 @@ final class Basket
             }
         }
 
-        if (null !== $ownerRunetId) {
+        if (false !== $ownerRunetId) {
             foreach ($this->getPayItems($ownerRunetId)->Items as $item) {
                 if (isset($items[$item->Id])) {
                     continue;
@@ -179,7 +183,9 @@ final class Basket
         if (\is_bool($ownerRunetId)) {
             @\trigger_error(\sprintf('Passing bool as the second argument to %s is deprecated. Pass null or integer instead.', __METHOD__), E_USER_DEPRECATED);
 
-            $ownerRunetId = $ownerRunetId ? $this->payerRunetId : null;
+            if ($ownerRunetId) {
+                $ownerRunetId = $this->payerRunetId;
+            }
         }
 
         $prioritized = [];
@@ -212,7 +218,9 @@ final class Basket
         if (\is_bool($ownerRunetId)) {
             @\trigger_error(\sprintf('Passing bool as the second argument to %s is deprecated. Pass null or integer instead.', __METHOD__), E_USER_DEPRECATED);
 
-            $ownerRunetId = $ownerRunetId ? $this->payerRunetId : null;
+            if ($ownerRunetId) {
+                $ownerRunetId = $this->payerRunetId;
+            }
         }
 
         $prioritized = $this->findPriorityItemsAndOrders($filter, $ownerRunetId);

@@ -5,26 +5,26 @@ declare(strict_types=1);
 namespace Ruwork\AwsBundle\Client;
 
 use Aws\Sdk;
-use Symfony\Component\DependencyInjection\ServiceLocator;
+use Psr\Container\ContainerInterface;
 
 final class AwsSdks
 {
-    private $locator;
+    private $container;
     private $defaultName;
 
-    public function __construct(ServiceLocator $locator, string $defaultName)
+    public function __construct(ContainerInterface $container, string $defaultName)
     {
-        $this->locator = $locator;
+        $this->container = $container;
         $this->defaultName = $defaultName;
     }
 
     public function has(string $name): bool
     {
-        return $this->locator->has($name);
+        return $this->container->has($name);
     }
 
     public function get(?string $name = null): Sdk
     {
-        return $this->locator->get($name ?? $this->defaultName);
+        return $this->container->get($name ?? $this->defaultName);
     }
 }

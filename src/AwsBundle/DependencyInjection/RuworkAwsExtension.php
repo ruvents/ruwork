@@ -44,7 +44,7 @@ final class RuworkAwsExtension extends ConfigurableExtension
             $container
                 ->findDefinition(AwsSdks::class)
                 ->setArguments([
-                    '$locator' => ServiceLocatorTagPass::register($container, $references),
+                    '$container' => ServiceLocatorTagPass::register($container, $references),
                     '$defaultName' => $config['default_sdk'],
                 ]);
         }

@@ -115,6 +115,7 @@
             "Ruwork\\FilterBundle\\": "src/FilterBundle/",
             "Ruwork\\FrujaxBundle\\": "src/FrujaxBundle/",
             "Ruwork\\ManualAuthBundle\\": "src/ManualAuthBundle/",
+            "Ruwork\\ObjectStoreBundle\\": "src/ObjectStoreBundle/",
             "Ruwork\\ObjectStore\\": "src/ObjectStore/",
             "Ruwork\\PaginatorBundle\\": "src/PaginatorBundle/",
             "Ruwork\\Paginator\\": "src/Paginator/",

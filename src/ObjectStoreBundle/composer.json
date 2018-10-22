@@ -1,0 +1,35 @@
+{
+    "name": "ruwork/object-store-bundle",
+    "description": "Ruwork Object Store Bundle",
+    "type": "symfony-bundle",
+    "keywords": [
+        "ruwork"
+    ],
+    "homepage": "https://ruvents.github.io/ruwork/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Valentin Udaltsov",
+            "email": "udaltsov@ruvents.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "ruwork/object-store": "^0.12",
+        "symfony/dependency-injection": "^3.4 || ^4.0",
+        "symfony/http-kernel": "^3.4 || ^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ruwork\\ObjectStoreBundle\\": ""
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.12-dev"
+        }
+    }
+}

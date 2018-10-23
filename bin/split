@@ -65,6 +65,12 @@ git push https://github.com/ruvents/ruwork-frujax-bundle.git `${SPLITSH_PATH}/sp
 git push https://github.com/ruvents/ruwork-manual-auth-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/ManualAuthBundle --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
 git push https://github.com/ruvents/ruwork-manual-auth-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/ManualAuthBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
 
+git push https://github.com/ruvents/ruwork-object-store-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/ObjectStoreBundle --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
+git push https://github.com/ruvents/ruwork-object-store-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/ObjectStoreBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
+
+git push https://github.com/ruvents/ruwork-object-store.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/ObjectStore --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
+git push https://github.com/ruvents/ruwork-object-store.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/ObjectStore --origin=refs/tags/${tag}`:refs/tags/${tag}
+
 git push https://github.com/ruvents/ruwork-paginator-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/PaginatorBundle --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
 git push https://github.com/ruvents/ruwork-paginator-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/PaginatorBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
 

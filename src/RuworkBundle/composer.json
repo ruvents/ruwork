@@ -30,7 +30,6 @@
         "symfony/expression-language": "^3.4 || ^4.0",
         "symfony/security": "^3.4 || ^4.0",
         "symfony/serializer": "^3.4 || ^4.0",
-        "symfony/validator": "^3.4 || ^4.0",
         "twig/twig": "^2.4"
     },
     "autoload": {

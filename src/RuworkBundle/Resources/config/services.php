@@ -9,8 +9,6 @@ use Ruwork\RuworkBundle\Doctrine\NamingStrategy\RuworkNamingStrategy;
 use Ruwork\RuworkBundle\EventListener\RedirectAnnotationListener;
 use Ruwork\RuworkBundle\ExpressionLanguage\RedirectTargetExpressionLanguage;
 use Ruwork\RuworkBundle\Serializer\Encoder\ExcelCsvEncoder;
-use Ruwork\RuworkBundle\Validator\Constraints\AliasValidator;
-use Ruwork\RuworkBundle\Validator\Constraints\ConditionValidator;
 
 return function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -52,17 +50,4 @@ return function (ContainerConfigurator $container): void {
             '$csvEncoder' => ref('serializer.encoder.csv'),
         ])
         ->tag('serializer.encoder');
-
-    // Validator
-
-    $services
-        ->set(AliasValidator::class)
-        ->args([
-            '$managerRegistry' => ref('doctrine'),
-        ])
-        ->tag('validator.constraint_validator');
-
-    $services
-        ->set(ConditionValidator::class)
-        ->tag('validator.constraint_validator');
 };

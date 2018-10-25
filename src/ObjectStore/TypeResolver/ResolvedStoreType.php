@@ -52,27 +52,7 @@ final class ResolvedStoreType implements ResolvedStoreTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function resolveOptions(array $options): array
-    {
-        return $this->getOptionsResolver()->resolve($options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function configureStore(StoreConfiguratorInterface $configurator, array $options): void
-    {
-        foreach ($this->requiredTypes as $requiredType) {
-            $requiredType->configureStore($configurator, $options);
-        }
-
-        $this->type->configureStore($configurator, $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    private function getOptionsResolver(): OptionsResolver
+    public function getOptionsResolver(): OptionsResolver
     {
         if (null !== $this->optionsResolver) {
             return $this->optionsResolver;
@@ -87,5 +67,17 @@ final class ResolvedStoreType implements ResolvedStoreTypeInterface
         $this->type->configureOptions($resolver);
 
         return $this->optionsResolver = $resolver;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureStore(StoreConfiguratorInterface $configurator, array $options): void
+    {
+        foreach ($this->requiredTypes as $requiredType) {
+            $requiredType->configureStore($configurator, $options);
+        }
+
+        $this->type->configureStore($configurator, $options);
     }
 }

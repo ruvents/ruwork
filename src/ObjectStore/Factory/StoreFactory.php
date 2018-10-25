@@ -23,7 +23,7 @@ final class StoreFactory implements StoreFactoryInterface
     public function create(string $type, array $options = []): StoreInterface
     {
         $resolvedType = $this->typeResolver->resolve($type);
-        $options = $resolvedType->resolveOptions($options);
+        $options = $resolvedType->getOptionsResolver()->resolve($options);
         $builder = new StoreBuilder();
         $resolvedType->configureStore($builder, $options);
 

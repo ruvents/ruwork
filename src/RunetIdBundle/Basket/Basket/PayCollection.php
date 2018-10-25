@@ -13,10 +13,6 @@ final class PayCollection
 {
     private $client;
     private $payList;
-
-    /**
-     * @var ItemsResult[]
-     */
     private $payItems = [];
 
     public function __construct(Client $client)
@@ -25,20 +21,10 @@ final class PayCollection
     }
 
     /**
-     * @param int $ownerRunetId
-     *
      * @return array[]|\Generator yields tuples [ItemResult, ?OrderResult]
      */
-    public function iterateItemsAndOrders($ownerRunetId = null): \Generator
+    public function iterateItemsAndOrders(?int $ownerRunetId = null): \Generator
     {
-        if (\is_bool($ownerRunetId)) {
-            @\trigger_error(\sprintf('Passing bool as the first argument to %s is deprecated since 0.12 and will be not possible in 0.13. Pass null or integer instead.', __METHOD__), E_USER_DEPRECATED);
-
-            if ($ownerRunetId) {
-                $ownerRunetId = null;
-            }
-        }
-
         $items = [];
 
         foreach ($this->getPayList()->Items as $item) {
@@ -59,7 +45,7 @@ final class PayCollection
             }
         }
 
-        if (false !== $ownerRunetId) {
+        if (null !== $ownerRunetId) {
             foreach ($this->getPayItems($ownerRunetId)->Items as $item) {
                 if (isset($items[$item->Id])) {
                     continue;
@@ -71,20 +57,10 @@ final class PayCollection
     }
 
     /**
-     * @param int $ownerRunetId
-     *
      * @return array tuples [ItemResult, ?OrderResult]
      */
-    public function findPriorityItemsAndOrders(callable $filter, $ownerRunetId = null): array
+    public function findPriorityItemsAndOrders(callable $filter, ?int $ownerRunetId = null): array
     {
-        if (\is_bool($ownerRunetId)) {
-            @\trigger_error(\sprintf('Passing bool as the second argument to %s is deprecated since 0.12 and will be not possible in 0.13. Pass null or integer instead.', __METHOD__), E_USER_DEPRECATED);
-
-            if ($ownerRunetId) {
-                $ownerRunetId = null;
-            }
-        }
-
         $prioritized = [];
 
         /** @var ItemResult $item */
@@ -106,20 +82,10 @@ final class PayCollection
     }
 
     /**
-     * @param int $ownerRunetId
-     *
      * @return array a tuple [?ItemResult, ?OrderResult]
      */
-    public function findPriorityItemAndOrder(callable $filter, $ownerRunetId = null): array
+    public function findPriorityItemAndOrder(callable $filter, ?int $ownerRunetId = null): array
     {
-        if (\is_bool($ownerRunetId)) {
-            @\trigger_error(\sprintf('Passing bool as the second argument to %s is deprecated since 0.12 and will be not possible in 0.13. Pass null or integer instead.', __METHOD__), E_USER_DEPRECATED);
-
-            if ($ownerRunetId) {
-                $ownerRunetId = null;
-            }
-        }
-
         $prioritized = $this->findPriorityItemsAndOrders($filter, $ownerRunetId);
 
         return \reset($prioritized) ?: [null, null];

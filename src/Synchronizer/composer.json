@@ -1,7 +1,7 @@
 {
     "name": "ruwork/synchronizer",
     "description": "Ruwork Synchronizer",
-    "type": "symfony-bundle",
+    "type": "library",
     "keywords": [
         "ruwork"
     ],

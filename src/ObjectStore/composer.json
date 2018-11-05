@@ -1,7 +1,7 @@
 {
     "name": "ruwork/object-store",
     "description": "Ruwork Object Store",
-    "type": "symfony-bundle",
+    "type": "library",
     "keywords": [
         "ruwork"
     ],

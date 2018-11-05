@@ -1,7 +1,7 @@
 {
     "name": "ruwork/paginator",
     "description": "Ruwork Paginator",
-    "type": "symfony-bundle",
+    "type": "library",
     "keywords": [
         "ruwork"
     ],

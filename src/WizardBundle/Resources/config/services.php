@@ -4,41 +4,73 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Ruwork\WizardBundle\EventListener\StepNotFoundExceptionListener;
-use Ruwork\WizardBundle\Storage\SessionStorage;
-use Ruwork\WizardBundle\Storage\StorageInterface;
-use Ruwork\WizardBundle\Type\TypeFacadeFactory;
-use Ruwork\WizardBundle\WizardFactory;
-use Ruwork\WizardBundle\WizardFactoryInterface;
+use Ruwork\Wizard\Step\Factory\StepFactory;
+use Ruwork\Wizard\Step\Factory\StepFactoryInterface;
+use Ruwork\Wizard\Step\Type\BaseStepType;
+use Ruwork\Wizard\Step\Type\SymfonyFormStepType;
+use Ruwork\Wizard\Step\Type\SymfonyValidatorStepType;
+use Ruwork\Wizard\Step\TypeResolver\StepTypeResolver;
+use Ruwork\Wizard\Step\TypeResolver\StepTypeResolverInterface;
+use Ruwork\Wizard\Wizard\Factory\WizardFactory;
+use Ruwork\Wizard\Wizard\Factory\WizardFactoryInterface;
+use Ruwork\Wizard\Wizard\TypeResolver\WizardTypeResolver;
+use Ruwork\Wizard\Wizard\TypeResolver\WizardTypeResolverInterface;
 
 return function (ContainerConfigurator $container): void {
     $services = $container->services()
         ->defaults()
         ->private();
 
-    $services->set(TypeFacadeFactory::class)
+    // Step\Factory
+
+    $services
+        ->set(StepFactory::class)
         ->args([
-            '$normalizer' => ref('serializer'),
-            '$denormalizer' => ref('serializer'),
-            '$validator' => ref('validator'),
+            '$typeResolver' => ref(StepTypeResolverInterface::class),
+        ]);
+
+    $services->alias(StepFactoryInterface::class, StepFactory::class);
+
+    // Step\Type
+
+    $services
+        ->set(BaseStepType::class)
+        ->tag('ruwork_wizard.step_type');
+
+    $services
+        ->set(SymfonyFormStepType::class)
+        ->args([
             '$formFactory' => ref('form.factory'),
-        ]);
+        ])
+        ->tag('ruwork_wizard.step_type');
 
-    $services->set(SessionStorage::class)
+    $services
+        ->set(SymfonyValidatorStepType::class)
         ->args([
-            '$session' => ref('session'),
-        ]);
+            '$validator' => ref('validator'),
+        ])
+        ->tag('ruwork_wizard.step_type');
 
-    $services->alias(StorageInterface::class, SessionStorage::class);
+    // Step\TypeResolver
 
-    $services->set(WizardFactory::class)
+    $services->set(StepTypeResolver::class);
+
+    $services->alias(StepTypeResolverInterface::class, StepTypeResolver::class);
+
+    // Wizard\Factory
+
+    $services
+        ->set(WizardFactory::class)
         ->args([
-            '$typeFacadeFactory' => ref(TypeFacadeFactory::class),
-            '$storage' => ref(StorageInterface::class),
+            '$typeResolver' => ref(WizardTypeResolverInterface::class),
+            '$stepFactory' => ref(StepFactoryInterface::class),
         ]);
 
     $services->alias(WizardFactoryInterface::class, WizardFactory::class);
 
-    $services->set(StepNotFoundExceptionListener::class)
-        ->tag('kernel.event_subscriber');
+    // Wizard\TypeResolver
+
+    $services->set(WizardTypeResolver::class);
+
+    $services->alias(WizardTypeResolverInterface::class, WizardTypeResolver::class);
 };

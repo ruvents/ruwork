@@ -116,4 +116,7 @@ git push https://github.com/ruvents/ruwork-validator-constraints.git `${SPLITSH_
 git push https://github.com/ruvents/ruwork-wizard-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/WizardBundle --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
 git push https://github.com/ruvents/ruwork-wizard-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/WizardBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
 
+git push https://github.com/ruvents/ruwork-wizard.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/Wizard --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
+git push https://github.com/ruvents/ruwork-wizard.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/Wizard --origin=refs/tags/${tag}`:refs/tags/${tag}
+
 echo "Splitting complete.";

@@ -17,8 +17,11 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
  */
 trait ApiControllerTrait
 {
-    protected function createFormBuilder($data = null, array $options = [], string $type = FormType::class): FormBuilderInterface
-    {
+    protected function createApiFormBuilder(
+        $data = null,
+        array $options = [],
+        string $type = FormType::class
+    ): FormBuilderInterface {
         $options['csrf_protection'] = false;
         $options['allow_extra_fields'] = true;
 
@@ -27,9 +30,38 @@ trait ApiControllerTrait
             ->createNamedBuilder('', $type, $data, $options);
     }
 
+    protected function createApiForm(string $type, $data = null, array $options = []): FormInterface
+    {
+        return $this->createApiFormBuilder($data, $options, $type)->getForm();
+    }
+
+    /**
+     * @deprecated since 0.13 and will be removed in 0.14
+     */
+    protected function createFormBuilder(
+        $data = null,
+        array $options = [],
+        string $type = FormType::class
+    ): FormBuilderInterface {
+        @trigger_error(
+            sprintf('Method "%s" is deprecated since 0.13 and will be removed in 0.14', __METHOD__),
+            E_USER_DEPRECATED
+        );
+
+        return $this->createApiFormBuilder($data, $options, $type);
+    }
+
+    /**
+     * @deprecated since 0.13 and will be removed in 0.14
+     */
     protected function createForm(string $type, $data = null, array $options = []): FormInterface
     {
-        return $this->createFormBuilder($data, $options, $type)->getForm();
+        @trigger_error(
+            sprintf('Method "%s" is deprecated since 0.13 and will be removed in 0.14', __METHOD__),
+            E_USER_DEPRECATED
+        );
+
+        return $this->createApiForm($type, $data, $options);
     }
 
     protected function validateForm(FormInterface $form): void

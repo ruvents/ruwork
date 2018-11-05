@@ -2,11 +2,16 @@
     "name": "ruwork/upload-bundle",
     "description": "Ruwork Upload Bundle",
     "type": "symfony-bundle",
-    "keywords": ["ruwork"],
+    "keywords": [
+        "ruwork"
+    ],
     "homepage": "https://ruvents.github.io/ruwork/",
     "license": "MIT",
     "authors": [
-        {"name": "Valentin Udaltsov", "email": "udaltsov@ruvents.com"}
+        {
+            "name": "Valentin Udaltsov",
+            "email": "udaltsov@ruvents.com"
+        }
     ],
     "require": {
         "php": "^7.1.3",

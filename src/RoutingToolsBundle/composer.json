@@ -21,8 +21,8 @@
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "^3.1",
-        "ruwork/bundle-test": "^0.10",
-        "ruwork/route-optional-prefix": "^0.10",
+        "ruwork/bundle-test": "^0.12",
+        "ruwork/route-optional-prefix": "^0.12",
         "symfony/property-access": "^3.4 || ^4.0",
         "symfony/twig-bridge": "^3.4 || ^4.0"
     },

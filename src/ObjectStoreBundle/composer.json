@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": "^7.1.3",
-        "ruwork/object-store": "^0.12",
+        "ruwork/object-store": "^0.13",
         "symfony/dependency-injection": "^3.4 || ^4.0",
         "symfony/http-kernel": "^3.4 || ^4.0"
     },

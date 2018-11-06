@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Ruwork\Wizard\Wizard\View;
 
 use Ruwork\Wizard\Exception\BadMethodCallException;
+use Ruwork\Wizard\Exception\RuntimeException;
 use Ruwork\Wizard\Step\View\SerialStepView;
 use Ruwork\Wizard\Wizard\WizardInterface;
 
 final class SerialWizardView implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     private $steps;
+    private $current;
 
     /**
      * @param SerialStepView[] $steps
@@ -31,6 +33,21 @@ final class SerialWizardView implements \ArrayAccess, \Countable, \IteratorAggre
         }
 
         return new self($steps);
+    }
+
+    public function getCurrent(): SerialStepView
+    {
+        if (null !== $this->current) {
+            return $this->current;
+        }
+
+        foreach ($this->steps as $step) {
+            if ($step->isCurrent()) {
+                return $this->current = $step;
+            }
+        }
+
+        throw new RuntimeException('No current step.');
     }
 
     /**

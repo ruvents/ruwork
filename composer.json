@@ -1,17 +1,22 @@
 {
     "name": "ruwork/ruwork",
-    "description": "Ruwork monorepo package.",
     "keywords": [
         "ruwork"
     ],
     "homepage": "https://ruvents.github.io/ruwork/",
-    "license": "MIT",
     "authors": [
         {
             "name": "Valentin Udaltsov",
             "email": "udaltsov@ruvents.com"
         }
     ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.13-dev"
+        }
+    },
+    "description": "Ruwork monorepo package.",
+    "license": "MIT",
     "require": {
         "php": "^7.1.3",
         "aws/aws-sdk-php": "^3.0",
@@ -44,9 +49,11 @@
     "require-dev": {
         "php": "^7.1.3",
         "doctrine/annotations": "^1.6",
+        "doctrine/doctrine-bundle": "^1.9",
         "doctrine/orm": "^2.5",
         "friendsofphp/php-cs-fixer": "^2.13",
         "guzzlehttp/psr7": "^1.0",
+        "happyr/doctrine-specification": "^0.7.2",
         "hwi/oauth-bundle": "^0.6.1",
         "matthiasnoback/symfony-config-test": "^3.1",
         "matthiasnoback/symfony-dependency-injection-test": "^2.3",
@@ -75,38 +82,6 @@
         "symplify/monorepo-builder": "^4.6",
         "twig/twig": "^2.4",
         "webthink/psr-test-container": "^1.0"
-    },
-    "replace": {
-        "ruwork/admin-bundle": "*",
-        "ruwork/annotation-tools": "*",
-        "ruwork/api-bundle": "*",
-        "ruwork/aws-bundle": "*",
-        "ruwork/bundle-test": "*",
-        "ruwork/doctrine-behaviors-bundle": "*",
-        "ruwork/doctrine-postgresql-bundle": "*",
-        "ruwork/feature-bundle": "*",
-        "ruwork/filter-bundle": "*",
-        "ruwork/frujax-bundle": "*",
-        "ruwork/manual-auth-bundle": "*",
-        "ruwork/object-store": "*",
-        "ruwork/object-store-bundle": "*",
-        "ruwork/paginator": "*",
-        "ruwork/paginator-bundle": "*",
-        "ruwork/reform": "*",
-        "ruwork/reform-bundle": "*",
-        "ruwork/reminder": "*",
-        "ruwork/reminder-bundle": "*",
-        "ruwork/route-optional-prefix": "*",
-        "ruwork/routing-tools-bundle": "*",
-        "ruwork/runet-id-bundle": "*",
-        "ruwork/ruwork-bundle": "*",
-        "ruwork/synchronizer": "*",
-        "ruwork/synchronizer-bundle": "*",
-        "ruwork/template-i18n-bundle": "*",
-        "ruwork/upload-bundle": "*",
-        "ruwork/validator-constraints": "*",
-        "ruwork/wizard": "*",
-        "ruwork/wizard-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -147,12 +122,39 @@
             "Ruwork\\": "tests/"
         }
     },
+    "replace": {
+        "ruwork/admin-bundle": "*",
+        "ruwork/annotation-tools": "*",
+        "ruwork/api-bundle": "*",
+        "ruwork/aws-bundle": "*",
+        "ruwork/bundle-test": "*",
+        "ruwork/doctrine-behaviors-bundle": "*",
+        "ruwork/doctrine-postgresql-bundle": "*",
+        "ruwork/feature-bundle": "*",
+        "ruwork/filter-bundle": "*",
+        "ruwork/frujax-bundle": "*",
+        "ruwork/manual-auth-bundle": "*",
+        "ruwork/object-store": "*",
+        "ruwork/object-store-bundle": "*",
+        "ruwork/paginator": "*",
+        "ruwork/paginator-bundle": "*",
+        "ruwork/reform": "*",
+        "ruwork/reform-bundle": "*",
+        "ruwork/reminder": "*",
+        "ruwork/reminder-bundle": "*",
+        "ruwork/route-optional-prefix": "*",
+        "ruwork/routing-tools-bundle": "*",
+        "ruwork/runet-id-bundle": "*",
+        "ruwork/ruwork-bundle": "*",
+        "ruwork/synchronizer": "*",
+        "ruwork/synchronizer-bundle": "*",
+        "ruwork/template-i18n-bundle": "*",
+        "ruwork/upload-bundle": "*",
+        "ruwork/validator-constraints": "*",
+        "ruwork/wizard": "*",
+        "ruwork/wizard-bundle": "*"
+    },
     "config": {
         "sort-packages": true
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.13-dev"
-        }
     }
 }

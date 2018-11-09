@@ -48,7 +48,10 @@ return function (ContainerConfigurator $container): void {
 
     $services
         ->set(UserProcessor::class)
-        ->tag('monolog.processor');
+        ->tag('monolog.processor')
+        ->args([
+            '$tokenStorage' => ref('security.token_storage'),
+        ]);
 
     // Serializer\Encoder
 

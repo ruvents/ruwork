@@ -12,6 +12,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 final class RuworkExtension extends ConfigurableExtension
@@ -25,11 +26,11 @@ final class RuworkExtension extends ConfigurableExtension
         $loader = new PhpFileLoader($container, $locator);
         $loader->load('services.php');
 
-        if (!class_exists(Logger::class)) {
+        if (!class_exists(Logger::class) || !interface_exists(TokenStorageInterface::class)) {
             $container->removeDefinition(UserProcessor::class);
         }
 
-        if (!\interface_exists(SerializerInterface::class)) {
+        if (!interface_exists(SerializerInterface::class)) {
             $container->removeDefinition(DoctrineObjectNormalizer::class);
             $container->removeDefinition(ExcelCsvEncoder::class);
         }

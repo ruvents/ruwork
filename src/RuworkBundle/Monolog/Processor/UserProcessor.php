@@ -4,24 +4,26 @@ declare(strict_types=1);
 
 namespace Ruwork\RuworkBundle\Monolog\Processor;
 
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 final class UserProcessor
 {
-    private $security;
+    private $tokenStorage;
 
-    public function __construct(Security $security)
+    public function __construct(TokenStorageInterface $tokenStorage)
     {
-        $this->security = $security;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function __invoke(array $record): array
     {
-        $user = $this->security->getUser();
+        $token = $this->tokenStorage->getToken();
 
-        if (null !== $user) {
-            $record['context']['user']['username'] = $user->getUsername();
+        if (null === $token) {
+            return $record;
         }
+
+        $record['context']['user']['username'] = $token->getUsername();
 
         return $record;
     }

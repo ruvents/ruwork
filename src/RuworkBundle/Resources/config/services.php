@@ -8,6 +8,7 @@ use Ruwork\RuworkBundle\Asset\VersionStrategy\FilemtimeStrategy;
 use Ruwork\RuworkBundle\Doctrine\NamingStrategy\RuworkNamingStrategy;
 use Ruwork\RuworkBundle\EventListener\RedirectAnnotationListener;
 use Ruwork\RuworkBundle\ExpressionLanguage\RedirectTargetExpressionLanguage;
+use Ruwork\RuworkBundle\Monolog\Processor\UserProcessor;
 use Ruwork\RuworkBundle\Serializer\Encoder\ExcelCsvEncoder;
 use Ruwork\RuworkBundle\Serializer\Normalizer\DoctrineObjectNormalizer;
 
@@ -42,6 +43,12 @@ return function (ContainerConfigurator $container): void {
     // ExpressionLanguage
 
     $services->set(RedirectTargetExpressionLanguage::class);
+
+    // Monolog
+
+    $services
+        ->set(UserProcessor::class)
+        ->tag('monolog.processor');
 
     // Serializer\Encoder
 

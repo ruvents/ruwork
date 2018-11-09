@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Ruwork\RuworkBundle\DependencyInjection;
 
+use Monolog\Logger;
+use Ruwork\RuworkBundle\Monolog\Processor\UserProcessor;
 use Ruwork\RuworkBundle\Serializer\Encoder\ExcelCsvEncoder;
 use Ruwork\RuworkBundle\Serializer\Normalizer\DoctrineObjectNormalizer;
 use Symfony\Component\Config\FileLocator;
@@ -22,6 +24,10 @@ final class RuworkExtension extends ConfigurableExtension
         $locator = new FileLocator(__DIR__.'/../Resources/config');
         $loader = new PhpFileLoader($container, $locator);
         $loader->load('services.php');
+
+        if (!class_exists(Logger::class)) {
+            $container->removeDefinition(UserProcessor::class);
+        }
 
         if (!\interface_exists(SerializerInterface::class)) {
             $container->removeDefinition(DoctrineObjectNormalizer::class);

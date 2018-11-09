@@ -25,6 +25,7 @@
         "doctrine/doctrine-bundle": "^1.9",
         "doctrine/orm": "^2.5",
         "happyr/doctrine-specification": "^0.7.2",
+        "monolog/monolog": "^1.0",
         "sensio/framework-extra-bundle": "^5.1",
         "swiftmailer/swiftmailer": "^6.0",
         "symfony/asset": "^3.4 || ^4.0",

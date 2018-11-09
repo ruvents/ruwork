@@ -9,6 +9,7 @@ use Ruwork\RuworkBundle\Doctrine\NamingStrategy\RuworkNamingStrategy;
 use Ruwork\RuworkBundle\EventListener\RedirectAnnotationListener;
 use Ruwork\RuworkBundle\ExpressionLanguage\RedirectTargetExpressionLanguage;
 use Ruwork\RuworkBundle\Serializer\Encoder\ExcelCsvEncoder;
+use Ruwork\RuworkBundle\Serializer\Normalizer\DoctrineObjectNormalizer;
 
 return function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -42,7 +43,7 @@ return function (ContainerConfigurator $container): void {
 
     $services->set(RedirectTargetExpressionLanguage::class);
 
-    // Serializer
+    // Serializer\Encoder
 
     $services
         ->set(ExcelCsvEncoder::class)
@@ -50,4 +51,13 @@ return function (ContainerConfigurator $container): void {
             '$csvEncoder' => ref('serializer.encoder.csv'),
         ])
         ->tag('serializer.encoder');
+
+    // Serializer\Normalizer
+
+    $services
+        ->set(DoctrineObjectNormalizer::class)
+        ->args([
+            '$registry' => ref('doctrine'),
+        ])
+        ->tag('serializer.normalizer', ['priority' => -800]);
 };

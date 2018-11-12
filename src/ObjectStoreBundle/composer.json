@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": "^7.1.3",
-        "ruwork/object-store": "^0.13",
+        "ruwork/object-store": "^0.14",
         "symfony/dependency-injection": "^3.4 || ^4.0",
         "symfony/http-kernel": "^3.4 || ^4.0"
     },
@@ -29,7 +29,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.13-dev"
+            "dev-master": "0.14-dev"
         }
     }
 }

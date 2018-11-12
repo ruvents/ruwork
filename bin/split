@@ -41,9 +41,6 @@ git push https://github.com/ruvents/ruwork-api-bundle.git `${SPLITSH_PATH}/split
 git push https://github.com/ruvents/ruwork-aws-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/AwsBundle --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
 git push https://github.com/ruvents/ruwork-aws-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/AwsBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
 
-git push https://github.com/ruvents/ruwork-bundle-test.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/BundleTest --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
-git push https://github.com/ruvents/ruwork-bundle-test.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/BundleTest --origin=refs/tags/${tag}`:refs/tags/${tag}
-
 git push https://github.com/ruvents/ruwork-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/RuworkBundle --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
 git push https://github.com/ruvents/ruwork-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/RuworkBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
 
@@ -88,12 +85,6 @@ git push https://github.com/ruvents/ruwork-reminder-bundle.git `${SPLITSH_PATH}/
 
 git push https://github.com/ruvents/ruwork-reminder.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/Reminder --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
 git push https://github.com/ruvents/ruwork-reminder.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/Reminder --origin=refs/tags/${tag}`:refs/tags/${tag}
-
-git push https://github.com/ruvents/ruwork-route-optional-prefix.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/RouteOptionalPrefix --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
-git push https://github.com/ruvents/ruwork-route-optional-prefix.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/RouteOptionalPrefix --origin=refs/tags/${tag}`:refs/tags/${tag}
-
-git push https://github.com/ruvents/ruwork-routing-tools-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/RoutingToolsBundle --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
-git push https://github.com/ruvents/ruwork-routing-tools-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/RoutingToolsBundle --origin=refs/tags/${tag}`:refs/tags/${tag}
 
 git push https://github.com/ruvents/ruwork-runet-id-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/RunetIdBundle --origin=refs/heads/${TRAVIS_BRANCH}`:refs/heads/${TRAVIS_BRANCH}
 git push https://github.com/ruvents/ruwork-runet-id-bundle.git `${SPLITSH_PATH}/splitsh-lite --prefix=src/RunetIdBundle --origin=refs/tags/${tag}`:refs/tags/${tag}

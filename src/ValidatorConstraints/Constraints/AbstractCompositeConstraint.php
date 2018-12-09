@@ -29,7 +29,7 @@ abstract class AbstractCompositeConstraint extends Composite
     /**
      * {@inheritdoc}
      */
-    protected function initializeNestedConstraints()
+    final protected function initializeNestedConstraints()
     {
         foreach ($this->getConstraints() as $constraint) {
             $this->constraints[] = $constraint;

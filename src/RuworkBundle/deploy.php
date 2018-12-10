@@ -8,9 +8,19 @@ use Deployer\Task\Context;
 
 require 'recipe/common.php';
 
+function symfonyCommand(string $command): string
+{
+    return \sprintf('{{bin/php}} {{release_path}}/bin/console %s --no-interaction', $command);
+}
+
 function symfony(string $command): void
 {
-    run(\sprintf('{{bin/php}} {{release_path}}/bin/console %s --no-interaction', $command));
+    run(symfonyCommand($command));
+}
+
+function symfonyLocally(string $command): void
+{
+    runLocally(symfonyCommand($command));
 }
 
 // Facts

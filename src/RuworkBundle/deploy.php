@@ -67,6 +67,10 @@ task('doctrine:database:migrate', static function (): void {
     symfony('doctrine:migrations:migrate --allow-no-migration');
 });
 
+task('frontend:upload', static function (): void {
+    runLocally('scp -r public/build/ {{host}}:{{release_path}}/public');
+});
+
 task('gulp:build', static function (): void {
     runLocally('node node_modules/gulp/bin/gulp.js build');
     runLocally('scp -r public/build/ {{host}}:{{release_path}}/public');

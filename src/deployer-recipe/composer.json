@@ -1,0 +1,34 @@
+{
+    "name": "ruwork/deployer-recipe",
+    "description": "Ruwork Deployer Recipe",
+    "type": "library",
+    "keywords": [
+        "ruwork",
+        "deployer"
+    ],
+    "homepage": "https://ruvents.github.io/ruwork/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Valentin Udaltsov",
+            "email": "udaltsov@ruvents.com"
+        }
+    ],
+    "require-dev": {
+        "deployer/deployer": "^6.3",
+        "deployer/recipes": "^6.1"
+    },
+    "autoload": {
+        "files": [
+            "autoload.php"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.14-dev"
+        }
+    }
+}

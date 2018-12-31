@@ -15,24 +15,41 @@ class ConfigurationTest extends TestCase
 {
     use ConfigurationTestCaseTrait;
 
-    public function testDefault(): void
-    {
-        $this->assertProcessedConfigurationEquals([], [
-            'http_handler' => HttplugHandler::class,
-        ]);
-    }
-
-    public function testExtraValues(): void
+    public function testDefaults(): void
     {
         $this->assertProcessedConfigurationEquals(
             [
-                [
-                    'extra' => 'value',
+                'sdks' => [
+                    'extra_value' => 'value',
                 ],
             ],
             [
-                'extra' => 'value',
-                'http_handler' => HttplugHandler::class,
+                'sdks' => [
+                    'default' => [
+                        'http_handler' => HttplugHandler::class,
+                        'extra_value' => 'value',
+                    ],
+                ],
+                'default_sdk' => 'default',
+            ]
+        );
+    }
+
+    public function testSingleSdkExpanding(): void
+    {
+        $this->assertProcessedConfigurationEquals(
+            [
+                'sdks' => [
+                    'http_handler' => HttplugHandler::class,
+                ],
+            ],
+            [
+                'sdks' => [
+                    'default' => [
+                        'http_handler' => HttplugHandler::class,
+                    ],
+                ],
+                'default_sdk' => 'default',
             ]
         );
     }

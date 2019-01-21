@@ -21,7 +21,7 @@ final class Configuration implements ConfigurationInterface
             ->root('ruwork_aws')
                 ->children()
                     ->scalarNode('http_handler')
-                        ->defaultValue(\interface_exists(HttpClient::class) ? HttplugHandler::class : null)
+                        ->defaultValue(interface_exists(HttpClient::class) ? HttplugHandler::class : null)
                     ->end()
                 ->end()
                 ->ignoreExtraKeys(false)

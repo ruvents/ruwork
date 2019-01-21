@@ -32,8 +32,8 @@ class FixDefaultSchemaListener extends AbstractListener
         }
 
         $namespaceRows = $connection->fetchAll('SELECT'." nspname FROM pg_namespace WHERE nspname !~ '^pg_.*' AND nspname != 'information_schema'");
-        $namespaces = \array_column($namespaceRows, 'nspname');
+        $namespaces = array_column($namespaceRows, 'nspname');
 
-        return \array_intersect($namespaces, $schemaManager->getSchemaSearchPaths());
+        return array_intersect($namespaces, $schemaManager->getSchemaSearchPaths());
     }
 }

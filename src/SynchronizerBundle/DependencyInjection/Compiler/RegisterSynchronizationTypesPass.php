@@ -27,8 +27,8 @@ final class RegisterSynchronizationTypesPass implements CompilerPassInterface
         foreach ($syncTypes as $id => $attributes) {
             $class = $container->getDefinition($id)->getClass();
 
-            if (!\is_subclass_of($class, TypeInterface::class)) {
-                throw new \InvalidArgumentException(\sprintf('Synchronization type "%s" must implement "%s".', $class, TypeInterface::class));
+            if (!is_subclass_of($class, TypeInterface::class)) {
+                throw new \InvalidArgumentException(sprintf('Synchronization type "%s" must implement "%s".', $class, TypeInterface::class));
             }
 
             $syncTypeRefs[$class] = new Reference($id);

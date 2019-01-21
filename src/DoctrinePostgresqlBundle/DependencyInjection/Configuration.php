@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
             ->root('ruwork_doctrine_behaviors')
                 ->beforeNormalization()
                     ->ifTrue(function ($value): bool {
-                        return \is_array($value) && !\array_key_exists('profiles', $value);
+                        return \is_array($value) && !array_key_exists('profiles', $value);
                     })
                     ->then(function (array $value): array {
                         return [

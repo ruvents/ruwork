@@ -34,21 +34,21 @@ final class TextLoggerSubscriber implements EventSubscriberInterface
 
     public function postCreate(SyncEvent $event)
     {
-        $this->output->writeln(\sprintf('<fg=green>%s: created #%s.</>', $event->getType(), $event->getId()));
+        $this->output->writeln(sprintf('<fg=green>%s: created #%s.</>', $event->getType(), $event->getId()));
     }
 
     public function postUpdate(SyncEvent $event)
     {
-        $this->output->writeln(\sprintf('<fg=yellow>%s: updated #%s.</>', $event->getType(), $event->getId()));
+        $this->output->writeln(sprintf('<fg=yellow>%s: updated #%s.</>', $event->getType(), $event->getId()));
     }
 
     public function postDelete(SyncEvent $event)
     {
-        $this->output->writeln(\sprintf('<fg=red>%s: deleted #%s.</>', $event->getType(), $event->getId()));
+        $this->output->writeln(sprintf('<fg=red>%s: deleted #%s.</>', $event->getType(), $event->getId()));
     }
 
     public function onComplete(CompleteEvent $event)
     {
-        $this->output->writeln(\sprintf('<fg=green>%s: complete.</>', $event->getType()));
+        $this->output->writeln(sprintf('<fg=green>%s: complete.</>', $event->getType()));
     }
 }

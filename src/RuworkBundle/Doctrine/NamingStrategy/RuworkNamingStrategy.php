@@ -14,7 +14,7 @@ final class RuworkNamingStrategy implements NamingStrategy
      */
     public function classToTableName($className)
     {
-        $className = \preg_replace('/(^.*\\\Entity\\\|\\\)/', '', $className);
+        $className = preg_replace('/(^.*\\\Entity\\\|\\\)/', '', $className);
 
         return Inflector::tableize($className);
     }
@@ -73,8 +73,8 @@ final class RuworkNamingStrategy implements NamingStrategy
 
     private function classToShortTableName(string $className): string
     {
-        if (false !== $rpos = \strrpos($className, '\\')) {
-            $className = \substr($className, $rpos + 1);
+        if (false !== $rpos = strrpos($className, '\\')) {
+            $className = substr($className, $rpos + 1);
         }
 
         return Inflector::tableize($className);

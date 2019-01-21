@@ -34,7 +34,7 @@ final class FormErrorsMapper implements FormErrorsMapperInterface
             $map = $map();
         }
 
-        if (!\is_iterable($map)) {
+        if (!is_iterable($map)) {
             throw new \InvalidArgumentException('Map must be iterable or a callback, returning an iterable value.');
         }
 
@@ -48,7 +48,7 @@ final class FormErrorsMapper implements FormErrorsMapperInterface
             }
 
             if (!$exception instanceof RunetIdException) {
-                throw new \UnexpectedValueException(\sprintf('Expected null or an instance of "%s".', RunetIdException::class));
+                throw new \UnexpectedValueException(sprintf('Expected null or an instance of "%s".', RunetIdException::class));
             }
 
             $data[] = [$target, $exception->getMessage()];

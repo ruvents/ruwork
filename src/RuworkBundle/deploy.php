@@ -10,7 +10,7 @@ require 'recipe/common.php';
 
 function symfony(string $command): void
 {
-    run(\sprintf('{{bin/php}} {{release_path}}/bin/console %s --no-interaction', $command));
+    run(sprintf('{{bin/php}} {{release_path}}/bin/console %s --no-interaction', $command));
 }
 
 // Facts

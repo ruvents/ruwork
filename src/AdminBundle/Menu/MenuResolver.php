@@ -44,7 +44,7 @@ class MenuResolver
      */
     public function resolve(array $items): array
     {
-        return \array_map([$this, 'resolveItem'], $items);
+        return array_map([$this, 'resolveItem'], $items);
     }
 
     private function resolveItem(AbstractItemConfig $item)
@@ -63,7 +63,7 @@ class MenuResolver
                 return $this->resolveEntityItem($item);
         }
 
-        throw new \InvalidArgumentException(\sprintf('Item of class "%s" is not supported.', \get_class($item)));
+        throw new \InvalidArgumentException(sprintf('Item of class "%s" is not supported.', \get_class($item)));
     }
 
     private function resolveUrlItem(UrlItemConfig $item): ResolvedMenuItem
@@ -112,7 +112,7 @@ class MenuResolver
     private function isActive(?string $href, ?string $expression, AbstractItemConfig $item): bool
     {
         if ($href) {
-            $hrefPath = \parse_url($href, PHP_URL_PATH);
+            $hrefPath = parse_url($href, PHP_URL_PATH);
             $requestPath = $this->requestStack->getCurrentRequest()->getPathInfo();
 
             if ($hrefPath === $requestPath) {

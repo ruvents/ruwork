@@ -31,7 +31,7 @@ final class Configuration implements ConfigurationInterface
                                         foreach ($users as $name => $user) {
                                             if (!\is_string($name)) {
                                                 throw new \InvalidArgumentException(
-                                                    \sprintf('"%s" is not a valid id. Must be string.', $name)
+                                                    sprintf('"%s" is not a valid id. Must be string.', $name)
                                                 );
                                             }
                                         }

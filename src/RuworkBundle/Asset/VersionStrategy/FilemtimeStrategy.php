@@ -13,7 +13,7 @@ final class FilemtimeStrategy implements VersionStrategyInterface
      */
     public function getVersion($path)
     {
-        return (string) @\filemtime((string) $path);
+        return (string) @filemtime((string) $path);
     }
 
     /**

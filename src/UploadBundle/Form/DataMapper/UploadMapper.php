@@ -55,7 +55,7 @@ final class UploadMapper implements DataMapperInterface
     public function mapFormsToData($forms, &$data)
     {
         /** @var FormInterface[] $formsArray */
-        $formsArray = \iterator_to_array($forms);
+        $formsArray = iterator_to_array($forms);
         $fileForm = $formsArray[$this->fileName];
         $pathForm = $formsArray[$this->pathName];
 

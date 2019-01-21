@@ -74,7 +74,7 @@ final class PayCollection
             $prioritized[] = [$item, $order, $priority];
         }
 
-        \usort($prioritized, function (array $a, array $b): int {
+        usort($prioritized, function (array $a, array $b): int {
             return $b[2] <=> $a[2];
         });
 
@@ -88,7 +88,7 @@ final class PayCollection
     {
         $prioritized = $this->findPriorityItemsAndOrders($filter, $ownerRunetId);
 
-        return \reset($prioritized) ?: [null, null];
+        return reset($prioritized) ?: [null, null];
     }
 
     /**

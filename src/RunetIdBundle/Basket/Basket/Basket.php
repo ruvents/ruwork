@@ -50,7 +50,7 @@ final class Basket implements BasketInterface
         $element = $loader->load($options, $this, $this->payCollection);
 
         if (!$element instanceof $class) {
-            throw new \UnexpectedValueException(\sprintf(
+            throw new \UnexpectedValueException(sprintf(
                 'Loaded element is expected to be an instance of "%s".',
                 $class
             ));

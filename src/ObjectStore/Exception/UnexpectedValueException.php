@@ -8,7 +8,7 @@ class UnexpectedValueException extends \UnexpectedValueException implements Exce
 {
     public static function createForValue($value, string $expectedType): self
     {
-        return new self(\sprintf(
+        return new self(sprintf(
             'Expected "%s", "%s" given.',
             $expectedType,
             \is_object($value) ? \get_class($value) : \gettype($value)

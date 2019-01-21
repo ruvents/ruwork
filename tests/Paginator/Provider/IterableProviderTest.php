@@ -19,7 +19,7 @@ class IterableProviderTest extends TestCase
         $provider = new IterableProvider($data);
 
         if ($data instanceof \Traversable) {
-            $data = \iterator_to_array($data);
+            $data = iterator_to_array($data);
         }
 
         $this->assertSame(\count($data), $provider->getTotal());
@@ -29,9 +29,9 @@ class IterableProviderTest extends TestCase
     public function getData()
     {
         return [
-            [\range(1, 100), 2, 3, [3, 4, 5]],
-            [new \ArrayIterator(\range(1, 100)), 0, 100, \range(1, 100)],
-            [new \ArrayIterator(\range(1, 100)), 0, 1000, \range(1, 100)],
+            [range(1, 100), 2, 3, [3, 4, 5]],
+            [new \ArrayIterator(range(1, 100)), 0, 100, range(1, 100)],
+            [new \ArrayIterator(range(1, 100)), 0, 1000, range(1, 100)],
         ];
     }
 }

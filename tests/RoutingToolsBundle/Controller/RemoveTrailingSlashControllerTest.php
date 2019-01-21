@@ -24,7 +24,7 @@ class RemoveTrailingSlashControllerTest extends TestCase
 
         $controller = new RemoveTrailingSlashController($factory);
 
-        $request = Request::create('http://local.dev/url/'.\urlencode(' '));
+        $request = Request::create('http://local.dev/url/'.urlencode(' '));
 
         $controller($request);
     }

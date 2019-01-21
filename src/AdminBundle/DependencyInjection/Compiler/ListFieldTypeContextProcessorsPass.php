@@ -32,8 +32,8 @@ class ListFieldTypeContextProcessorsPass implements CompilerPassInterface
             $processor = $container->findDefinition((string) $processorReference);
             $class = $processor->getClass();
 
-            if (!\is_subclass_of($class, TypeContextProcessorInterface::class)) {
-                throw new \InvalidArgumentException(\sprintf('Service tagged with "%s" must implement "%s".', $tag, TypeContextProcessorInterface::class));
+            if (!is_subclass_of($class, TypeContextProcessorInterface::class)) {
+                throw new \InvalidArgumentException(sprintf('Service tagged with "%s" must implement "%s".', $tag, TypeContextProcessorInterface::class));
             }
 
             $type = \call_user_func([$class, 'getType']);
@@ -44,7 +44,7 @@ class ListFieldTypeContextProcessorsPass implements CompilerPassInterface
             $processorReferencesByType[$type][] = $processorReference;
         }
 
-        $processors = \array_map(function (array $references) use ($container) {
+        $processors = array_map(function (array $references) use ($container) {
             return new IteratorArgument($references);
         }, $processorReferencesByType);
 

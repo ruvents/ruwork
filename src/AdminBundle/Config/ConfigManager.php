@@ -100,7 +100,7 @@ class ConfigManager implements CacheWarmerInterface
         }
 
         foreach ($metadata->getFileTimestamps() as $file => $timestamp) {
-            if (@\filemtime($file) !== $timestamp) {
+            if (@filemtime($file) !== $timestamp) {
                 return false;
             }
         }
@@ -113,18 +113,18 @@ class ConfigManager implements CacheWarmerInterface
         $config = new Config();
         $hash = $this->generateHash($this->data);
         $fileTimestamps = [
-            __FILE__ => \filemtime(__FILE__),
+            __FILE__ => filemtime(__FILE__),
         ];
 
         foreach ($this->passes as $pass) {
             $pass->process($config, $this->data);
             $fileName = (new \ReflectionObject($pass))->getFileName();
-            $fileTimestamps[$fileName] = \filemtime($fileName);
+            $fileTimestamps[$fileName] = filemtime($fileName);
         }
 
         foreach ($config->entities as $entityConfig) {
             $fileName = (new \ReflectionClass($entityConfig->class))->getFileName();
-            $fileTimestamps[$fileName] = \filemtime($fileName);
+            $fileTimestamps[$fileName] = filemtime($fileName);
         }
 
         $metadata = new ConfigMetadata($config, $hash, $fileTimestamps, \count($this->passes));
@@ -135,6 +135,6 @@ class ConfigManager implements CacheWarmerInterface
 
     private function generateHash(array $data)
     {
-        return \sha1(\serialize($data));
+        return sha1(serialize($data));
     }
 }

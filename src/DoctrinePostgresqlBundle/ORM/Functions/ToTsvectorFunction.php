@@ -46,7 +46,7 @@ class ToTsvectorFunction extends FunctionNode
      */
     public function getSql(SqlWalker $sqlWalker)
     {
-        return \sprintf('to_tsvector(%s%s)',
+        return sprintf('to_tsvector(%s%s)',
             $this->config ? $this->config->dispatch($sqlWalker).', ' : '',
             $this->document->dispatch($sqlWalker)
         );

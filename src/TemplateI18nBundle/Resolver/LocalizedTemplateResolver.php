@@ -46,9 +46,9 @@ final class LocalizedTemplateResolver implements LocalizedTemplateResolverInterf
             throw $exception;
         }
 
-        throw new \Twig_Error_Loader(\sprintf(
+        throw new \Twig_Error_Loader(sprintf(
             'Failed to find any of the following templates: "%s".',
-            \implode('", "', \array_keys($failed))
+            implode('", "', array_keys($failed))
         ));
     }
 

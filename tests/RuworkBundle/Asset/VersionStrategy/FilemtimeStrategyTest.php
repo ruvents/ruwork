@@ -15,7 +15,7 @@ class FilemtimeStrategyTest extends TestCase
     {
         $strategy = new FilemtimeStrategy();
 
-        $this->assertSame((string) \filemtime(__FILE__), $strategy->getVersion(__FILE__));
+        $this->assertSame((string) filemtime(__FILE__), $strategy->getVersion(__FILE__));
     }
 
     public function testGetVersionOfNonExistingFile(): void
@@ -29,7 +29,7 @@ class FilemtimeStrategyTest extends TestCase
     {
         $strategy = new FilemtimeStrategy();
         $path = __FILE__;
-        $expected = \sprintf('%s?t=%d', $path, \filemtime($path));
+        $expected = sprintf('%s?t=%d', $path, filemtime($path));
 
         $this->assertSame($expected, $strategy->applyVersion($path));
     }

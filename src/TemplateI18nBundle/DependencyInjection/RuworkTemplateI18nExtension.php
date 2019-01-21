@@ -35,7 +35,7 @@ final class RuworkTemplateI18nExtension extends ConfigurableExtension
             $container->setAlias(NamingStrategyInterface::class, $service);
         }
 
-        if (!\class_exists(Template::class)) {
+        if (!class_exists(Template::class)) {
             $container->removeDefinition(TemplateAnnotationListener::class);
         }
     }

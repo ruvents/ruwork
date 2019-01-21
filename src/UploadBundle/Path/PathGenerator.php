@@ -22,9 +22,9 @@ final class PathGenerator implements PathGeneratorInterface, PathLocatorInterfac
      */
     public function generatePath(?string $extension = null): string
     {
-        $random = \bin2hex(\random_bytes(16));
+        $random = bin2hex(random_bytes(16));
 
-        return $this->uploadsDir.'/'.\substr($random, 0, 2).'/'.\substr($random, 2).($extension ? '.'.$extension : '');
+        return $this->uploadsDir.'/'.substr($random, 0, 2).'/'.substr($random, 2).($extension ? '.'.$extension : '');
     }
 
     /**

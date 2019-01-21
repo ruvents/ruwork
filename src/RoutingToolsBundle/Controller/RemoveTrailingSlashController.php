@@ -19,8 +19,8 @@ final class RemoveTrailingSlashController
 
     public function __invoke(Request $request): RedirectResponse
     {
-        $pathInfo = \urldecode($request->getPathInfo());
-        $pathInfo = \rtrim($pathInfo, ' /');
+        $pathInfo = urldecode($request->getPathInfo());
+        $pathInfo = rtrim($pathInfo, ' /');
         $query = $request->getQueryString();
         $uri = $request->getUriForPath($pathInfo).($query ? '?'.$query : '');
 

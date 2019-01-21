@@ -101,7 +101,7 @@ final class RedirectAnnotationListener implements EventSubscriberInterface
 
     private function getConditionVars(Request $request): array
     {
-        return \array_merge($request->attributes->all(), [
+        return array_merge($request->attributes->all(), [
             'request' => $request,
             'object' => $request,
             'user' => $this->tokenStorage->getToken()->getUser(),
@@ -111,7 +111,7 @@ final class RedirectAnnotationListener implements EventSubscriberInterface
 
     private function getTargetVars(Request $request): array
     {
-        return \array_merge($request->attributes->all(), [
+        return array_merge($request->attributes->all(), [
             'request' => $request,
             'url_generator' => $this->urlGenerator,
         ]);

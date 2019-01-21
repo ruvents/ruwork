@@ -39,8 +39,8 @@ final class AddProvidersPass implements CompilerPassInterface
         foreach ($tagged as $id => $attributes) {
             $class = $container->getDefinition($id)->getClass();
 
-            if (!\is_subclass_of($class, ProviderInterface::class)) {
-                throw new \LogicException(\sprintf('Reminder items provider "%s" must implement "%s".', $class, ProviderInterface::class));
+            if (!is_subclass_of($class, ProviderInterface::class)) {
+                throw new \LogicException(sprintf('Reminder items provider "%s" must implement "%s".', $class, ProviderInterface::class));
             }
 
             $references[$class::getName()] = new Reference($id);

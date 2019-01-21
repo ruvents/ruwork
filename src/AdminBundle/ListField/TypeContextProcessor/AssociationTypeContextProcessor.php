@@ -43,7 +43,7 @@ class AssociationTypeContextProcessor implements TypeContextProcessorInterface
             ->getClassMetadata($associationClass);
 
         $context['association_class'] = $associationClass;
-        $context['association_has_to_string'] = \method_exists($associationClass, '__toString');
+        $context['association_has_to_string'] = method_exists($associationClass, '__toString');
         $context['association_id_property'] = $associationMetadata->getIdentifierFieldNames()[0];
         $context['association_single'] = $entityMetadata->isSingleValuedAssociation($propertyPath);
         $context['association_entity_name'] = null;

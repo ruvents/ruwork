@@ -40,8 +40,8 @@ final class AddStoreTypesPass implements CompilerPassInterface
         foreach ($tagged as $id => $attributes) {
             $class = $container->getDefinition($id)->getClass();
 
-            if (!\is_subclass_of($class, StoreTypeInterface::class)) {
-                throw new LogicException(\sprintf(
+            if (!is_subclass_of($class, StoreTypeInterface::class)) {
+                throw new LogicException(sprintf(
                     'Service tagged with "%s" must implement "%s".',
                     $this->tag,
                     StoreTypeInterface::class

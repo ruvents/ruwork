@@ -14,7 +14,7 @@ final class NamespacedCache implements CacheInterface
     public function __construct(CacheInterface $cache, string $namespace)
     {
         $this->cache = $cache;
-        $this->namespace = \dechex(\crc32($namespace));
+        $this->namespace = dechex(crc32($namespace));
     }
 
     /**

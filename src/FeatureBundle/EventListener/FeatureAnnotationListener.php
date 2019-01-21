@@ -41,7 +41,7 @@ final class FeatureAnnotationListener implements EventSubscriberInterface
             $name = $feature->getName();
 
             if (!$this->checker->isAvailable($name)) {
-                $message = $feature->getMessage() ?? \sprintf('Feature "%s" must be available to access this action.', $name);
+                $message = $feature->getMessage() ?? sprintf('Feature "%s" must be available to access this action.', $name);
 
                 throw new HttpException($feature->getStatusCode(), $message);
             }

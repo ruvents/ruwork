@@ -11,6 +11,14 @@ final class TimeTypeDefaultDTIExtension extends AbstractDefaultDTIExtension
     /**
      * {@inheritdoc}
      */
+    public static function getExtendedTypes(): iterable
+    {
+        return [TimeType::class];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getExtendedType()
     {
         return TimeType::class;

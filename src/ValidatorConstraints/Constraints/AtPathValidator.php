@@ -30,6 +30,10 @@ final class AtPathValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, AtPath::class);
         }
 
+        if (null === $value) {
+            return;
+        }
+
         try {
             $value = $this->accessor->getValue($value, $constraint->path);
         } catch (AccessException $exception) {

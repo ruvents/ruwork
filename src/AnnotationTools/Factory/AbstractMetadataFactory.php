@@ -44,6 +44,14 @@ abstract class AbstractMetadataFactory implements MetadataFactoryInterface
                 $mappings = $this->getPropertyMappings($reflectionProperty);
                 $properties[$name] = new PropertyMetadata($name, $mappings);
             }
+
+            if (false !== $reflectionClass->getParentClass()) {
+                foreach ($reflectionClass->getParentClass()->getProperties() as $parentReflectionProperty) {
+                    $name = $parentReflectionProperty->getName();
+                    $mappings = $this->getPropertyMappings($parentReflectionProperty);
+                    $properties[$name] = new PropertyMetadata($name, $mappings);
+                }
+            }
         }
 
         if (isset($targetsMap[self::TARGET_METHOD])) {
@@ -51,6 +59,14 @@ abstract class AbstractMetadataFactory implements MetadataFactoryInterface
                 $name = $reflectionMethod->getName();
                 $mappings = $this->getMethodMappings($reflectionMethod);
                 $methods[$name] = new MethodMetadata($name, $mappings);
+            }
+
+            if (false !== $reflectionClass->getParentClass()) {
+                foreach ($reflectionClass->getParentClass()->getMethods() as $parentReflectionMethod) {
+                    $name = $parentReflectionMethod->getName();
+                    $mappings = $this->getMethodMappings($parentReflectionMethod);
+                    $methods[$name] = new MethodMetadata($name, $mappings);
+                }
             }
         }
 

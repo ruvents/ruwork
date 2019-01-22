@@ -100,27 +100,27 @@ abstract class AbstractMetadataFactory implements MetadataFactoryInterface
 
     private function getPropertiesMetadata(\ReflectionClass $reflectionClass, array &$properties): void
     {
-        if (false === $reflectionClass->getParentClass()) {
-            foreach ($reflectionClass->getProperties() as $reflectionProperty) {
-                $name = $reflectionProperty->getName();
-                $mappings = $this->getPropertyMappings($reflectionProperty);
-                $properties[$name] = new PropertyMetadata($name, $mappings);
-            }
-        } else {
+        if ($reflectionClass->getParentClass()) {
             $this->getPropertiesMetadata($reflectionClass->getParentClass(), $properties);
+        }
+
+        foreach ($reflectionClass->getProperties() as $reflectionProperty) {
+            $name = $reflectionProperty->getName();
+            $mappings = $this->getPropertyMappings($reflectionProperty);
+            $properties[$name] = new PropertyMetadata($name, $mappings);
         }
     }
 
     private function getMethodsMetadata(\ReflectionClass $reflectionClass, array &$methods): void
     {
-        if (false === $reflectionClass->getParentClass()) {
-            foreach ($reflectionClass->getMethods() as $reflectionMethod) {
-                $name = $reflectionMethod->getName();
-                $mappings = $this->getMethodMappings($reflectionMethod);
-                $methods[$name] = new MethodMetadata($name, $mappings);
-            }
-        } else {
+        if ($reflectionClass->getParentClass()) {
             $this->getMethodsMetadata($reflectionClass->getParentClass(), $methods);
+        }
+
+        foreach ($reflectionClass->getMethods() as $reflectionMethod) {
+            $name = $reflectionMethod->getName();
+            $mappings = $this->getMethodMappings($reflectionMethod);
+            $methods[$name] = new MethodMetadata($name, $mappings);
         }
     }
 }

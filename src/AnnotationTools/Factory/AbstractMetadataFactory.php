@@ -98,7 +98,7 @@ abstract class AbstractMetadataFactory implements MetadataFactoryInterface
         return $mappings;
     }
 
-    private function getPropertiesMetadata($reflectionClass, $properties)
+    private function getPropertiesMetadata(\ReflectionClass $reflectionClass, array &$properties): void
     {
         if (false === $reflectionClass->getParentClass()) {
             foreach ($reflectionClass->getProperties() as $reflectionProperty) {
@@ -111,7 +111,7 @@ abstract class AbstractMetadataFactory implements MetadataFactoryInterface
         }
     }
 
-    private function getMethodsMetadata($reflectionClass, $methods)
+    private function getMethodsMetadata(\ReflectionClass $reflectionClass, array &$methods): void
     {
         if (false === $reflectionClass->getParentClass()) {
             foreach ($reflectionClass->getMethods() as $reflectionMethod) {

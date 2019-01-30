@@ -16,6 +16,14 @@ final class CheckboxTypeFalseValueExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    public static function getExtendedTypes(): iterable
+    {
+        return [CheckboxType::class];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

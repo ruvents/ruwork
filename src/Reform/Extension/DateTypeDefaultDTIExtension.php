@@ -11,6 +11,14 @@ final class DateTypeDefaultDTIExtension extends AbstractDefaultDTIExtension
     /**
      * {@inheritdoc}
      */
+    public static function getExtendedTypes(): iterable
+    {
+        return [DateType::class];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getExtendedType()
     {
         return DateType::class;

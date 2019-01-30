@@ -14,6 +14,14 @@ final class FormTypeNovalidateExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    public static function getExtendedTypes(): iterable
+    {
+        return [FormType::class];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if ($form->isRoot()) {

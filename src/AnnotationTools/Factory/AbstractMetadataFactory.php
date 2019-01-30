@@ -39,19 +39,11 @@ abstract class AbstractMetadataFactory implements MetadataFactoryInterface
         }
 
         if (isset($targetsMap[self::TARGET_PROPERTY])) {
-            foreach ($reflectionClass->getProperties() as $reflectionProperty) {
-                $name = $reflectionProperty->getName();
-                $mappings = $this->getPropertyMappings($reflectionProperty);
-                $properties[$name] = new PropertyMetadata($name, $mappings);
-            }
+            $this->getPropertiesMetadata($reflectionClass, $properties);
         }
 
         if (isset($targetsMap[self::TARGET_METHOD])) {
-            foreach ($reflectionClass->getMethods() as $reflectionMethod) {
-                $name = $reflectionMethod->getName();
-                $mappings = $this->getMethodMappings($reflectionMethod);
-                $methods[$name] = new MethodMetadata($name, $mappings);
-            }
+            $this->getMethodsMetadata($reflectionClass, $methods);
         }
 
         return new ClassMetadata($class, $classMappings, $properties, $methods);
@@ -104,5 +96,31 @@ abstract class AbstractMetadataFactory implements MetadataFactoryInterface
         }
 
         return $mappings;
+    }
+
+    private function getPropertiesMetadata(\ReflectionClass $reflectionClass, array &$properties): void
+    {
+        if ($reflectionClass->getParentClass()) {
+            $this->getPropertiesMetadata($reflectionClass->getParentClass(), $properties);
+        }
+
+        foreach ($reflectionClass->getProperties() as $reflectionProperty) {
+            $name = $reflectionProperty->getName();
+            $mappings = $this->getPropertyMappings($reflectionProperty);
+            $properties[$name] = new PropertyMetadata($name, $mappings);
+        }
+    }
+
+    private function getMethodsMetadata(\ReflectionClass $reflectionClass, array &$methods): void
+    {
+        if ($reflectionClass->getParentClass()) {
+            $this->getMethodsMetadata($reflectionClass->getParentClass(), $methods);
+        }
+
+        foreach ($reflectionClass->getMethods() as $reflectionMethod) {
+            $name = $reflectionMethod->getName();
+            $mappings = $this->getMethodMappings($reflectionMethod);
+            $methods[$name] = new MethodMetadata($name, $mappings);
+        }
     }
 }

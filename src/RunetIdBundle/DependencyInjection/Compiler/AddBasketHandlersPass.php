@@ -28,8 +28,8 @@ final class AddBasketHandlersPass implements CompilerPassInterface
         foreach ($tagged as $id => $attributes) {
             $class = $container->getDefinition($id)->getClass();
 
-            if (!\is_subclass_of($class, HandlerInterface::class)) {
-                throw new \LogicException(\sprintf('Basket handler "%s" must implement "%s".', $class, HandlerInterface::class));
+            if (!is_subclass_of($class, HandlerInterface::class)) {
+                throw new \LogicException(sprintf('Basket handler "%s" must implement "%s".', $class, HandlerInterface::class));
             }
 
             $references[$class] = new Reference($id);

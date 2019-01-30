@@ -23,7 +23,7 @@ final class EmailHostValidator extends ConstraintValidator
             return;
         }
 
-        if (!\is_scalar($value) && !(\is_object($value) && \method_exists($value, '__toString'))) {
+        if (!is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
             throw new UnexpectedTypeException($value, 'string');
         }
 
@@ -37,7 +37,7 @@ final class EmailHostValidator extends ConstraintValidator
         $types = (array) $constraint->types;
 
         foreach ($types as $type) {
-            if (\checkdnsrr($normalizedHost, $type)) {
+            if (checkdnsrr($normalizedHost, $type)) {
                 return;
             }
         }
@@ -45,13 +45,13 @@ final class EmailHostValidator extends ConstraintValidator
         $this->context
             ->buildViolation($constraint->message)
             ->setParameter('{{ value }}', $this->formatValue($host))
-            ->setParameter('{{ types }}', \implode(', ', $types))
+            ->setParameter('{{ types }}', implode(', ', $types))
             ->addViolation();
     }
 
     private function extractHost(string $value): ?string
     {
-        if (\preg_match('/@(.+)$/', $value, $matches)) {
+        if (preg_match('/@(.+)$/', $value, $matches)) {
             return $matches[1];
         }
 
@@ -60,10 +60,10 @@ final class EmailHostValidator extends ConstraintValidator
 
     private function normalizeHost(string $host): string
     {
-        if ('.' !== \mb_substr($host, -1)) {
+        if ('.' !== mb_substr($host, -1)) {
             $host .= '.';
         }
 
-        return \idn_to_ascii($host);
+        return idn_to_ascii($host);
     }
 }

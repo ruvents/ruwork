@@ -40,7 +40,7 @@ final class MetadataFactory implements MetadataFactoryInterface
         }
 
         if (null === $pathProperty) {
-            throw new NotMappedException(\sprintf('Upload class "%s" must have a @Path property.', $class));
+            throw new NotMappedException(sprintf('Upload class "%s" must have a @Path property.', $class));
         }
 
         return new Metadata($class, $pathProperty, $attributes);

@@ -14,7 +14,7 @@ final class NamingStrategy implements NamingStrategyInterface
         string $extensionPattern = '\.\w+\.twig',
         string $noSuffixLocale = null
     ) {
-        $this->pattern = \sprintf('#(\.(%s))?(%s)$#', $localeSuffixPattern, $extensionPattern);
+        $this->pattern = sprintf('#(\.(%s))?(%s)$#', $localeSuffixPattern, $extensionPattern);
         $this->noSuffixLocale = $noSuffixLocale;
     }
 
@@ -25,6 +25,6 @@ final class NamingStrategy implements NamingStrategyInterface
     {
         $replacement = $locale === $this->noSuffixLocale ? '' : '.'.$locale;
 
-        return \preg_replace($this->pattern, $replacement.'$3', $name);
+        return preg_replace($this->pattern, $replacement.'$3', $name);
     }
 }

@@ -35,8 +35,8 @@ final class RuworkReminderExtension extends ConfigurableExtension
 
     private function registerMarker(ContainerBuilder $container, array $configs): string
     {
-        $config = \reset($configs);
-        $type = \key($configs);
+        $config = reset($configs);
+        $type = key($configs);
         $id = 'ruwork_reminder.marker';
 
         switch ($type) {
@@ -52,6 +52,6 @@ final class RuworkReminderExtension extends ConfigurableExtension
                 return $config;
         }
 
-        throw new \InvalidArgumentException(\sprintf('Unknown marker type "%s".', $type));
+        throw new \InvalidArgumentException(sprintf('Unknown marker type "%s".', $type));
     }
 }

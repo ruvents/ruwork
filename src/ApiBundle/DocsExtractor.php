@@ -57,7 +57,7 @@ final class DocsExtractor
             $docs[] = $doc;
         }
 
-        \usort($docs, static function (Doc $a, Doc $b): int {
+        usort($docs, static function (Doc $a, Doc $b): int {
             return $a->priority <=> $b->priority ?: $a->endpoint <=> $b->endpoint;
         });
 
@@ -66,11 +66,11 @@ final class DocsExtractor
 
     private function getControllerClassMethod(string $_controller): ?string
     {
-        if (false !== \strpos($_controller, '::')) {
+        if (false !== strpos($_controller, '::')) {
             return $_controller;
         }
 
-        if (\class_exists($_controller) && \method_exists($_controller, '__invoke')) {
+        if (class_exists($_controller) && method_exists($_controller, '__invoke')) {
             return $_controller.'::__invoke';
         }
 

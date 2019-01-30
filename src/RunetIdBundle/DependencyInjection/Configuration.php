@@ -21,7 +21,7 @@ final class Configuration implements ConfigurationInterface
             ->root('ruwork_runet_id')
                 ->beforeNormalization()
                     ->ifTrue(function ($value): bool {
-                        return \is_array($value) && [] !== $value && !\array_key_exists('clients', $value);
+                        return \is_array($value) && [] !== $value && !array_key_exists('clients', $value);
                     })
                     ->then(function (array $value): array {
                         return [
@@ -79,7 +79,7 @@ final class Configuration implements ConfigurationInterface
                             && !isset($value['clients'][$value['default_client']]);
                     })
                     ->then(function (array $value): void {
-                        throw new \InvalidArgumentException(\sprintf('Client "%s" is not defined and cannot be used as default.', $value['default_client']));
+                        throw new \InvalidArgumentException(sprintf('Client "%s" is not defined and cannot be used as default.', $value['default_client']));
                     })
                 ->end();
         // @formatter:on

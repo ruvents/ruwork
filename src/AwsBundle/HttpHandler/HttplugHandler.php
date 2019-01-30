@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ruwork\AwsBundle\HttpHandler;
 
+use function GuzzleHttp\Promise\promise_for;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 use Http\Client\Exception\HttpException;
@@ -11,7 +12,6 @@ use Http\Client\Exception\NetworkException;
 use Http\Client\HttpAsyncClient;
 use Http\Discovery\HttpAsyncClientDiscovery;
 use Psr\Http\Message\RequestInterface;
-use function GuzzleHttp\Promise\promise_for;
 
 final class HttplugHandler
 {

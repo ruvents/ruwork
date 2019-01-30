@@ -59,7 +59,7 @@ final class UploadAccessor
         $class = $metadata->getClass();
 
         foreach ($metadata->getAttributes() as $property => $attributeMapping) {
-            if (\array_key_exists($attributeMapping->name, $attributes)) {
+            if (array_key_exists($attributeMapping->name, $attributes)) {
                 $this->getReflectionProperty($class, $property)->setValue($object, $attributes[$attributeMapping->name]);
             }
         }

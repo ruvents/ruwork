@@ -48,13 +48,13 @@ trait ApiControllerTrait
                 $path = '';
 
                 if (null !== $propertyPath = $error->getOrigin()->getPropertyPath()) {
-                    $path = \implode('.', $propertyPath->getElements());
+                    $path = implode('.', $propertyPath->getElements());
                 }
 
                 $message .= $path.': '.$error->getMessage()."\n";
             }
 
-            throw new BadRequestHttpException(\trim($message));
+            throw new BadRequestHttpException(trim($message));
         }
     }
 

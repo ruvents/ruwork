@@ -46,7 +46,7 @@ final class Synchronizer implements SynchronizerInterface
      */
     public function syncAll(): void
     {
-        \iterator_count($this->syncAndYieldAll());
+        iterator_count($this->syncAndYieldAll());
     }
 
     /**

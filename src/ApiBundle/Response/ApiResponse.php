@@ -12,7 +12,7 @@ class ApiResponse extends JsonResponse
     {
         $this->encodingOptions = JSON_UNESCAPED_UNICODE;
 
-        parent::__construct($data, $statusCode, \array_merge([
+        parent::__construct($data, $statusCode, array_merge([
             'Content-Type' => 'application/json; charset=utf-8',
         ], $headers));
     }

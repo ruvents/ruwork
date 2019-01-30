@@ -29,7 +29,7 @@ class EventDatesExtractorTest extends TestCase
 
     public function getData(): \Generator
     {
-        \date_default_timezone_set('Etc/GMT-5');
+        date_default_timezone_set('Etc/GMT-5');
 
         yield [
             [

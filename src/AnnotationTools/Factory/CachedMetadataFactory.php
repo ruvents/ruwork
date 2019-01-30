@@ -28,7 +28,7 @@ final class CachedMetadataFactory implements MetadataFactoryInterface
             return $this->metadatas[$class];
         }
 
-        $item = $this->cache->getItem(\str_replace('\\', '.', $class));
+        $item = $this->cache->getItem(str_replace('\\', '.', $class));
 
         if ($item->isHit()) {
             return $this->metadatas[$class] = $item->get();

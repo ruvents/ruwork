@@ -32,7 +32,7 @@ final class RuworkAwsExtension extends ConfigurableExtension
             ->findDefinition(Sdk::class)
             ->setArgument(0, $config);
 
-        if (!\interface_exists(HttpClient::class)) {
+        if (!interface_exists(HttpClient::class)) {
             $container->removeDefinition(HttplugHandler::class);
         }
     }

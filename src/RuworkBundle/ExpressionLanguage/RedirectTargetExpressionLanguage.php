@@ -16,7 +16,7 @@ class RedirectTargetExpressionLanguage extends ExpressionLanguage
         parent::registerFunctions();
 
         $this->register('path', function (string $route, array $parameters = []): string {
-            return \sprintf('$url_generator->generate(%s, %s)', $route, $parameters);
+            return sprintf('$url_generator->generate(%s, %s)', $route, $parameters);
         }, function (array $variables, string $route, array $parameters = []): string {
             return $variables['url_generator']->generate($route, $parameters);
         });

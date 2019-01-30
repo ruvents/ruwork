@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
+/**
+ * @internal
+ */
 final class CompositeValidatorTest extends ConstraintValidatorTestCase
 {
     public function testValidateSkipsNull(): void
@@ -68,11 +71,10 @@ final class CompositeValidatorTest extends ConstraintValidatorTestCase
 
     private function createConstraint(array $constraints = [], $options = null): AbstractCompositeConstraint
     {
-        return new class ($constraints, $options) extends AbstractCompositeConstraint
-        {
+        return new class($constraints, $options) extends AbstractCompositeConstraint {
             private $innerConstraints;
 
-            public function __construct(array $innerConstraints=[], $options = null)
+            public function __construct(array $innerConstraints = [], $options = null)
             {
                 $this->innerConstraints = $innerConstraints;
                 parent::__construct($options);

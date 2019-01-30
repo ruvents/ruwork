@@ -15,7 +15,7 @@ class DateTypeDefaultDTIExtensionTest extends FormIntegrationTestCase
 {
     protected function setUp()
     {
-        if (!\class_exists(DateTimeImmutableToDateTimeTransformer::class)) {
+        if (!class_exists(DateTimeImmutableToDateTimeTransformer::class)) {
             $this->markTestSkipped();
         }
 

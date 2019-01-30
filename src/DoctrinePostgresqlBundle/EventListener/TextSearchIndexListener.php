@@ -52,17 +52,17 @@ class TextSearchIndexListener extends AbstractListener
     private function createIndexSQL(AbstractPlatform $platform, Table $table, Index $index, string $type): string
     {
         $columns = $index->getQuotedColumns($platform);
-        $type = \strtoupper($type);
+        $type = strtoupper($type);
 
         if (1 !== \count($columns)) {
-            throw new \InvalidArgumentException(\sprintf('Invalid %s index definition. Exactly 1 column must be assigned.', $type));
+            throw new \InvalidArgumentException(sprintf('Invalid %s index definition. Exactly 1 column must be assigned.', $type));
         }
 
         $table = $table->getQuotedName($platform);
         $name = $index->getQuotedName($platform);
         $list = $platform->getIndexFieldDeclarationListSQL($columns);
 
-        return \sprintf('CREATE'.' INDEX %s ON %s USING %s(%s)', $name, $table, $type, $list);
+        return sprintf('CREATE'.' INDEX %s ON %s USING %s(%s)', $name, $table, $type, $list);
     }
 
     private function indexDiff(Index $a, Index $b): bool

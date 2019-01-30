@@ -11,7 +11,7 @@ abstract class AbstractListener
     protected function checkPostgresqlPlatform(AbstractPlatform $platform): void
     {
         if ('postgresql' !== $platform->getName()) {
-            throw new \RuntimeException(\sprintf('Listener "%s" can be attached only to PostgreSQL platform connections.', \get_class($this)));
+            throw new \RuntimeException(sprintf('Listener "%s" can be attached only to PostgreSQL platform connections.', \get_class($this)));
         }
     }
 }

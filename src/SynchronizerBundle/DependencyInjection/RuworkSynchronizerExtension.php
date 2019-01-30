@@ -26,7 +26,7 @@ final class RuworkSynchronizerExtension extends Extension
             ->setPublic(false)
             ->addTag('ruwork_synchronizer.synchronization_type');
 
-        if (!\class_exists(DoctrineBundle::class)) {
+        if (!class_exists(DoctrineBundle::class)) {
             $container->removeDefinition(FlushListener::class);
         }
     }

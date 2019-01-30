@@ -107,7 +107,7 @@ class UniqueEmailValidatorTest extends ConstraintValidatorTestCase
 
     private function setUsers(array $data): void
     {
-        $this->httpClient->addResponse(new Response(200, [], \json_encode([
+        $this->httpClient->addResponse(new Response(200, [], json_encode([
             'Users' => $data,
         ])));
     }

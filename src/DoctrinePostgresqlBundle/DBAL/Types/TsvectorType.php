@@ -58,6 +58,6 @@ class TsvectorType extends Type
      */
     public function convertToDatabaseValueSQL($sqlExpr, AbstractPlatform $platform)
     {
-        return \sprintf('to_tsvector(%s)', $sqlExpr);
+        return sprintf('to_tsvector(%s)', $sqlExpr);
     }
 }

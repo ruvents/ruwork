@@ -86,14 +86,14 @@ final class ResolvedSource implements ResolvedSourceInterface
         } else {
             $dir = \dirname($this->absolutePath);
 
-            if (!\is_dir($dir)) {
-                \mkdir($dir, 0777, true);
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
             }
 
-            \rename($this->tmpPath, $this->absolutePath);
+            rename($this->tmpPath, $this->absolutePath);
         }
 
-        \chmod($this->absolutePath, 0644);
+        chmod($this->absolutePath, 0644);
 
         $this->saved = true;
     }
@@ -103,6 +103,6 @@ final class ResolvedSource implements ResolvedSourceInterface
      */
     public function clear(): void
     {
-        @\unlink($this->tmpPath);
+        @unlink($this->tmpPath);
     }
 }

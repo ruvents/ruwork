@@ -28,8 +28,8 @@ final class AddBasketLoadersPass implements CompilerPassInterface
         foreach ($tagged as $id => $attributes) {
             $class = $container->getDefinition($id)->getClass();
 
-            if (!\is_subclass_of($class, LoaderInterface::class)) {
-                throw new \LogicException(\sprintf('Basket loader "%s" must implement "%s".', $class, LoaderInterface::class));
+            if (!is_subclass_of($class, LoaderInterface::class)) {
+                throw new \LogicException(sprintf('Basket loader "%s" must implement "%s".', $class, LoaderInterface::class));
             }
 
             $references[$class::getClass()] = new Reference($id);

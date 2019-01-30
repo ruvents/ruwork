@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
+/**
+ * @internal
+ */
 final class AtPathValidatorTest extends ConstraintValidatorTestCase
 {
     public function testValidateSkipsNull(): void

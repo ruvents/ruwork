@@ -28,8 +28,8 @@ final class UniqueEmailValidator extends ConstraintValidator
         }
 
         if (null !== $value &&
-            !\is_scalar($value) &&
-            !(\is_object($value) && \method_exists($value, '__toString'))
+            !is_scalar($value) &&
+            !(\is_object($value) && method_exists($value, '__toString'))
         ) {
             throw new UnexpectedTypeException($value, 'string');
         }
@@ -59,6 +59,6 @@ final class UniqueEmailValidator extends ConstraintValidator
             ->getResult()
             ->Users;
 
-        return \iterator_count($users) > 0;
+        return iterator_count($users) > 0;
     }
 }

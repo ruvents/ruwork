@@ -25,8 +25,8 @@ final class Store implements StoreInterface
         ?callable $defaultFactory = null,
         ?NormalizerInterface $normalizer = null
     ) {
-        if (!\class_exists($class)) {
-            throw new InvalidArgumentException(\sprintf('Class "%s" does not exist.', $class));
+        if (!class_exists($class)) {
+            throw new InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));
         }
 
         $this->class = $class;

@@ -18,6 +18,6 @@ final class TmpPathGenerator implements TmpPathGeneratorInterface
      */
     public function generateTmpPath(): string
     {
-        return \tempnam(\sys_get_temp_dir(), $this->prefix);
+        return tempnam(sys_get_temp_dir(), $this->prefix);
     }
 }

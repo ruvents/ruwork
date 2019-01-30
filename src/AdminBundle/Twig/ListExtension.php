@@ -100,7 +100,7 @@ class ListExtension extends AbstractExtension
         $context = [
             'entity_class' => $entityClass,
             'entity_config' => $entityConfig,
-            'entity_has_to_string' => \method_exists($entityClass, '__toString'),
+            'entity_has_to_string' => method_exists($entityClass, '__toString'),
             'entity_name' => $entityName,
             'entity_id_property' => $this->registry
                 ->getManagerForClass($entityClass)

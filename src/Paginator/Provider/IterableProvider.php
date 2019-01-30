@@ -11,7 +11,7 @@ class IterableProvider implements ProviderInterface
     public function __construct(iterable $data)
     {
         if ($data instanceof \Traversable) {
-            $data = \iterator_to_array($data);
+            $data = iterator_to_array($data);
         }
 
         $this->data = $data;

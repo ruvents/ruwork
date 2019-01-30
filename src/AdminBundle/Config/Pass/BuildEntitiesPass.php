@@ -71,7 +71,7 @@ class BuildEntitiesPass implements PassInterface
         $action->perPage = $data['per_page'];
         $action->title = $data['title'];
         $action->requiresGranted = $data['requires_granted'];
-        $action->fields = \array_map([$this, 'buildListField'], $data['fields']);
+        $action->fields = array_map([$this, 'buildListField'], $data['fields']);
 
         return $action;
     }
@@ -97,7 +97,7 @@ class BuildEntitiesPass implements PassInterface
         $action->type = $data['type'];
         $action->options = $data['options'];
         $action->theme = $data['theme'];
-        $action->fields = \array_map([$this, 'buildFormField'], $data['fields']);
+        $action->fields = array_map([$this, 'buildFormField'], $data['fields']);
 
         return $action;
     }
@@ -129,25 +129,25 @@ class BuildEntitiesPass implements PassInterface
         $manager = $this->registry->getManagerForClass($class);
 
         if (null === $manager) {
-            throw new \InvalidArgumentException(\sprintf('No manager was found for class "%s".', $class));
+            throw new \InvalidArgumentException(sprintf('No manager was found for class "%s".', $class));
         }
 
         if (!$manager instanceof EntityManagerInterface) {
-            throw new \InvalidArgumentException(\sprintf('Manager for class %s is not an instance of %s.', $class, EntityManagerInterface::class));
+            throw new \InvalidArgumentException(sprintf('Manager for class %s is not an instance of %s.', $class, EntityManagerInterface::class));
         }
 
         $metadata = $manager->getClassMetadata($class);
 
         if ($metadata->isMappedSuperclass) {
-            throw new \InvalidArgumentException(\sprintf('Class %s is not an entity but a mapped superclass.', $class));
+            throw new \InvalidArgumentException(sprintf('Class %s is not an entity but a mapped superclass.', $class));
         }
 
         if ($metadata->isEmbeddedClass) {
-            throw new \InvalidArgumentException(\sprintf('Class %s is not an entity but an embeddable class.', $class));
+            throw new \InvalidArgumentException(sprintf('Class %s is not an entity but an embeddable class.', $class));
         }
 
         if ($metadata->isIdentifierComposite) {
-            throw new \InvalidArgumentException(\sprintf('Entity %s has a composite identifier which is currently not supported.', $class));
+            throw new \InvalidArgumentException(sprintf('Entity %s has a composite identifier which is currently not supported.', $class));
         }
     }
 }
